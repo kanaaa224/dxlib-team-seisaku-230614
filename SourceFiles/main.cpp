@@ -22,20 +22,20 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     //Fps fps;
 
     // 一部のリソースをstaticとして読み込み
-    int bgm_title, bgm_result;
-    if ((bgm_title = LoadSoundMem("Resources/Sounds/bgm_title.wav")) == -1) return -1;
-    ChangeVolumeSoundMem(255, bgm_title);
-    Resources::Set(SND, BGM, TITLE, bgm_title);
-    if ((bgm_result = LoadSoundMem("Resources/Sounds/bgm_result.wav")) == -1) return -1;
-    ChangeVolumeSoundMem(255, bgm_result);
-    Resources::Set(SND, BGM, 2, bgm_result);
+    //int bgm_title, bgm_result;
+    //if ((bgm_title = LoadSoundMem("Resources/Sounds/bgm_title.wav")) == -1) return -1;
+    //ChangeVolumeSoundMem(255, bgm_title);
+    //Resources::Set(SND, BGM, TITLE, bgm_title);
+    //if ((bgm_result = LoadSoundMem("Resources/Sounds/bgm_result.wav")) == -1) return -1;
+    //ChangeVolumeSoundMem(255, bgm_result);
+    //Resources::Set(SND, BGM, 2, bgm_result);
 
     // ゲームループし、シーンマネジャーでシーンの更新
-    while ((ProcessMessage() == 0)/* && (sceneMng->Update() != nullptr) && !(InputControl::OnButton(XINPUT_BUTTON_BACK))*/) {
+    while ((ProcessMessage() == 0) && (sceneMng->Update() != nullptr)/* && !(InputControl::OnButton(XINPUT_BUTTON_BACK))*/) {
         ClearDrawScreen(); // 画面の初期化
 
         // シーンマネジャーでシーンの描画開始
-        //sceneMng->Draw();
+        sceneMng->Draw();
 
         //fps.Update();
         //fps.Draw();
