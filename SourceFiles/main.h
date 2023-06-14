@@ -10,7 +10,7 @@
 using std::string;
 using std::to_string;
 #include <time.h>
-//#include "SceneManager.h"
+#include "SceneManager.h"
 
 //#include "PadInput.h"
 
@@ -18,7 +18,7 @@ using std::to_string;
 
 // 各シーンのヘッダーファイル
 //#include "Title.h"
-//#include "GameMainScene.h"
+#include "GameScene.h"
 //#include "Result.h"
 //#include "Help.h"
 //#include "Ranking.h"
