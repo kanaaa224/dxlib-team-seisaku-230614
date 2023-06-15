@@ -22,5 +22,5 @@ void GamePlayer::Update() {
 
 // プレイヤー描画
 void GamePlayer::Draw() const {
-	DrawFormatString(20, 50, 0xffffff, "プレイヤークラス実行中！");
+	DrawFormatString(20, 100, 0xffffff, "プレイヤークラス実行中！");
 };
