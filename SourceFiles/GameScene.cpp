@@ -23,6 +23,8 @@ AbstractScene* Game::Update() {
 void Game::Draw() const {
 	SetFontSize(16);
 
+	player.Draw();
+
 	DrawFormatString(20, 50, 0xffffff, "ゲームメイン");
 };
 

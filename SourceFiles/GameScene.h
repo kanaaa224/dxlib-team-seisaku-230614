@@ -4,10 +4,12 @@
 ********************************/
 #pragma once
 #include "AbstractScene.h"
+#include "main.h"
 
 class Game : public AbstractScene {
 private:
 	int state;
+	GamePlayer player;
 public:
 	// コンストラクタ
 	Game();
