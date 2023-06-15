@@ -5,8 +5,7 @@
 #pragma once
 
 // デフォルトの抽象シーンクラス
-class AbstractScene
-{
+class AbstractScene {
 public:
 	// デストラクタ
 	virtual ~AbstractScene() {};

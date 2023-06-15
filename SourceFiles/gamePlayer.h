@@ -17,10 +17,8 @@ public:
 	~GamePlayer();
 
 	// 更新
-	//void Update();
+	void Update();
 
 	// 描画
-	void Draw() const {
-		DrawFormatString(20, 100, 0xffffff, "プレイヤークラス実行中！");
-	};
+	void Draw() const;
 };

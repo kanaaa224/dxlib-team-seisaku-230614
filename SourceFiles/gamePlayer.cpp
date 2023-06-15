@@ -1,5 +1,5 @@
 ﻿/********************************
-* ゲームプレイヤー
+* ゲームプレイヤー処理
 * 編集者：島袋
 ********************************/
 #include "main.h"
@@ -15,7 +15,12 @@ GamePlayer::~GamePlayer() {
 	// 終了処理
 };
 
-// プレイヤークラス
-//GamePlayer::Draw() {
-//	DrawFormatString(20, 50, 0xffffff, "プレイヤークラス実行中！");
-//};
+// プレイヤー更新処理
+void GamePlayer::Update() {
+
+};
+
+// プレイヤー描画
+void GamePlayer::Draw() const {
+	DrawFormatString(20, 50, 0xffffff, "プレイヤークラス実行中！");
+};
