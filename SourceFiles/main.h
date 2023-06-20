@@ -16,6 +16,9 @@ using std::to_string;
 
 #include "DxLib.h"
 
+// ゲーム処理のヘッダーファイル
+#include "gamePlayer.h"
+
 // 各シーンのヘッダーファイル
 //#include "Title.h"
 #include "GameScene.h"
@@ -25,6 +28,7 @@ using std::to_string;
 //#include "DrawRanking.h"
 //#include "InputRanking.h"
 //#include "Credit.h"
+
 
 // リソース管理
 #define IMG 0
