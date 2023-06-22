@@ -1,5 +1,6 @@
 ﻿#include "DxLib.h"
 #include "main.h"
+#include "../Stage.h"
 
 int Resources::snd_bgm[5];
 int Resources::snd_se[5];
@@ -17,7 +18,7 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     SetDrawScreen(DX_SCREEN_BACK);                 // 描画先画面を裏にする（ダブルバッファリング）
 
     // タイトル シーンオブジェクト作成（デバッグでゲームメインに変更中）
-    SceneManager* sceneMng = new SceneManager((AbstractScene*) new Game());
+    SceneManager* sceneMng = new SceneManager((AbstractScene*) new Stage());
 
     //Fps fps;
 
