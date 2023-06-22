@@ -9,6 +9,12 @@
 class GamePlayer {
 private:
 	int state;
+
+	int img_bg;
+
+	int x, y; // プレイヤー座標
+	int w, h; // プレイヤーの幅と高さ
+
 public:
 	// コンストラクタ
 	GamePlayer();
