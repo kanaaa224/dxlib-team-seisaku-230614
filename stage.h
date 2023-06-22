@@ -1,10 +1,11 @@
 #pragma once
-
-#include "AbstractScene.h"
+#include "SourceFiles/AbstractScene.h"
+#include "SourceFiles/GameScene.h"
 
 class Stage : public AbstractScene
 {
 private:
+	int StageImages;
 
 public:
 	//コンストラクタ

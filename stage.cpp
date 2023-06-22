@@ -4,7 +4,8 @@
 //コンストラクタ
 Stage::Stage()
 {
-
+	//ステージ画像の読み込み
+	StageImages = LoadGraph("Resources/images/Stage1.png");
 }
 
 //デストラクタ
@@ -21,5 +22,8 @@ AbstractScene* Stage::Update()
 //描画
 void Stage::Draw() const
 {
-	DrawString(250, 240 - 32, "Hello C World!", 0xffffff);
+	//ステージ画像の表示
+	DrawExtendGraph(0, 0, 640, 480, StageImages, TRUE);
+	//プレイヤーの仮表示
+	
 }
