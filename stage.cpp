@@ -1,7 +1,1 @@
-#include "DxLib.h"
-#include "stage.h"
-
-/********************************
-* •Ï”éŒ¾
-********************************/
-int gStage;
+#include "Stage.h"
