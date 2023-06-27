@@ -1,5 +1,4 @@
-﻿#include "DxLib.h"
-#include "main.h"
+﻿#include "main.h"
 
 int Resources::snd_bgm[5];
 int Resources::snd_se[5];
