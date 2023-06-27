@@ -7,7 +7,6 @@
 // プレイヤークラスのコンストラクタ
 GameStage::GameStage() {
 	// 初期化処理
-	state = 0;
 
 	// 画像読み込み
 	if ((img_bg = LoadGraph("Resources/Images/Stage1.png")) == -1) throw "Resources/Images/Stage1.png";
