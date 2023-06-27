@@ -10,6 +10,7 @@ class Game : public AbstractScene {
 private:
 	int state;
 	GamePlayer player;
+	GameStage stage;
 public:
 	// コンストラクタ
 	Game();

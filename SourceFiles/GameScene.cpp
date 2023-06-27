@@ -24,6 +24,7 @@ void Game::Draw() const {
 	SetFontSize(16);
 
 	player.Draw();
+	stage.Draw();
 
 	DrawFormatString(20, 50, 0xffffff, "ゲームメイン");
 };
