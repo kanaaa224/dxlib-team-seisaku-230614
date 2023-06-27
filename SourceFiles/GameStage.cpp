@@ -11,12 +11,6 @@ GameStage::GameStage() {
 
 	// 画像読み込み
 	if ((img_bg = LoadGraph("Resources/Images/Stage1.png")) == -1) throw "Resources/Images/Stage1.png";
-
-	w = 30;
-	h = 60;
-
-	x = SCREEN_WIDTH / 2;
-	y = 270;
 };
 
 // プレイヤークラスのデストラクタ
@@ -33,6 +27,4 @@ void GameStage::Update() {
 void GameStage::Draw() const {
 	// 背景表示
 	DrawExtendGraph(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, img_bg, TRUE);
-
-	DrawBox(x, y, x + w, y + h, 0xffffff, FALSE);
 };
