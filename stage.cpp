@@ -5,7 +5,8 @@
 Stage::Stage()
 {
 	//ステージ画像の読み込み
-	StageImages = LoadGraph("Resources/images/Stage1.png");
+	StageImages = LoadGraph("Resources/Images/Stage2.png");
+
 }
 
 //デストラクタ
