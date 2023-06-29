@@ -8,7 +8,9 @@
 
 class Game : public AbstractScene {
 private:
+	int btn_flg;
 	int state;
+
 	GamePlayer player;
 	GameStage stage;
 public:
