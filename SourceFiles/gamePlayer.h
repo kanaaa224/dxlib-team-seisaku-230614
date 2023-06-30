@@ -5,6 +5,13 @@
 #pragma once
 #include "main.h"
 
+// 人構造体
+struct Person {
+	int state = 0;
+	int x, y;
+	int width, height;
+};
+
 // プレイヤークラス
 class GamePlayer {
 private:
