@@ -39,3 +39,5 @@ void GamePlayer::Draw() const {
 	DrawBox(x, y, x + w, y + h, 0xffffff, FALSE);
 	DrawFormatString(20, 100, 0xffffff, "プレイヤークラス実行中！");
 };
+
+// プレイヤー

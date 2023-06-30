@@ -17,7 +17,8 @@ using std::to_string;
 #include "DxLib.h"
 
 // ゲーム処理のヘッダーファイル
-#include "gamePlayer.h"
+#include "GamePlayer.h"
+#include "GameStage.h"
 
 // 各シーンのヘッダーファイル
 //#include "Title.h"
