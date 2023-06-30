@@ -27,6 +27,8 @@ GamePlayer::~GamePlayer() {
 // プレイヤー更新処理
 void GamePlayer::Update() {
 
+
+
 };
 
 // プレイヤー描画
