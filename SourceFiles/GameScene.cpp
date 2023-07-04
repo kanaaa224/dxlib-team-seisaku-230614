@@ -16,6 +16,8 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
+	player.Control();
+
 	if (!CheckHitKey(KEY_INPUT_SPACE)) {
 		btn_flg = 0;
 	};
@@ -37,8 +39,11 @@ AbstractScene* Game::Update() {
 void Game::Draw() const {
 	SetFontSize(16);
 
-	player.Draw();
 	stage.Draw();
+
+	player.Draw();
+
+	//ui.Draw();
 
 	DrawFormatString(20, 50, 0xffffff, "ゲームメイン");
 

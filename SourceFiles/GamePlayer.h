@@ -17,6 +17,7 @@ class GamePlayer {
 private:
 	int state;
 
+	int img_player[32];
 	int img_bg;
 
 	int x, y; // プレイヤー座標
@@ -34,4 +35,7 @@ public:
 
 	// 描画
 	void Draw() const;
+
+	// プレイヤー移動
+	void Control();
 };
