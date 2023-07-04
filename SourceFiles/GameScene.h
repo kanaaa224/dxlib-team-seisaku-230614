@@ -10,6 +10,7 @@ class Game : public AbstractScene {
 private:
 	int btn_flg;
 	int state;
+	int img_bg;
 
 	GamePlayer player;
 	GameStage stage;

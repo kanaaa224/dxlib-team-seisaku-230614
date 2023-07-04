@@ -9,7 +9,7 @@ GameStage::GameStage() {
 	// 初期化処理
 
 	// 画像読み込み
-	if ((img_bg = LoadGraph("Resources/Images/Stage1.png")) == -1) throw "Resources/Images/Stage1.png";
+	img_bg = LoadGraph("Resources/Images/Stage_Sea01.png");
 };
 
 // プレイヤークラスのデストラクタ
@@ -25,5 +25,5 @@ void GameStage::Update() {
 // プレイヤー描画
 void GameStage::Draw() const {
 	// 背景表示
-	DrawExtendGraph(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, img_bg, TRUE);
+	//DrawGraph(0, 0, img_bg, TRUE);
 };

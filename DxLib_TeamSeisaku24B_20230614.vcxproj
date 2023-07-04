@@ -152,7 +152,7 @@
     <ClInclude Include="SourceFiles\GamePlayer.h" />
     <ClInclude Include="SourceFiles\GameScene.h" />
     <ClInclude Include="SourceFiles\GameStage.h" />
-    <ClInclude Include="SourceFiles\main.h" />
+    <ClInclude Include="SourceFiles\common.h" />
     <ClInclude Include="SourceFiles\SceneManager.h" />
     <ClInclude Include="Stage.h" />
   </ItemGroup>
