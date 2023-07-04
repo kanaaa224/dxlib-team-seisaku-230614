@@ -2,7 +2,7 @@
 * ゲームプレイヤー処理
 * 編集者：島袋
 ********************************/
-#include "main.h"
+#include "common.h"
 
 // プレイヤークラスのコンストラクタ
 GamePlayer::GamePlayer() {

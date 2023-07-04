@@ -3,7 +3,7 @@
 * 編集者：島袋
 ********************************/
 #pragma once
-#include "main.h"
+#include "common.h"
 
 // 人構造体
 struct Person {

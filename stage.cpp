@@ -5,7 +5,7 @@
 Stage::Stage()
 {
 	//ステージ画像の読み込み
-	StageImages = LoadGraph("Resources/Images/Stage2.png");
+	StageImages = LoadGraph("Resources/Images/Stage_Sea01.png");
 
 }
 
@@ -24,7 +24,6 @@ AbstractScene* Stage::Update()
 void Stage::Draw() const
 {
 	//ステージ画像の表示
-	DrawExtendGraph(0, 0,640,480, StageImages, FALSE);
-	//プレイヤーの仮表示
+	DrawGraph(300, 0, StageImages, FALSE);
 	
 }

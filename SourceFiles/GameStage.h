@@ -3,7 +3,7 @@
 * 編集者：
 ********************************/
 #pragma once
-#include "main.h"
+#include "common.h"
 
 // プレイヤークラス
 class GameStage {
