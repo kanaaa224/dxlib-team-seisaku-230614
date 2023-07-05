@@ -16,7 +16,9 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
+	player.Update();
 	player.Control();
+	player.Gravity();
 
 	if (!CheckHitKey(KEY_INPUT_SPACE)) {
 		btn_flg = 0;
@@ -45,12 +47,12 @@ void Game::Draw() const {
 
 	//ui.Draw();
 
-	DrawFormatString(20, 50, 0xffffff, "ゲームメイン");
+	//DrawFormatString(20, 50, 0xffffff, "ゲームメイン");
 
 	if (state == 0) {
-		DrawFormatString(20, 100, 0xffffff, "ボタンが押されました");
+		//DrawFormatString(20, 100, 0xffffff, "ボタンが押されました");
 	} else if (state == 1) {
-		DrawFormatString(20,150, 0xffffff, "ボタンが押されました");
+		//DrawFormatString(20,150, 0xffffff, "ボタンが押されました");
 	};
 };
 

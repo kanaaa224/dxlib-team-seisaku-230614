@@ -18,7 +18,7 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     // タイトル シーンオブジェクト作成（デバッグでゲームメインに変更中）
     SceneManager* sceneMng = new SceneManager((AbstractScene*) new Game());
 
-    //Fps fps;
+    FPS fps;
 
     // 一部のリソースをstaticとして読み込み
     //int bgm_title, bgm_result;
@@ -36,12 +36,14 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         // シーンマネジャーでシーンの描画開始
         sceneMng->Draw();
 
-        //fps.Update();
-        //fps.Draw();
+        fps.Update();
         //InputControl::Update(); //コントローラー入力更新
+
+        fps.Draw();
         
         ScreenFlip(); // 裏画面の内容を表画面に反映する
-        //fps.Wait();		//待機
+
+        fps.Wait();
 
     };
 
