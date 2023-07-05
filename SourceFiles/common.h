@@ -30,7 +30,6 @@ using std::to_string;
 //#include "InputRanking.h"
 //#include "Credit.h"
 
-
 // リソース管理
 #define SND 1
 

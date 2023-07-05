@@ -24,6 +24,6 @@ AbstractScene* Stage::Update()
 void Stage::Draw() const
 {
 	//ステージ画像の表示
-	DrawGraph(300, 0, StageImages, FALSE);
+	DrawExtendGraph(0, 400,640,480, StageImages, FALSE);
 	
 }
