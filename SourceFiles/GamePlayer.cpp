@@ -38,14 +38,32 @@ void GamePlayer::Init() {
 // プレイヤー更新処理
 void GamePlayer::Update() {
 
-	Control();
-	//Gravity();
-	Animation();
-
 	// 5m（300s）でカウントリセット
 	if ((frameCounter++) >= 18000) {
 		frameCounter = 1;
 	};
+
+	if (!Control()) {
+		if (player.state >= 2) {
+			if (player.state <= 3) {
+				playerImg_state = 11;
+			};
+		}
+		if(player.state > 1) {
+			player.state = player.state - 2;
+		};
+	};
+
+	//Gravity();
+	Animation();
+
+	// ステージ外に出ると反対側へ
+	if (SCREEN_WIDTH < player.position.x) {
+		player.position.x = 0 - player.size.width;
+	}
+	else if (player.position.x < 0 - player.size.width) {
+		player.position.x = SCREEN_WIDTH;
+	}
 
 	// 飛んだらしばらく経つまでは飛べない
 	if (fly_state == 1) {
@@ -87,6 +105,8 @@ void GamePlayer::Draw() const {
 
 	DrawFormatString(20, 100, 0xffffff, "Player Position X : %0.1f", player.position.x);
 	DrawFormatString(20, 115, 0xffffff, "Player Position Y : %0.1f", player.position.y);
+	DrawFormatString(20, 130, 0xffffff, "Player State : %d", player.state);
+	DrawFormatString(20, 145, 0xffffff, "Player Img State : %d", playerImg_state);
 
 	DrawFormatString(20, 200, 0xffffff, "debug[0] : %d", debug[0]);
 	
@@ -112,27 +132,40 @@ void GamePlayer::Draw() const {
 };
 
 // プレイヤー移動
-void GamePlayer::Control() {
+bool GamePlayer::Control() {
 	if (CheckHitKey(KEY_INPUT_A)) {
 		player.position.x = player.position.x - 2;
-		player.state = 0;
+		if (player.state <= 1) {
+			playerImg_state = 8;
+		};
+		player.state = 2;
+		return true;
 	}
 	else if (CheckHitKey(KEY_INPUT_D)) {
 		player.position.x = player.position.x + 2;
-		player.state = 1;
+		if (player.state <= 1) {
+			playerImg_state = 8;
+		};
+		player.state = 3;
+		return true;
 	};
 
 	if (CheckHitKey(KEY_INPUT_W)) {
 		player.position.y = player.position.y - 2;
+		return true;
 	}
 	else if (CheckHitKey(KEY_INPUT_S)) {
 		player.position.y = player.position.y + 2;
+		return true;
 	};
 
 	if (CheckHitKey(KEY_INPUT_SPACE) && (fly_state == 0)) {
 		player.position.y = player.position.y - 30;
 		fly_state = 1;
+		return true;
 	};
+
+	return false;
 };
 
 void GamePlayer::Gravity() {
@@ -146,6 +179,16 @@ void GamePlayer::Animation() {
 		if (frameCounter % 30 == 0) {
 			if (playerImg_state >= 2) {
 				playerImg_state = 0;
+			}
+			else {
+				playerImg_state++;
+			};
+		};
+	}
+	else if (player.state <= 3) {
+		if (frameCounter % 5 == 0) {
+			if (playerImg_state >= 10) {
+				playerImg_state = 8;
 			}
 			else {
 				playerImg_state++;
