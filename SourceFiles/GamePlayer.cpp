@@ -156,6 +156,23 @@ bool GamePlayer::Control() {
 			player.state = 3;
 			return true;
 		};
+	}
+	else if (state == 2) {
+		if (CheckHitKey(KEY_INPUT_SPACE) && (fly_state == 0)) {
+			player.position.y = player.position.y - 30;
+			fly_state = 1;
+			return true;
+		}
+		else {
+			if (CheckHitKey(KEY_INPUT_A)) {
+				player.state = 2;
+				return true;
+			}
+			else if (CheckHitKey(KEY_INPUT_D)) {
+				player.state = 3;
+				return true;
+			};
+		};
 	};
 
 	if (CheckHitKey(KEY_INPUT_W)) {
