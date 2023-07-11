@@ -17,8 +17,6 @@ Game::~Game() {
 AbstractScene* Game::Update() {
 
 	player.Update();
-	player.Control();
-	player.Gravity();
 
 	if (!CheckHitKey(KEY_INPUT_SPACE)) {
 		btn_flg = 0;
@@ -41,7 +39,7 @@ AbstractScene* Game::Update() {
 void Game::Draw() const {
 	SetFontSize(16);
 
-	stage.Draw();
+	//stage.Draw();
 
 	player.Draw();
 
