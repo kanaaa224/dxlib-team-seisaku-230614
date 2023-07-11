@@ -57,7 +57,12 @@ void GamePlayer::Update() {
 	//Gravity();
 	Animation();
 
-	// ステージ外に出ると反対側へ
+	// ステージ下の海に落ちればリスポーン地点へ
+	if (SCREEN_HEIGHT <= player.position.y) {
+		Init();
+	};
+
+	// ステージ横の外に出ると反対側へ
 	if (SCREEN_WIDTH < player.position.x) {
 		player.position.x = 0 - player.size.width;
 	}
@@ -100,6 +105,7 @@ void GamePlayer::Draw() const {
 	DrawBox(player.position.x, player.position.y, (player.position.x + player.size.width), (player.position.y + player.size.height), 0xffffff, FALSE);
 	//DrawBox(player.position.x + 12, player.position.y + 14, (player.position.x + 40) + 12, (player.position.y + 50) + 14, 0xffffff, FALSE);
 
+	DrawFormatString(20, 55, 0xffffff, "PlayerClass FrameCounter : %d", state);
 	DrawFormatString(20, 70, 0xffffff, "PlayerClass FrameCounter : %d", frameCounter);
 	DrawFormatString(20, 85, 0xffffff, "PlayerClass Elapsed time : %d s", (frameCounter / 60));
 
@@ -133,21 +139,23 @@ void GamePlayer::Draw() const {
 
 // プレイヤー移動
 bool GamePlayer::Control() {
-	if (CheckHitKey(KEY_INPUT_A)) {
-		player.position.x = player.position.x - 2;
-		if (player.state <= 1) {
-			playerImg_state = 8;
+	if (state == 0) {
+		if (CheckHitKey(KEY_INPUT_A)) {
+			player.position.x = player.position.x - 2;
+			if (player.state <= 1) {
+				playerImg_state = 8;
+			};
+			player.state = 2;
+			return true;
+		}
+		else if (CheckHitKey(KEY_INPUT_D)) {
+			player.position.x = player.position.x + 2;
+			if (player.state <= 1) {
+				playerImg_state = 8;
+			};
+			player.state = 3;
+			return true;
 		};
-		player.state = 2;
-		return true;
-	}
-	else if (CheckHitKey(KEY_INPUT_D)) {
-		player.position.x = player.position.x + 2;
-		if (player.state <= 1) {
-			playerImg_state = 8;
-		};
-		player.state = 3;
-		return true;
 	};
 
 	if (CheckHitKey(KEY_INPUT_W)) {

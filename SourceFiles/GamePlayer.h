@@ -30,6 +30,7 @@ class GamePlayer {
 private:
 	Person player;
 
+	int state = 0;
 	int fly_state = 0;
 	int frameCounter = 0;
 	int playerImg_state = 0; // 0-2: 風船２個の待機 | 4-6: 風船２個の待機 | 8-11: 風船２個の歩行 | 12-15: 風船１個の歩行 | 15-20: 風船２個の飛行 | 21-23: 死亡 | 24-28: 風船１個の飛行
@@ -73,12 +74,12 @@ public:
 
 	// プレイヤーの状態を設定
 	void SetState(int State) {
-		player.state = State;
+		state = State;
 	};
 
 	// プレイヤーの状態を取得
 	int GetState() {
-		return player.state;
+		return state;
 	};
 
 
@@ -95,5 +96,11 @@ public:
 	// プレイヤーの位置を取得（float型 座標 構造体）
 	Position GetPosition() {
 		return player.position;
+	};
+
+
+	// プレイヤーのサイズを取得（大きさ 構造体）
+	Size GetSize() {
+		return player.size;
 	};
 };

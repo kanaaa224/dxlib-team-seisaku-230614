@@ -13,6 +13,9 @@ private:
 
 	GamePlayer player;
 	GameStage stage;
+
+	// 仮
+	int block[4];
 public:
 	// コンストラクタ
 	Game();
