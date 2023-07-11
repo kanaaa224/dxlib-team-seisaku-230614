@@ -17,7 +17,7 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     SetDrawScreen(DX_SCREEN_BACK);                 // 描画先画面を裏にする（ダブルバッファリング）
 
     // タイトル シーンオブジェクト作成（デバッグでゲームメインに変更中）
-    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new GameStage()));
+    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new Stage()));
 
     //Fps fps;
 
