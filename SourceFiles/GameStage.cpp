@@ -31,5 +31,8 @@ void GameStage::Draw() const {
 	DrawGraph(-50, 430, img_bg1, FALSE);
 	DrawGraph(370, 430, img_bg1, FALSE);
 	DrawGraph(180, 250, img_bg1, FALSE);
+	DrawBox(0, 430, 230, 450, 0xff0000, FALSE);
+	DrawBox(370, 430, 640, 450, 0xff0000, FALSE);
+	DrawBox(180, 250, 460, 270, 0xff0000, FALSE);
 
 };
