@@ -17,7 +17,7 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     SetDrawScreen(DX_SCREEN_BACK);                 // 描画先画面を裏にする（ダブルバッファリング）
 
     // タイトル シーンオブジェクト作成（デバッグでゲームメインに変更中）
-    SceneManager* sceneMng = new SceneManager((AbstractScene*) new Stage());
+    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new GameStage()));
 
     //Fps fps;
 
@@ -31,11 +31,11 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     //Resources::Set(SND, BGM, 2, bgm_result);
 
     // ゲームループし、シーンマネジャーでシーンの更新
-    while ((ProcessMessage() == 0) && (sceneMng->Update() != nullptr)/* && !(InputControl::OnButton(XINPUT_BUTTON_BACK))*/) {
+    while ((ProcessMessage() == 0) && (sceneMng.Update() != nullptr)/* && !(InputControl::OnButton(XINPUT_BUTTON_BACK))*/) {
         ClearDrawScreen(); // 画面の初期化
 
         // シーンマネジャーでシーンの描画開始
-        sceneMng->Draw();
+        sceneMng.Draw();
 
         //fps.Update();
         //fps.Draw();

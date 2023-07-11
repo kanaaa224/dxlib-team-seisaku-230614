@@ -4,11 +4,13 @@
 ********************************/
 #pragma once
 #include "common.h"
+#include "AbstractScene.h"
 
 // プレイヤークラス
-class GameStage {
+class GameStage :public AbstractScene{
 private:
 	int img_bg;
+	int img_bg1;
 
 public:
 	// コンストラクタ
@@ -18,8 +20,8 @@ public:
 	~GameStage();
 
 	// 更新
-	void Update();
+	virtual AbstractScene* Update() override;
 
 	// 描画
-	void Draw() const;
+	virtual void Draw() const override;
 };

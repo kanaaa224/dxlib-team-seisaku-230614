@@ -147,7 +147,6 @@
     <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractScene.h" />
     <ClInclude Include="SourceFiles\AbstractScene.h" />
     <ClInclude Include="SourceFiles\GamePlayer.h" />
     <ClInclude Include="SourceFiles\GameScene.h" />

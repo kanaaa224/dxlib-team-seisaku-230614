@@ -6,6 +6,7 @@ class Stage : public AbstractScene
 {
 private:
 	int StageImages;
+	int StageImages1;
 
 public:
 	//コンストラクタ
