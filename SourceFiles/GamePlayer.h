@@ -5,6 +5,19 @@
 #pragma once
 #include "main.h"
 
+#define PLAYER_STOP 0
+#define PLAYER_WALK 1
+#define PLAYER_FLIGHT 2
+
+#define PLAYER_L_STOP 0
+#define PLAYER_R_STOP 1
+#define PLAYER_L_WALK 2
+#define PLAYER_R_WALK 3
+#define PLAYER_L_SLIP 4
+#define PLAYER_R_SLIP 5
+#define PLAYER_L_FLIGHT 6
+#define PLAYER_R_FLIGHT 7
+
 // float型 2次元座標 構造体
 struct Position {
 	float x = 0.0f;
