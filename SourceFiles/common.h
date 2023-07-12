@@ -13,6 +13,7 @@ using std::to_string;
 #include "SceneManager.h"
 
 //#include "PadInput.h"
+#include "fps.h"
 
 #include "DxLib.h"
 

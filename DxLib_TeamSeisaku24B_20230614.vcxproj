@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\AbstractScene.h" />
+    <ClInclude Include="SourceFiles\fps.h" />
     <ClInclude Include="SourceFiles\GamePlayer.h" />
     <ClInclude Include="SourceFiles\GameScene.h" />
     <ClInclude Include="SourceFiles\GameStage.h" />

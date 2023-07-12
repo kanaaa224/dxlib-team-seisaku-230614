@@ -1,20 +1,60 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="SourceFiles\GamePlayer.cpp" />
-    <ClCompile Include="SourceFiles\GameScene.cpp" />
-    <ClCompile Include="SourceFiles\GameStage.cpp" />
-    <ClCompile Include="SourceFiles\main.cpp" />
-    <ClCompile Include="SourceFiles\SceneManager.cpp" />
-    <ClCompile Include="Stage.cpp" />
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="シーンマネージャー">
+      <UniqueIdentifier>{eddcc571-2b4a-4752-b55b-7159798b63dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SourceFiles\AbstractScene.h" />
-    <ClInclude Include="SourceFiles\GamePlayer.h" />
-    <ClInclude Include="SourceFiles\GameScene.h" />
-    <ClInclude Include="SourceFiles\GameStage.h" />
-    <ClInclude Include="SourceFiles\common.h" />
-    <ClInclude Include="SourceFiles\SceneManager.h" />
-    <ClInclude Include="Stage.h" />
+    <ClCompile Include="SourceFiles\main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\SceneManager.cpp">
+      <Filter>シーンマネージャー</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\GameScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\GamePlayer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\GameStage.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SourceFiles\main.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\AbstractScene.h">
+      <Filter>シーンマネージャー</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\SceneManager.h">
+      <Filter>シーンマネージャー</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\GameScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\GamePlayer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\GameStage.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\fps.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
