@@ -141,6 +141,26 @@ void GamePlayer::Draw() const {
 
 // プレイヤー移動
 bool GamePlayer::Control() {
+
+	if (!CheckHitKey(KEY_INPUT_SPACE)) {
+		keyInput_state[0] = 0;
+	};
+	if (!CheckHitKey(KEY_INPUT_A)) {
+		keyInput_state[1] = 0;
+	};
+	if (!CheckHitKey(KEY_INPUT_D)) {
+		keyInput_state[2] = 0;
+	};	
+
+	if (CheckHitKey(KEY_INPUT_SPACE) && keyInput_state[0] == 0) {
+
+
+
+		keyInput_state[0] = 1;
+	};
+
+	// --------------------------------------------------------------------------------------------
+
 	if (state == PLAYER_STOP) {
 		if (CheckHitKey(KEY_INPUT_A)) {
 			player.position.x = player.position.x - 2;
@@ -170,9 +190,14 @@ bool GamePlayer::Control() {
 			player.state = player.state + 2;
 		}
 		if (CheckHitKey(KEY_INPUT_SPACE) && (fly_state == 0)) {
-			player.position.y = player.position.y - 30;
-			fly_state = 1;
-			return true;
+			if (CheckHitKey(KEY_INPUT_A)) {
+				player.position.x = player.position.x - 2;
+				return true;
+			}
+			else if (CheckHitKey(KEY_INPUT_D)) {
+				player.position.x = player.position.x + 2;
+				return true;
+			};
 		}
 		else {
 			if (CheckHitKey(KEY_INPUT_A)) {

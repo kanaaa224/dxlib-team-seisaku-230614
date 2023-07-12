@@ -49,6 +49,7 @@ private:
 	int playerImg_state = 0; // 0-2: 風船２個の待機 | 4-6: 風船２個の待機 | 8-11: 風船２個の歩行 | 12-15: 風船１個の歩行 | 15-20: 風船２個の飛行 | 21-23: 死亡 | 24-28: 風船１個の飛行
 	int img_player[32];
 
+	int keyInput_state[3];
 	int speed[4];
 	int move[4];
 
