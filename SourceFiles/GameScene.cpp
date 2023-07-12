@@ -55,7 +55,7 @@ AbstractScene* Game::Update() {
 void Game::Draw() const {
 	SetFontSize(16);
 
-	//stage.Draw();
+	stage.Draw();
 
 	player.Draw();
 
