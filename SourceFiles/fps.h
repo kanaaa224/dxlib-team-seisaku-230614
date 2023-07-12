@@ -45,4 +45,3 @@ public:
 		if (waitTime > 0) Sleep(waitTime);
 	};
 };
-

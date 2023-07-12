@@ -1,6 +1,6 @@
 ﻿/********************************
 * ゲームメインシーン
-* 編集：島袋
+* 担当：島袋、
 ********************************/
 #include "main.h"
 
@@ -23,14 +23,16 @@ Game::~Game() {
 AbstractScene* Game::Update() {
 
 	player.Update();
+	//player.SetState(state);
+	player.Debug();
 
-	if (!CheckCollideSquares(player.GetPosition().x, player.GetPosition().y, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[0] + block[2], block[1] + block[3])) {
-		player.Gravity();
-		player.SetState(2);
-	}
-	else {
-		player.SetState(0);
-	};
+	//if (!CheckCollideSquares(player.GetPosition().x, player.GetPosition().y, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[0] + block[2], block[1] + block[3])) {
+	//	//player.Gravity();
+	//	//player.SetState(2);
+	//}
+	//else {
+	//	//player.SetState(0);
+	//};
 
 
 
