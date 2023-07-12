@@ -12,7 +12,7 @@ Game::Game() {
 	// 仮
 	block[0] = 0;
 	block[1] = 428;
-	block[2] = 160;
+	block[2] = 260;
 	block[3] = SCREEN_HEIGHT;
 };
 

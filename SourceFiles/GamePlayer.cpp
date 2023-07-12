@@ -90,7 +90,7 @@ void GamePlayer::Update() {
 // プレイヤー描画
 void GamePlayer::Draw() const {
 	// 仮 - 背景表示
-	DrawExtendGraph(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, img_bg, TRUE);
+	//DrawExtendGraph(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, img_bg, TRUE);
 
 	// プレイヤー画像表示
 	if (player.state % 2 == 0) {
@@ -105,7 +105,7 @@ void GamePlayer::Draw() const {
 	DrawBox(player.position.x, player.position.y, (player.position.x + player.size.width), (player.position.y + player.size.height), 0xffffff, FALSE);
 	//DrawBox(player.position.x + 12, player.position.y + 14, (player.position.x + 40) + 12, (player.position.y + 50) + 14, 0xffffff, FALSE);
 
-	DrawFormatString(20, 55, 0xffffff, "PlayerClass FrameCounter : %d", state);
+	DrawFormatString(20, 55, 0xffffff, "PlayerClass State : %d", state);
 	DrawFormatString(20, 70, 0xffffff, "PlayerClass FrameCounter : %d", frameCounter);
 	DrawFormatString(20, 85, 0xffffff, "PlayerClass Elapsed time : %d s", (frameCounter / 60));
 
@@ -139,7 +139,7 @@ void GamePlayer::Draw() const {
 
 // プレイヤー移動
 bool GamePlayer::Control() {
-	if (state == 0) {
+	if (state == PLAYER_STOP) {
 		if (CheckHitKey(KEY_INPUT_A)) {
 			player.position.x = player.position.x - 2;
 			if (player.state <= 1) {
@@ -157,7 +157,7 @@ bool GamePlayer::Control() {
 			return true;
 		};
 	}
-	else if (state == 2) {
+	else if (state == PLAYER_FLIGHT) {
 		if (CheckHitKey(KEY_INPUT_SPACE) && (fly_state == 0)) {
 			player.position.y = player.position.y - 30;
 			fly_state = 1;
@@ -165,11 +165,11 @@ bool GamePlayer::Control() {
 		}
 		else {
 			if (CheckHitKey(KEY_INPUT_A)) {
-				player.state = 2;
+				player.state = 6;
 				return true;
 			}
 			else if (CheckHitKey(KEY_INPUT_D)) {
-				player.state = 3;
+				player.state = 7;
 				return true;
 			};
 		};
@@ -214,6 +214,21 @@ void GamePlayer::Animation() {
 		if (frameCounter % 5 == 0) {
 			if (playerImg_state >= 10) {
 				playerImg_state = 8;
+			}
+			else {
+				playerImg_state++;
+			};
+		};
+	}
+	else if (player.state <= 7) {
+		if (player.state != 6) {
+			if (player.state != 7) {
+				playerImg_state = 18;
+			};
+		};
+		if (frameCounter % 30 == 0) {
+			if (playerImg_state >= 20) {
+				playerImg_state = 18;
 			}
 			else {
 				playerImg_state++;
