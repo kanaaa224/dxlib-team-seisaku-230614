@@ -300,11 +300,3 @@ void GamePlayer::Draw() const {
 
 	DrawBox(player.position.x - player.size.width, player.position.y - player.size.height, player.position.x + player.size.width, player.position.y + player.size.height, 0xffffff, false);
 };
-
-void GamePlayer::SetStageData(int StageData[20][10]) {
-	for (int i = 0; i < 20; i++) {
-		for (int j = 0; j < 10; j++) {
-			this->MapData[i][j] = StageData[i][j];
-		};
-	};
-};
