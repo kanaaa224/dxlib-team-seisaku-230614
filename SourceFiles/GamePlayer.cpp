@@ -72,7 +72,9 @@ void GamePlayer::Update() {
 
 	// 飛んだらしばらく経つまでは飛べない
 	if (fly_state == 1) {
-		if (frameCounter % 10 == 0) {
+		player.position.y = player.position.y - 2;
+		if (frameCounter % 30 == 0) {
+			
 			fly_state = 0;
 		};
 	};
@@ -158,6 +160,15 @@ bool GamePlayer::Control() {
 		};
 	}
 	else if (state == PLAYER_FLIGHT) {
+		if (player.state <= 1) {
+			player.state = player.state + 6;
+		}
+		else if (player.state <= 3) {
+			player.state = player.state + 4;
+		}
+		else if (player.state <= 5) {
+			player.state = player.state + 2;
+		}
 		if (CheckHitKey(KEY_INPUT_SPACE) && (fly_state == 0)) {
 			player.position.y = player.position.y - 30;
 			fly_state = 1;
@@ -185,7 +196,7 @@ bool GamePlayer::Control() {
 	};
 
 	if (CheckHitKey(KEY_INPUT_SPACE) && (fly_state == 0)) {
-		player.position.y = player.position.y - 30;
+		//player.position.y = player.position.y - 30;
 		fly_state = 1;
 		return true;
 	};
