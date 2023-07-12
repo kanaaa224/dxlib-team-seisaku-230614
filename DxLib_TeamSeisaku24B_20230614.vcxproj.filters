@@ -16,11 +16,11 @@
     <Filter Include="シーンマネージャー">
       <UniqueIdentifier>{eddcc571-2b4a-4752-b55b-7159798b63dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="メイン">
+      <UniqueIdentifier>{59f620b4-230a-4815-b7f3-2e650058b5ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SourceFiles\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\SceneManager.cpp">
       <Filter>シーンマネージャー</Filter>
     </ClCompile>
@@ -33,11 +33,14 @@
     <ClCompile Include="SourceFiles\GameStage.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\main.cpp">
+      <Filter>メイン</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\padInput.cpp">
+      <Filter>メイン</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SourceFiles\main.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SourceFiles\AbstractScene.h">
       <Filter>シーンマネージャー</Filter>
     </ClInclude>
@@ -54,7 +57,13 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\fps.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>メイン</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\main.h">
+      <Filter>メイン</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\padInput.h">
+      <Filter>メイン</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

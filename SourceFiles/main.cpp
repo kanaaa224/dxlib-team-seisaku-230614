@@ -31,20 +31,18 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
 
     // ゲームループし、シーンマネジャーでシーンの更新
     while ((ProcessMessage() == 0) && (sceneMng->Update() != nullptr)/* && !(InputControl::OnButton(XINPUT_BUTTON_BACK))*/) {
-        ClearDrawScreen(); // 画面の初期化
+        ClearDrawScreen();  // 画面の初期化
 
-        // シーンマネジャーでシーンの描画開始
-        sceneMng->Draw();
+        sceneMng->Draw();   // シーンマネジャーでシーン描画
+
+        PadInput::Update();
+        //PadInput::Debug();
 
         fps.Update();
-        //InputControl::Update(); //コントローラー入力更新
-
         fps.Draw();
+        fps.Wait();
         
         ScreenFlip(); // 裏画面の内容を表画面に反映する
-
-        fps.Wait();
-
     };
 
     DxLib_End(); // DXライブラリ使用の終了処理
