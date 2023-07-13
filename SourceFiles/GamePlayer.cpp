@@ -105,8 +105,12 @@ void GamePlayer::Update() {
 
 	bool wallHit = false;
 
-	if (player.state == 2 || player.position.y - player.size.height <= 0) {
-		player.position.y += 5.2;
+	if (player.state == 2) {
+		player.position.y = 270 + player.size.height + 1;
+		wallHit = true;
+	};
+	if (player.position.y - player.size.height <= 0) {
+		player.position.y += 0.1;
 		wallHit = true;
 	};
 

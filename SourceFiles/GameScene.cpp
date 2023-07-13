@@ -16,7 +16,7 @@ Game::Game() {
 	block[3] = 251;
 
 	block[4] = 180;
-	block[5] = 270;
+	block[5] = 250;
 	block[6] = 460;
 	block[7] = 270;
 };
@@ -29,8 +29,13 @@ AbstractScene* Game::Update() {
 
 	//player.SetState(CheckCollideSquares2(1, player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[2], block[3]));
 
-	player.SetState(CheckCollideSquares3(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[4], block[5], block[6], block[7]));
-
+	Collide collide;
+	collide.ul.x = block[4];
+	collide.ul.y = block[5];
+	collide.lr.x = block[6];
+	collide.lr.y = block[7];
+	player.SetCollideData(collide);
+	player.SetState(CheckCollideBox( player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[4], block[5], block[6], block[7]));
 
 
 	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
