@@ -7,7 +7,7 @@
 #include "AbstractScene.h"
 
 // プレイヤークラス
-class GameStage {
+class GameStage:public AbstractScene{
 private:
 	int img_bg;
 	int img_bg1;
@@ -25,8 +25,9 @@ public:
 	~GameStage();
 
 	// 更新
-	void Update();
+	AbstractScene* Update() override;
 
 	// 描画
 	void Draw() const;
+	void HitStage();
 };
