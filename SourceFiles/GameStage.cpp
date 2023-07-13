@@ -15,6 +15,7 @@ GameStage::GameStage() {
 	sx1 = playerX + 60;
 	sy0 = playerY;
 	sy1 = playerY + 8;
+	PlayerAngle = 0.624f;
 	// 画像読み込み
 	img_bg = LoadGraph("Resources/Images/Stage_Sea01.png");
 	img_bg1 = LoadGraph("Resources/Images/Stage_Footing01.png");
@@ -53,6 +54,7 @@ void GameStage::HitStage()
 	//プレイヤーとステージの当たり判定
 	if (sx0 <= mx1 && sx1 >= mx0 && sy0 <= my1 && sy1 >= my0) {
 		if (StageFlg == 0) {
+			PlayerAngle = (0.3f / 60) * (mx1 - sx0) + 0.6f;
 			StageFlg = 1;
 		}
 	}

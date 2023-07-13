@@ -1,5 +1,4 @@
 #include "common.h"
-#include "../stage.h"
 
 int Resources::snd_bgm[5];
 int Resources::snd_se[5];
