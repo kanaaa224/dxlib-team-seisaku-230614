@@ -12,7 +12,8 @@ using std::to_string;
 #include <time.h>
 #include "SceneManager.h"
 
-//#include "PadInput.h"
+#include "padInput.h"
+#include "fps.h"
 
 #include "DxLib.h"
 
@@ -30,9 +31,7 @@ using std::to_string;
 //#include "InputRanking.h"
 //#include "Credit.h"
 
-
 // リソース管理
-#define IMG 0
 #define SND 1
 
 #define BGM 0
@@ -47,23 +46,29 @@ private:
     static int snd_se[];
 public:
     static int Get(int media, int type, int getNum) {
-        if (media == 1) {
-            if (type == 0) {
+        if (media == SND) {
+            if (type == BGM) {
                 return snd_bgm[getNum];
             }
-            else if (type == 1) {
+            else if (type == SE) {
                 return snd_se[getNum];
+            }
+            else {
+                return -1;
             };
         }
+        else {
+            return -1;
+        };
     };
     static void Set(int media, int type, int getNum, int data) {
-        if (media == 1) {
-            if (type == 0) {
+        if (media == SND) {
+            if (type == BGM) {
                 snd_bgm[getNum] = data;
             }
-            else if (type == 1) {
+            else if (type == SE) {
                 snd_se[getNum] = data;
             };
-        }
+        };
     };
 };
