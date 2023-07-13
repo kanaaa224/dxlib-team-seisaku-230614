@@ -22,7 +22,7 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
-	player.SetState(CheckCollideSquares(block[0], block[1], block[2], block[3], player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height));
+	player.SetState(CheckCollideSquares(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[2], block[3]));
 
 
 	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
