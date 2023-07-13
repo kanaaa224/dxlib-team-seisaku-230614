@@ -49,9 +49,6 @@ private:
 
 	int img_player[30];
 
-
-	int MapData[20][10];
-
 public:
 	// コンストラクタ
 	GamePlayer();
@@ -128,13 +125,5 @@ public:
 		printfDx("animState: %d\n", animState);
 		printfDx("flightMove: %d\n", flightMove);
 		printfDx("Move Speed: %0.0f - Fall Speed: %0.0f\n", speed[0], speed[1]);
-	};
-
-	void SetStageData(int StageData[20][10]) {
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 10; j++) {
-				this->MapData[i][j] = StageData[i][j];
-			};
-		};
 	};
 };
