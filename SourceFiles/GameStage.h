@@ -3,11 +3,10 @@
 * 編集者：
 ********************************/
 #pragma once
-#include "common.h"
-#include "AbstractScene.h"
+#include "main.h"
 
 // プレイヤークラス
-class GameStage:public AbstractScene{
+class GameStage{
 private:
 	int img_bg;
 	int img_bg1;
@@ -25,9 +24,10 @@ public:
 	~GameStage();
 
 	// 更新
-	AbstractScene* Update() override;
+	void Update();
 
 	// 描画
 	void Draw() const;
+
 	void HitStage();
 };

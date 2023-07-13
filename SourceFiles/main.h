@@ -12,7 +12,7 @@ using std::to_string;
 #include <time.h>
 #include "SceneManager.h"
 
-//#include "PadInput.h"
+#include "padInput.h"
 #include "fps.h"
 
 #include "DxLib.h"

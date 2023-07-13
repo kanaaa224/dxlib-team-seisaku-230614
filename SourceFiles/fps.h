@@ -1,3 +1,7 @@
+/********************************
+* FPSŒÅ’è
+* ì¬F“‡‘Ü
+********************************/
 #pragma once
 
 #include <math.h>
@@ -41,4 +45,3 @@ public:
 		if (waitTime > 0) Sleep(waitTime);
 	};
 };
-

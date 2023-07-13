@@ -2,7 +2,7 @@
 * ゲームステージ処理
 * 編集者：
 ********************************/
-#include "common.h"
+#include "main.h"
 
 // ステージクラスのコンストラクタ
 GameStage::GameStage() {
@@ -28,11 +28,11 @@ GameStage::~GameStage()
 };
 
 // ステージの更新
-AbstractScene*GameStage::Update() 
+void GameStage::Update() 
 {
 	void HitStage();//ステージの当たり判定
 
-	return this;
+
 };
 
 // ステージ描画
