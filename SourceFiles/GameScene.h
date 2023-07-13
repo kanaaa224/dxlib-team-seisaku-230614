@@ -18,6 +18,8 @@ private:
 	// 仮
 	int block[4];
 	int block1[4];
+	int block2[4];
+
 public:
 	// コンストラクタ
 	Game();
