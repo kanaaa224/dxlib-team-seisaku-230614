@@ -36,6 +36,7 @@ private:
 	Person player;  // プレイヤーの位置、サイズ、状態、風船の状態
 
 	float inputX;   // スティック横軸の入力
+	int state;      // 当たり判定の状態
 	int flapCount;  // ジャンプ数
 	int flightMove; // 空中で羽ばたき中の移動
 	int animState;  // アニメーションの状態

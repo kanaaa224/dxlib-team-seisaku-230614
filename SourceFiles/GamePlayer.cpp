@@ -21,7 +21,7 @@ GamePlayer::~GamePlayer() {
 };
 
 void GamePlayer::Init() {
-	player.state = 0;
+	state = 0;
 	player.hp = 0;
 
 	player.position.x = 50; //50
@@ -65,7 +65,7 @@ void GamePlayer::Update() {
 	if (!flapCount && (PadInput::OnPress(XINPUT_BUTTON_B) || PadInput::OnPressed(XINPUT_BUTTON_A) || CheckHitKey(KEY_INPUT_SPACE))) {
 		flapCount = 12;
 		animState = 0;
-		//if (player.state)speed[FALL_SPEED] = jumpForce * 12;
+		//if (state)speed[FALL_SPEED] = jumpForce * 12;
 		if (inputX >= 0.3 || inputX <= -0.3) {
 			flightMove = 12;
 		};
@@ -90,39 +90,39 @@ void GamePlayer::Update() {
 		flapCount = 0;
 	};
 
-	bool WallHit = false;
-
-	// 天井（ステージとの判定も追加予定）
-	while (player.position.y - player.size.height <= 0) {
-		player.position.y += 0.1;
-		WallHit = true;
-	};
-
-	// 天井に当たっていれば跳ね返り
-	if (WallHit) {
-		speed[FALL_SPEED] *= -1;
-	};
-
-	player.state = false;
+	state = 0;
 
 	// 床
-	while (MapData[(int)(player.position.y + player.size.height) / BlockSize][(int)leftEndX / BlockSize] > 0 ||
-		MapData[(int)(player.position.y + player.size.height) / BlockSize][(int)player.position.x / BlockSize] > 0 ||
-		MapData[(int)(player.position.y + player.size.height) / BlockSize][(int)rightEndX / BlockSize] > 0 ||
-		SCREEN_HEIGHT + BLOCK_SIZE * 2 <= player.position.y + player.size.height + 1) {
+	if (player.state == 1) {
 		player.position.y -= 0.1;
-		player.state = true;
+		state = 2;
 		if (speed[FALL_SPEED] > 0.f) {
 			speed[FALL_SPEED] = 0;
 		};
 	};
 
+	// 海
+
+	bool wallHit = false;
+
+	// 天井（ステージとの判定も追加予定）
+	if (player.state == 2 || player.position.y - player.size.height <= 0) {
+		player.position.y += 0.1;
+		wallHit = true;
+	};
+
+	// 天井に当たっていれば跳ね返り
+	if (wallHit) {
+		speed[FALL_SPEED] *= -1;
+	};
+
+
 	// 移動
 	float moveSpeedMax = 2.3;
 
-	if (player.state || flightMove) {
+	if ((state != 0) || flightMove) {
 		if (inputX >= 0.3) {
-			if (speed[MOVE_SPEED] < 0 && player.state) {
+			if (speed[MOVE_SPEED] < 0 && (state != 0)) {
 				speed[MOVE_SPEED] += 0.2;
 			};
 			turnState = true;
@@ -133,7 +133,7 @@ void GamePlayer::Update() {
 			};
 		}
 		else if (inputX <= -0.3) {
-			if (0 < speed[MOVE_SPEED] && player.state) {
+			if (0 < speed[MOVE_SPEED] && (state != 0)) {
 				speed[MOVE_SPEED] -= 0.2;
 			};
 			turnState = false;
@@ -143,7 +143,7 @@ void GamePlayer::Update() {
 				speed[MOVE_SPEED] = -moveSpeedMax;
 			};
 		}
-		else if (player.state) {
+		else if ((state != 0)) {
 			if (0 < speed[MOVE_SPEED]) {
 				speed[MOVE_SPEED] -= 0.2;
 				if (speed[MOVE_SPEED] < 0) {
@@ -189,16 +189,10 @@ void GamePlayer::Update() {
 	};
 
 
-	WallHit = false;
+	wallHit = false;
 
 	// 壁で移動を止める
-	bool Wall = false;
-	for (float i = 0; i < player.size.height && !Wall; i++) {
-		if (MapData[(int)(player.position.y + i) / BlockSize][(int)rightEndX / BlockSize] > 0) Wall = true;
-		if (MapData[(int)(player.position.y - i) / BlockSize][(int)rightEndX / BlockSize] > 0) Wall = true;
-	};
-
-	while (Wall) {
+	if (player.state == 3) {
 		player.position.x--;
 
 		// 画面端に到達すると反対の画面端に移動
@@ -221,22 +215,10 @@ void GamePlayer::Update() {
 			rightEndX = rightEndX - SCREEN_WIDTH;
 		};
 
-		WallHit = true;
-
-		Wall = false;
-		for (float i = 0; i < player.size.height && !Wall; i++) {
-			if (MapData[(int)(player.position.y + i) / BlockSize][(int)rightEndX / BlockSize] > 0) Wall = true;
-			if (MapData[(int)(player.position.y - i) / BlockSize][(int)rightEndX / BlockSize] > 0) Wall = true;
-		}
+		wallHit = true;
 	};
 
-	Wall = false;
-	for (float i = 0; i < player.size.height && !Wall; i++) {
-		if (MapData[(int)(player.position.y + i) / BlockSize][(int)leftEndX / BlockSize] > 0) Wall = true;
-		if (MapData[(int)(player.position.y - i) / BlockSize][(int)leftEndX / BlockSize] > 0) Wall = true;
-	};
-
-	while (Wall) {
+	if (player.state == 4) {
 		player.position.x++;
 		
 		// 画面端に到達すると反対の画面端に移動
@@ -259,17 +241,10 @@ void GamePlayer::Update() {
 			rightEndX = rightEndX - SCREEN_WIDTH;
 		};
 
-		WallHit = true;
-
-		Wall = false;
-		for (float i = 0; i < player.size.height && !Wall; i++)
-		{
-			if (MapData[(int)(player.position.y + i) / BlockSize][(int)leftEndX / BlockSize] > 0) Wall = true;
-			if (MapData[(int)(player.position.y - i) / BlockSize][(int)leftEndX / BlockSize] > 0) Wall = true;
-		};
+		wallHit = true;
 	};
 
-	if (WallHit) {
+	if (wallHit) {
 		speed[MOVE_SPEED] *= -0.9;
 	};
 };
@@ -277,7 +252,7 @@ void GamePlayer::Update() {
 void GamePlayer::Draw() const {
 	int anim = 0;
 
-	if (!player.state) { // 飛行
+	if ((state == 0)) { // 飛行
 		anim = abs(-2 + (flapCount / 3 % 4));
 		if (flapCount == 0)anim += animState / 25 % 3;
 
@@ -293,7 +268,7 @@ void GamePlayer::Draw() const {
 		DrawRotaGraph2(player.position.x + SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
 
 	}
-	else if (player.state) { // 地面
+	else if ((state != 0)) { // 地面
 		anim = animState / 5 % 3;
 		if ((inputX > -0.3 && 0.3 > inputX) ||
 			(speed[MOVE_SPEED] < 0 && inputX >= 0.3) ||

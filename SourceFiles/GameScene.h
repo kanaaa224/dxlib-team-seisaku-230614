@@ -31,34 +31,24 @@ public:
 
 
 	// 当たり判定 - 島袋
-	static int CheckCollideSquares(int s1x1, int s1y1, int s1x2, int s1y2, int s2x1, int s2y1, int s2x2, int s2y2) {
-        // 四角形1の座標
-        int s1_left = s1x1;
-        int s1_right = s1x2;
-        int s1_top = s1y1;
-        int s1_bottom = s1y2;
-
-        // 四角形2の座標
-        int s2_left = s2x1;
-        int s2_right = s2x2;
-        int s2_top = s2y1;
-        int s2_bottom = s2y2;
-
-        // 衝突判定
-        if (s1_bottom < s2_top) {
-            return 1; // 四角形1の上辺と四角形2の下辺が衝突している
-        }
-        else if (s1_top > s2_bottom) {
-            return 2; // 四角形1の下辺と四角形2の上辺が衝突している
-        }
-        else if (s1_right < s2_left) {
-            return 3; // 四角形1の左辺と四角形2の右辺が衝突している
-        }
-        else if (s1_left > s2_right) {
-            return 4; // 四角形1の右辺と四角形2の左辺が衝突している
-        }
-        else {
-            return 0; // 衝突していない
-        };
+	static int CheckCollideSquares(int s1X1, int s1Y1, int s1X2, int s1Y2, int s2X1, int s2Y1, int s2X2, int s2Y2) {
+		// s1がs2の左側にある場合
+		if (s1X2 < s2X1) {
+			return 0;
+		};
+		// s1がs2の右側にある場合
+		if (s1X1 > s2X2) {
+			return 0;
+		};
+		// s1がs2の上側にある場合
+		if (s1Y2 < s2Y1) {
+			return 0;
+		};
+		// s1がs2の下側にある場合
+		if (s1Y1 > s2Y2) {
+			return 0;
+		};
+		// 上記の条件に当てはまらない場合、二つの四角形は重なっている
+		return 1;
 	};
 };

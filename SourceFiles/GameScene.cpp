@@ -22,10 +22,7 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
-	player.Update();
-	player.Debug();
-
-	player.SetState(CheckCollideSquares(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[0] + block[2], block[1] + block[3]));
+	player.SetState(CheckCollideSquares(block[0], block[1], block[2], block[3], player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height));
 
 
 	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
@@ -34,32 +31,44 @@ AbstractScene* Game::Update() {
 	if (CheckHitKey(KEY_INPUT_0) && btn_flg == 0) {
 
 		state = 0;
+		player.SetState(0);
 
 		btn_flg = 1;
 	}
 	else if (CheckHitKey(KEY_INPUT_1) && btn_flg == 0) {
 		
 		state = 1;
+		player.SetState(1);
 
 		btn_flg = 1;
 	}
 	else if (CheckHitKey(KEY_INPUT_2) && btn_flg == 0) {
 
 		state = 2;
+		player.SetState(2);
 
 		btn_flg = 1;
 	}
-	else if (CheckHitKey(KEY_INPUT_1) && btn_flg == 0) {
+	else if (CheckHitKey(KEY_INPUT_3) && btn_flg == 0) {
 
 		state = 3;
+		player.SetState(3);
 
 		btn_flg = 1;
 	}
-	else if (CheckHitKey(KEY_INPUT_2) && btn_flg == 0) {
+	else if (CheckHitKey(KEY_INPUT_4) && btn_flg == 0) {
 
 		state = 4;
+		player.SetState(4);
 
 		btn_flg = 1;
+	};
+
+	player.Update();
+	player.Debug();
+
+	if (state > 1) {
+		player.SetState(0);
 	};
 
 	return this;
