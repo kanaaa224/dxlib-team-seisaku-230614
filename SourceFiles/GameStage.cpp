@@ -52,14 +52,14 @@ void GameStage::Draw() const
 //ステージの当たり判定
 void GameStage::HitStage()
 {
-	////プレイヤーとステージの当たり判定
-	//if (sx0 <= mx1 && sx1 >= mx0 && sy0 <= my1 && sy1 >= my0) {
-	//	if (StageFlg == 0) {
-	//		PlayerAngle = (0.3f / 60) * (mx1 - sx0) + 0.6f;
-	//		StageFlg = 1;
-	//	}
-	//}
-	//else {
-	//	if (StageFlg != 2)StageFlg = 0;
-	//}
+	//プレイヤーとステージの当たり判定
+	if (sx0 <= mx1 && sx1 >= mx0 && sy0 <= my1 && sy1 >= my0) {
+		if (StageFlg == 0) {
+			PlayerAngle = (0.3f / 60) * (mx1 - sx0) + 0.6f;
+			StageFlg = 1;
+		}
+	}
+	else {
+		if (StageFlg != 2)StageFlg = 0;
+	}
 }
