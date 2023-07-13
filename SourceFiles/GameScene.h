@@ -4,7 +4,7 @@
 ********************************/
 #pragma once
 #include "AbstractScene.h"
-#include "common.h"
+#include "main.h"
 
 class Game : public AbstractScene {
 private:

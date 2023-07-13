@@ -2,7 +2,7 @@
 * ゲームプレイヤー処理
 * 担当：島袋
 ********************************/
-#include "common.h"
+#include "main.h"
 
 // プレイヤークラスのコンストラクタ
 GamePlayer::GamePlayer() {

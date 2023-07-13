@@ -3,7 +3,7 @@
 * 担当：島袋
 ********************************/
 #pragma once
-#include "common.h"
+#include "main.h"
 
 //ブロック1つのサイズ(正方形)
 #define BLOCK_SIZE SCREEN_WIDTH / 32

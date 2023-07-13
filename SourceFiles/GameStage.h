@@ -3,7 +3,7 @@
 * 編集者：
 ********************************/
 #pragma once
-#include "common.h"
+#include "main.h"
 #include "AbstractScene.h"
 
 // プレイヤークラス
@@ -29,4 +29,6 @@ public:
 
 	// 描画
 	void Draw() const;
+
+	void HitStage();
 };
