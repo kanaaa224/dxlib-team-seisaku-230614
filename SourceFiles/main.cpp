@@ -1,4 +1,4 @@
-#include "common.h"
+﻿#include "main.h"
 
 int Resources::snd_bgm[5];
 int Resources::snd_se[5];
@@ -16,7 +16,7 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     SetDrawScreen(DX_SCREEN_BACK);                 // 描画先画面を裏にする（ダブルバッファリング）
 
     // タイトル シーンオブジェクト作成（デバッグでゲームメインに変更中）
-    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new Game()));
+    SceneManager* sceneMng = new SceneManager((AbstractScene*) new Game());
 
     FPS fps;
 
@@ -30,21 +30,19 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     //Resources::Set(SND, BGM, 2, bgm_result);
 
     // ゲームループし、シーンマネジャーでシーンの更新
-    while ((ProcessMessage() == 0) && (sceneMng.Update() != nullptr)/* && !(InputControl::OnButton(XINPUT_BUTTON_BACK))*/) {
-        ClearDrawScreen(); // 画面の初期化
+    while ((ProcessMessage() == 0) && (sceneMng->Update() != nullptr)/* && !(InputControl::OnButton(XINPUT_BUTTON_BACK))*/) {
+        ClearDrawScreen();  // 画面の初期化
 
-        // シーンマネジャーでシーンの描画開始
-        sceneMng.Draw();
+        sceneMng->Draw();   // シーンマネジャーでシーン描画
+
+        PadInput::Update();
+        //PadInput::Debug();
 
         fps.Update();
-        //InputControl::Update(); //コントローラー入力更新
-
         fps.Draw();
+        fps.Wait();
         
         ScreenFlip(); // 裏画面の内容を表画面に反映する
-
-        fps.Wait();
-
     };
 
     DxLib_End(); // DXライブラリ使用の終了処理
