@@ -144,7 +144,6 @@
     <ClCompile Include="SourceFiles\GameStage.cpp" />
     <ClCompile Include="SourceFiles\main.cpp" />
     <ClCompile Include="SourceFiles\SceneManager.cpp" />
-    <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\AbstractScene.h" />
@@ -154,7 +153,6 @@
     <ClInclude Include="SourceFiles\GameStage.h" />
     <ClInclude Include="SourceFiles\common.h" />
     <ClInclude Include="SourceFiles\SceneManager.h" />
-    <ClInclude Include="Stage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

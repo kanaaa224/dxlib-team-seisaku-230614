@@ -35,26 +35,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SourceFiles\main.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\AbstractScene.h">
-      <Filter>シーンマネージャー</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\SceneManager.h">
-      <Filter>シーンマネージャー</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\GamePlayer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\GameStage.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\fps.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
+    <ClInclude Include="SourceFiles\AbstractScene.h" />
+    <ClInclude Include="SourceFiles\GamePlayer.h" />
+    <ClInclude Include="SourceFiles\GameScene.h" />
+    <ClInclude Include="SourceFiles\GameStage.h" />
+    <ClInclude Include="SourceFiles\common.h" />
+    <ClInclude Include="SourceFiles\SceneManager.h" />
   </ItemGroup>
 </Project>
