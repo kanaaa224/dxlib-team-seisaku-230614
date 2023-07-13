@@ -19,6 +19,7 @@ GameStage::GameStage() {
 	// 画像読み込み
 	img_bg = LoadGraph("Resources/Images/Stage_Sea01.png");
 	img_bg1 = LoadGraph("Resources/Images/Stage_Footing01.png");
+	LoadDivGraph("Resources/Images/Stage_CloudAnimation.png", 3, 3, 1, 128, 64, cloudimg);
 };
 
 // ステージクラスのデストラクタ
@@ -43,6 +44,7 @@ void GameStage::Draw() const
 	//DrawGraph(-50, 430, img_bg1, FALSE);
 	DrawGraph(370, 430, img_bg1, FALSE);
 	DrawGraph(180, 250, img_bg1, FALSE);
+	DrawGraph(320, 80, cloudimg[0], TRUE);//雲の画像表示
 	DrawBox(0, 430, 230, 480, 0xff0000, FALSE);
 	DrawBox(370, 430, 640, 480, 0xff0000, FALSE);
 	DrawBox(180, 250, 460, 270, 0xff0000, FALSE);
