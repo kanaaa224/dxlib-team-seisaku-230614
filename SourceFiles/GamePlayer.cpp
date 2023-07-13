@@ -46,6 +46,8 @@ void GamePlayer::Init() {
 
 void GamePlayer::Update() {
 
+	frameCounter++;
+
 	inputX = PadInput::GetLStick().x;
 
 	if (CheckHitKey(KEY_INPUT_A)) {
@@ -90,15 +92,13 @@ void GamePlayer::Update() {
 
 	bool WallHit = false;
 
-	// 天井
-	while (MapData[(int)(player.position.y - player.size.height) / BlockSize][(int)leftEndX / BlockSize] > 0 ||
-		MapData[(int)(player.position.y - player.size.height) / BlockSize][(int)player.position.x / BlockSize] > 0 ||
-		MapData[(int)(player.position.y - player.size.height) / BlockSize][(int)rightEndX / BlockSize] > 0 ||
-		player.position.y - player.size.height <= 0) {
+	// 天井（ステージとの判定も追加予定）
+	while (player.position.y - player.size.height <= 0) {
 		player.position.y += 0.1;
 		WallHit = true;
 	};
 
+	// 天井に当たっていれば跳ね返り
 	if (WallHit) {
 		speed[FALL_SPEED] *= -1;
 	};
@@ -118,34 +118,46 @@ void GamePlayer::Update() {
 	};
 
 	// 移動
-	float MoveSpeedMax = 2.3;
+	float moveSpeedMax = 2.3;
 
 	if (player.state || flightMove) {
 		if (inputX >= 0.3) {
-			if (speed[MOVE_SPEED] < 0 && player.state)speed[MOVE_SPEED] += 0.2;
+			if (speed[MOVE_SPEED] < 0 && player.state) {
+				speed[MOVE_SPEED] += 0.2;
+			};
 			turnState = true;
 			speed[MOVE_SPEED] += 0.2;
 			animState++;
-			if (MoveSpeedMax < speed[MOVE_SPEED])speed[MOVE_SPEED] = MoveSpeedMax;
+			if (moveSpeedMax < speed[MOVE_SPEED]) {
+				speed[MOVE_SPEED] = moveSpeedMax;
+			};
 		}
 		else if (inputX <= -0.3) {
-			if (0 < speed[MOVE_SPEED] && player.state)speed[MOVE_SPEED] -= 0.2;
+			if (0 < speed[MOVE_SPEED] && player.state) {
+				speed[MOVE_SPEED] -= 0.2;
+			};
 			turnState = false;
 			speed[MOVE_SPEED] -= 0.2;
 			animState++;
-			if (speed[MOVE_SPEED] < -MoveSpeedMax)speed[MOVE_SPEED] = -MoveSpeedMax;
+			if (speed[MOVE_SPEED] < -moveSpeedMax) {
+				speed[MOVE_SPEED] = -moveSpeedMax;
+			};
 		}
 		else if (player.state) {
 			if (0 < speed[MOVE_SPEED]) {
 				speed[MOVE_SPEED] -= 0.2;
-				if (speed[MOVE_SPEED] < 0)speed[MOVE_SPEED] = 0;
+				if (speed[MOVE_SPEED] < 0) {
+					speed[MOVE_SPEED] = 0;
+				};
 			}
 			else if (speed[MOVE_SPEED] < 0) {
 				speed[MOVE_SPEED] += 0.2;
-				if (0 < speed[MOVE_SPEED])speed[MOVE_SPEED] = 0;
-			}
+				if (0 < speed[MOVE_SPEED]) {
+					speed[MOVE_SPEED] = 0;
+				};
+			};
 			animState = 0;
-		}
+		};
 	};
 
 	if (--flightMove < 0 || (inputX < 0.3 && inputX > -0.3)) {
@@ -154,6 +166,7 @@ void GamePlayer::Update() {
 
 	// プレイヤー横移動反映
 	player.position.x += speed[MOVE_SPEED];
+
 	
 	// 画面端に到達すると反対の画面端に移動
 	if (player.position.x <= 0) {
@@ -259,8 +272,6 @@ void GamePlayer::Update() {
 	if (WallHit) {
 		speed[MOVE_SPEED] *= -0.9;
 	};
-
-	frameCounter++;
 };
 
 void GamePlayer::Draw() const {

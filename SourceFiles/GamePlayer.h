@@ -125,6 +125,7 @@ public:
 		printfDx("X: %0.0f - Y: %0.0f\n", player.position.x, player.position.y);
 		printfDx("State: %d\n", player.state);
 		printfDx("animState: %d\n", animState);
+		printfDx("flightMove: %d\n", flightMove);
 		printfDx("Move Speed: %0.0f - Fall Speed: %0.0f\n", speed[0], speed[1]);
 	};
 

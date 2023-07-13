@@ -10,10 +10,10 @@ Game::Game() {
 	state = 0;
 
 	// 仮
-	block[0] = 0;
-	block[1] = 428;
-	block[2] = 260;
-	block[3] = SCREEN_HEIGHT;
+	block[0] = 200;
+	block[1] = SCREEN_HEIGHT - 180;
+	block[2] = 460;
+	block[3] = SCREEN_HEIGHT - 200;
 };
 
 Game::~Game() {
@@ -23,30 +23,41 @@ Game::~Game() {
 AbstractScene* Game::Update() {
 
 	player.Update();
-	//player.SetState(state);
 	player.Debug();
 
-	//if (!CheckCollideSquares(player.GetPosition().x, player.GetPosition().y, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[0] + block[2], block[1] + block[3])) {
-	//	//player.Gravity();
-	//	//player.SetState(2);
-	//}
-	//else {
-	//	//player.SetState(0);
-	//};
+	player.SetState(CheckCollideSquares(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[0] + block[2], block[1] + block[3]));
 
 
-
-	if (!CheckHitKey(KEY_INPUT_SPACE)) {
+	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
 		btn_flg = 0;
 	};
-	if (CheckHitKey(KEY_INPUT_SPACE) && btn_flg == 0) {
+	if (CheckHitKey(KEY_INPUT_0) && btn_flg == 0) {
+
+		state = 0;
+
+		btn_flg = 1;
+	}
+	else if (CheckHitKey(KEY_INPUT_1) && btn_flg == 0) {
 		
-		if (state == 0) {
-			state = 1;
-		}
-		else {
-			state = 0;
-		};
+		state = 1;
+
+		btn_flg = 1;
+	}
+	else if (CheckHitKey(KEY_INPUT_2) && btn_flg == 0) {
+
+		state = 2;
+
+		btn_flg = 1;
+	}
+	else if (CheckHitKey(KEY_INPUT_1) && btn_flg == 0) {
+
+		state = 3;
+
+		btn_flg = 1;
+	}
+	else if (CheckHitKey(KEY_INPUT_2) && btn_flg == 0) {
+
+		state = 4;
 
 		btn_flg = 1;
 	};
