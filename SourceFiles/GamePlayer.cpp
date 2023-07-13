@@ -57,8 +57,6 @@ void GamePlayer::Update() {
 		inputX = 1.0;
 	};
 
-	int BlockSize = BLOCK_SIZE;
-
 	float jumpForce = -0.1;
 	float fallSpeedMax = -jumpForce * 21;
 
@@ -91,21 +89,24 @@ void GamePlayer::Update() {
 
 	state = 0;
 
+	// 海
+	if (SCREEN_HEIGHT < player.position.y - player.size.height) {
+		Init();
+	};
+
 	// 床
 	if (player.state == 1) {
 		player.position.y -= 0.1;
-		state = 2;
+		state = 1;
 		if (speed[FALL_SPEED] > 0.f) {
 			speed[FALL_SPEED] = 0;
 		};
 	};
 
-	// 海
-
 	bool wallHit = false;
 
 	if (player.state == 2 || player.position.y - player.size.height <= 0) {
-		player.position.y += 0.1;
+		player.position.y += 5.2;
 		wallHit = true;
 	};
 
@@ -244,35 +245,29 @@ void GamePlayer::Draw() const {
 
 	if ((state == 0)) { // 飛行
 		anim = abs(-2 + (flapCount / 3 % 4));
-		if (flapCount == 0)anim += animState / 25 % 3;
-
-		// ワープ用にゲーム画面分の間隔をあけて3体描画する
-		DrawRotaGraph2(player.position.x, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[16 + anim], true, turnState);
-		DrawRotaGraph2(player.position.x - SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[16 + anim], true, turnState);
-		DrawRotaGraph2(player.position.x + SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[16 + anim], true, turnState);
+		if (flapCount == 0) {
+			anim += animState / 25 % 3;
+		};
+		anim = anim + 16;		
 	}
 	else if (speed[MOVE_SPEED] == 0) { // 待機
 		anim = frameCounter / 25 % 3;
-		DrawRotaGraph2(player.position.x, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
-		DrawRotaGraph2(player.position.x - SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
-		DrawRotaGraph2(player.position.x + SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
-
 	}
-	else if ((state != 0)) { // 地面
+	else if ((state == 1)) { // 地面
 		anim = animState / 5 % 3;
-		if ((inputX > -0.3 && 0.3 > inputX) ||
-			(speed[MOVE_SPEED] < 0 && inputX >= 0.3) ||
-			(0 < speed[MOVE_SPEED] && -0.3 >= inputX)) { // スリップ
-			DrawRotaGraph2(player.position.x, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[11], true, turnState);
-			DrawRotaGraph2(player.position.x - SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[11], true, turnState);
-			DrawRotaGraph2(player.position.x + SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[11], true, turnState);
+		if ((inputX > -0.3 && 0.3 > inputX) || (speed[MOVE_SPEED] < 0 && inputX >= 0.3) || (0 < speed[MOVE_SPEED] && -0.3 >= inputX)) { // スリップ
+			anim = 11;
 		}
 		else { // 歩行
-			DrawRotaGraph2(player.position.x, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[8 + anim], true, turnState);
-			DrawRotaGraph2(player.position.x - SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[8 + anim], true, turnState);
-			DrawRotaGraph2(player.position.x + SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[8 + anim], true, turnState);
+			anim = anim + 8;
 		};
 	};
 
+	// ワープ用にゲーム画面分の間隔をあけて3体描画する
+	DrawRotaGraph2(player.position.x, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
+	DrawRotaGraph2(player.position.x - SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
+	DrawRotaGraph2(player.position.x + SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
+
+	// 仮
 	DrawBox(player.position.x - player.size.width, player.position.y - player.size.height, player.position.x + player.size.width, player.position.y + player.size.height, 0xffffff, false);
 };

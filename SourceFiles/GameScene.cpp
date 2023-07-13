@@ -11,15 +11,19 @@ Game::Game() {
 
 	// 仮
 	block[0] = 180;
-	block[1] = SCREEN_HEIGHT - 230;
+	block[1] = 250;
 	block[2] = 460;
-	block[3] = SCREEN_HEIGHT - 250;
+	block[3] = 251;
+
+	block[4] = 180;
+	block[5] = 270;
+	block[6] = 460;
+	block[7] = 270;
 
 	block1[0] = 0;
 	block1[1] = SCREEN_HEIGHT - 50;
 	block1[2] = 230;
 	block1[3] = SCREEN_HEIGHT - 70;
-	
 };
 
 Game::~Game() {
@@ -28,8 +32,12 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
-	player.SetState(CheckCollideSquares(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[2], block[3]));
+	//player.SetState(CheckCollideSquares(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[2], block[3]));
 	player.SetState(CheckCollideSquares(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block1[0], block1[1], block1[2], block1[3]));
+
+	//player.SetState(CheckCollideSquares2(1, player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[2], block[3]));
+	player.SetState(CheckCollideSquares3(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[4], block[5], block[6], block[7]));
+
 
 
 	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
@@ -73,6 +81,8 @@ AbstractScene* Game::Update() {
 
 	player.Update();
 	player.Debug();
+
+	player.SetState(0);
 
 	if (state > 1) {
 		player.SetState(0);
