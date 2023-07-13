@@ -4,10 +4,9 @@
 ********************************/
 #pragma once
 #include "main.h"
-#include "AbstractScene.h"
 
 // プレイヤークラス
-class GameStage {
+class GameStage{
 private:
 	int img_bg;
 	int img_bg1;
