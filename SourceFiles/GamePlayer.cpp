@@ -65,7 +65,6 @@ void GamePlayer::Update() {
 	if (!flapCount && (PadInput::OnPress(XINPUT_BUTTON_B) || PadInput::OnPressed(XINPUT_BUTTON_A) || CheckHitKey(KEY_INPUT_SPACE))) {
 		flapCount = 12;
 		animState = 0;
-		//if (state)speed[FALL_SPEED] = jumpForce * 12;
 		if (inputX >= 0.3 || inputX <= -0.3) {
 			flightMove = 12;
 		};
@@ -105,13 +104,11 @@ void GamePlayer::Update() {
 
 	bool wallHit = false;
 
-	// 天井（ステージとの判定も追加予定）
 	if (player.state == 2 || player.position.y - player.size.height <= 0) {
 		player.position.y += 0.1;
 		wallHit = true;
 	};
 
-	// 天井に当たっていれば跳ね返り
 	if (wallHit) {
 		speed[FALL_SPEED] *= -1;
 	};
@@ -164,10 +161,9 @@ void GamePlayer::Update() {
 		flightMove = 0;
 	};
 
-	// プレイヤー横移動反映
 	player.position.x += speed[MOVE_SPEED];
 
-	
+
 	// 画面端に到達すると反対の画面端に移動
 	if (player.position.x <= 0) {
 		player.position.x = SCREEN_WIDTH - 1; // 画面左端時
@@ -195,21 +191,18 @@ void GamePlayer::Update() {
 	if (player.state == 3) {
 		player.position.x--;
 
-		// 画面端に到達すると反対の画面端に移動
 		if (player.position.x <= 0) {
-			player.position.x = SCREEN_WIDTH - 1; // 画面左端時
+			player.position.x = SCREEN_WIDTH - 1;
 		}
 		else if (SCREEN_WIDTH <= player.position.x) {
-			player.position.x = 0 + 1;            // 画面右端時
+			player.position.x = 0 + 1;
 		};
 
-		// プレイヤー右端の座標を更新
 		leftEndX = player.position.x - player.size.width;
 		if (leftEndX <= 0) {
 			leftEndX = SCREEN_WIDTH + leftEndX;
 		};
 
-		// プレイヤー左端の座標を更新
 		rightEndX = player.position.x + player.size.width;
 		if (SCREEN_WIDTH <= rightEndX) {
 			rightEndX = rightEndX - SCREEN_WIDTH;
@@ -220,22 +213,19 @@ void GamePlayer::Update() {
 
 	if (player.state == 4) {
 		player.position.x++;
-		
-		// 画面端に到達すると反対の画面端に移動
+
 		if (player.position.x <= 0) {
-			player.position.x = SCREEN_WIDTH - 1; // 画面左端時
+			player.position.x = SCREEN_WIDTH - 1;
 		}
 		else if (SCREEN_WIDTH <= player.position.x) {
-			player.position.x = 0 + 1;            // 画面右端時
+			player.position.x = 0 + 1;
 		};
 
-		// プレイヤー右端の座標を更新
 		leftEndX = player.position.x - player.size.width;
 		if (leftEndX <= 0) {
 			leftEndX = SCREEN_WIDTH + leftEndX;
 		};
 
-		// プレイヤー左端の座標を更新
 		rightEndX = player.position.x + player.size.width;
 		if (SCREEN_WIDTH <= rightEndX) {
 			rightEndX = rightEndX - SCREEN_WIDTH;
