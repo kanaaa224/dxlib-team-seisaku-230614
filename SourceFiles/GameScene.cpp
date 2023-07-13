@@ -14,6 +14,11 @@ Game::Game() {
 	block[1] = SCREEN_HEIGHT - 230;
 	block[2] = 460;
 	block[3] = SCREEN_HEIGHT - 250;
+
+	block1[0] = 0;
+	block1[1] = SCREEN_HEIGHT - 50;
+	block1[2] = 230;
+	block1[3] = SCREEN_HEIGHT - 70;
 	
 };
 
@@ -24,6 +29,7 @@ Game::~Game() {
 AbstractScene* Game::Update() {
 
 	player.SetState(CheckCollideSquares(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[2], block[3]));
+	player.SetState(CheckCollideSquares(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block1[0], block1[1], block1[2], block1[3]));
 
 
 	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
@@ -94,5 +100,6 @@ void Game::Draw() const {
 
 	// 仮
 	DrawBox(block[0], block[1], block[2], block[3], 0xffffff, FALSE);
+	DrawBox(block1[0], block1[1], block1[2], block1[3], 0xffffff, FALSE);
 };
 
