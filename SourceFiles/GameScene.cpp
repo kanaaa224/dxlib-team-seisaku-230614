@@ -10,10 +10,11 @@ Game::Game() {
 	state = 0;
 
 	// 仮
-	block[0] = 200;
-	block[1] = SCREEN_HEIGHT - 180;
+	block[0] = 180;
+	block[1] = SCREEN_HEIGHT - 230;
 	block[2] = 460;
-	block[3] = SCREEN_HEIGHT - 200;
+	block[3] = SCREEN_HEIGHT - 250;
+	
 };
 
 Game::~Game() {

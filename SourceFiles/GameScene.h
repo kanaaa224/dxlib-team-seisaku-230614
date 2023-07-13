@@ -17,6 +17,7 @@ private:
 
 	// 仮
 	int block[4];
+	int Stage1[4];
 public:
 	// コンストラクタ
 	Game();
