@@ -2,7 +2,7 @@
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
-#define GAME_NAME "バルーンファイト"
+#define GAME_NAME "BALLOON FIGHT"
 
 #include <stdio.h>
 #include <math.h>

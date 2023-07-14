@@ -28,11 +28,17 @@ AbstractScene* Game::Update() {
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
 	if (player.GetState() == 0) {
 		blockData = stage.GetBlock(blockIndex);
-		if (blockIndex >= (BLOCK_MAX - 1)) blockIndex = 0;
+		if (blockIndex >= (FOOTING_MAX - 1)) blockIndex = 0;
 		else blockIndex++;
 	};
 	player.SetCollideData(blockData);
-	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y));
+	player.SetState(
+		CheckCollideBox(
+			player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, 
+			player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height,
+			blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y
+		)
+	);
 	if (state != 1) player.Update();
 
 	// 仮 - Pキーでポーズ
