@@ -98,6 +98,12 @@ void GamePlayer::Update() {
 	if (player.state == 1) {
 		player.position.y -= 0.1;
 		//player.position.y = collideData.ul.y - player.size.height;
+		//if ((player.position.y + player.size.height - 0.2) > collideData.ul.y) {
+		//	player.position.y -= 0.4;
+		//}
+		//else {
+		//	player.position.y -= 0.1;
+		//};
 		state = 1;
 		if (speed[FALL_SPEED] > 0.f) {
 			speed[FALL_SPEED] = 0;

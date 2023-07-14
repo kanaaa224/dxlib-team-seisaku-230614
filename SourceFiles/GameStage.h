@@ -5,6 +5,8 @@
 #pragma once
 #include "main.h"
 
+#define BLOCK_MAX 3
+
 // プレイヤークラス
 class GameStage{
 private:
@@ -13,7 +15,7 @@ private:
 	int img_cloud[2]; // 雲の画像用
 
 	// 仮
-	int block[3][4];
+	int block[BLOCK_MAX][4];
 
 public:
 	// コンストラクタ
