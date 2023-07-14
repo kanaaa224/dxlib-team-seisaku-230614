@@ -31,7 +31,7 @@ GameUI::~GameUI() {
 void GameUI::Update() {
 	if (state >= 1) {
 		frameCounter++;
-		if (frameCounter % 30 == 0) {
+		if (frameCounter % 20 == 0) {
 			if (state >= 10) state -= 10;
 			else state += 10;
 		};
@@ -50,7 +50,7 @@ void GameUI::Draw() const {
 		DrawRotaGraph(170 - (20 * i), 23, 1.0, 0.0, img_number[digit], TRUE);
 	};
 
-	// ハイスコア
+	// ハイスコア（6桁）
 	DrawGraph(240, 15, img_highScore, TRUE);
 	for (int i = 0; i < 6; i++) {
 		int digit = (highScore / static_cast<int>(pow(10, i))) % 10;
@@ -63,7 +63,7 @@ void GameUI::Draw() const {
 		DrawGraph(145, 35, img_stock, TRUE);
 	}
 	else if (stock == 1) {
-		DrawGraph(145, 35, img_stock, true);
+		DrawGraph(145, 35, img_stock, TRUE);
 	};
 
 	// PHASE
