@@ -135,10 +135,20 @@ public:
 
 		printfDx("\n\nプレイヤークラス情報\n");
 
-		printfDx("X: %0.0f - Y: %0.0f\n", player.position.x, player.position.y);
-		printfDx("State: %d\n", player.state);
-		printfDx("animState: %d\n", animState);
+		printfDx("x: %0.0f - y: %0.0f\n", player.position.x, player.position.y);
+		printfDx("playerState: %d\n", player.state);
+
+		printfDx("\ninputX: %0.0f\n", inputX);
+		printfDx("state: %d\n", state);
+		printfDx("flapCount: %d\n", flapCount);
 		printfDx("flightMove: %d\n", flightMove);
-		printfDx("Move Speed: %0.0f - Fall Speed: %0.0f\n", speed[0], speed[1]);
+		printfDx("animState: %d\n", animState);
+		printfDx("turnState: %d\n", turnState);
+	
+		printfDx("\nmoveSpeed: %0.0f - fallSpeed: %0.0f\n", speed[0], speed[1]);
+
+		printfDx("\nleftEndX: %0.0f - rightEndX: %0.0f\n", leftEndX, rightEndX);
+
+		printfDx("\nframeCounter: %d\n", frameCounter);
 	};
 };
