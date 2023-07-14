@@ -22,23 +22,16 @@ AbstractScene* Game::Update() {
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
 	if (player.GetState() == 0) {
 		blockData = stage.GetBlock(blockIndex);
-		if (blockIndex >= (BLOCK_MAX - 1)) {
-			blockIndex = 0;
-		}
-		else {
-			blockIndex++;
-		};
+		if (blockIndex >= (BLOCK_MAX - 1)) blockIndex = 0;
+		else blockIndex++;
 	};
 	player.SetCollideData(blockData);
 	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y));
-	if (state != 1) {
-		player.Update();
-	};
-	player.Debug();
+	if (state != 1) player.Update();
+	//player.Debug();
 
-	if (!CheckHitKey(KEY_INPUT_P)) {
-		btn_flg = 0;
-	};
+	// 仮 - Pキーでポーズ
+	if (!CheckHitKey(KEY_INPUT_P)) btn_flg = 0;
 	if (CheckHitKey(KEY_INPUT_P) && btn_flg == 0) {
 		if (state == 1) {
 			state = 0;
@@ -88,6 +81,8 @@ AbstractScene* Game::Update() {
 		btn_flg = 1;
 	};*/
 
+	stage.Update();
+	ui.Update();
 
 	return this;
 };
@@ -95,10 +90,8 @@ AbstractScene* Game::Update() {
 void Game::Draw() const {
 
 	stage.Draw();
-
 	player.Draw();
-
-	//ui.Draw();
+	ui.Draw();
 
 	//SetFontSize(16);
 	//DrawFormatString(20, 50, 0xffffff, "ゲームメイン");

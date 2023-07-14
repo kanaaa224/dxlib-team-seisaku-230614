@@ -14,6 +14,7 @@ private:
 
 	GamePlayer player;
 	GameStage stage;
+	GameUI ui;
 
 	// 仮
 	Collide blockData;

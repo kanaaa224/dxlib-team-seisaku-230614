@@ -142,6 +142,7 @@
     <ClCompile Include="SourceFiles\GamePlayer.cpp" />
     <ClCompile Include="SourceFiles\GameScene.cpp" />
     <ClCompile Include="SourceFiles\GameStage.cpp" />
+    <ClCompile Include="SourceFiles\GameUI.cpp" />
     <ClCompile Include="SourceFiles\main.cpp" />
     <ClCompile Include="SourceFiles\padInput.cpp" />
     <ClCompile Include="SourceFiles\SceneManager.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="SourceFiles\GamePlayer.h" />
     <ClInclude Include="SourceFiles\GameScene.h" />
     <ClInclude Include="SourceFiles\GameStage.h" />
+    <ClInclude Include="SourceFiles\GameUI.h" />
     <ClInclude Include="SourceFiles\main.h" />
     <ClInclude Include="SourceFiles\padInput.h" />
     <ClInclude Include="SourceFiles\SceneManager.h" />
