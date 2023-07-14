@@ -12,7 +12,7 @@ class GameStage{
 private:
 	int img_sea;      // 海
 	int img_footing;  // 足場
-	int img_cloud[2]; // 雲の画像用
+	int img_cloud[2]; // 雲
 
 	// 仮
 	int block[BLOCK_MAX][4];
@@ -32,7 +32,7 @@ public:
 
 	void HitStage();
 
-	// 引数で指定したブロックの左下、右下の座標えお返す
+	// 引数で指定したブロックの左下、右下の座標を返す
 	Collide GetBlock(int Index) {
 		Collide collide;
 		collide.ul.x = block[Index][0];
