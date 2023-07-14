@@ -5,8 +5,6 @@
 #pragma once
 #include "main.h"
 
-//ブロック1つのサイズ(正方形)
-#define BLOCK_SIZE SCREEN_WIDTH / 32
 
 #define MOVE_SPEED 0
 #define FALL_SPEED 1
@@ -36,6 +34,8 @@ struct Person {
 	int hp = 0;
 };
 
+
+// プレイヤークラス
 class GamePlayer {
 private:
 	Person player;  // プレイヤーの位置、サイズ、状態、風船の状態
@@ -74,19 +74,6 @@ public:
 	void Draw() const;
 
 
-	// プレイヤー移動
-	bool Control();
-
-	// 重力を作用させる
-	void Gravity();
-
-	// プレイヤー画像のアニメーションを行う
-	void Animation();
-
-	// 跳ね返りさせる
-	void Bounce();
-
-
 	// プレイヤーの状態を設定
 	void SetState(int State) {
 		player.state = State;
@@ -97,29 +84,17 @@ public:
 		return player.state;
 	};
 
-
-	// プレイヤーのX位置を設定
-	void SetPositionX(float X) {
-		player.position.x = X;
-	};
-
-	// プレイヤーのY位置を設定
-	void SetPositionY(float Y) {
-		player.position.y = Y;
-	};
-
 	// プレイヤーの位置を取得（float型 座標 構造体）
 	Position GetPosition() {
 		return player.position;
 	};
-
 
 	// プレイヤーのサイズを取得（大きさ 構造体）
 	Size GetSize() {
 		return player.size;
 	};
 
-
+	// 当たり判定用の左上・右上の座標を設定
 	void SetCollideData(Collide CollideData) {
 		collideData.ul.x = CollideData.ul.x;
 		collideData.ul.y = CollideData.ul.y;
@@ -151,4 +126,17 @@ public:
 
 		printfDx("\nframeCounter: %d\n", frameCounter);
 	};
+
+
+	//// プレイヤー移動
+	//bool Control();
+
+	//// 重力を作用させる
+	//void Gravity();
+
+	//// プレイヤー画像のアニメーションを行う
+	//void Animation();
+
+	//// 跳ね返りさせる
+	//void Bounce();
 };
