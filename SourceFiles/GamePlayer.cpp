@@ -105,7 +105,7 @@ void GamePlayer::Update() {
 		//	player.position.y -= 0.1;
 		//};
 		state = 1;
-		if (speed[FALL_SPEED] > 0.f) {
+		if (speed[FALL_SPEED] > 0.0f) {
 			speed[FALL_SPEED] = 0;
 		};
 	};
