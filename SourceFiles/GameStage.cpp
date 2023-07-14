@@ -4,8 +4,6 @@
 ********************************/
 #include "main.h"
 
-
-// ステージクラスのコンストラクタ
 GameStage::GameStage() {
 	// 初期化処理
 	
@@ -31,18 +29,15 @@ GameStage::GameStage() {
 	block[2][3] = SCREEN_HEIGHT;
 };
 
-// ステージクラスのデストラクタ
 GameStage::~GameStage() {
 	// 終了処理
 };
 
-// ステージの更新
 void GameStage::Update() {
 
 	void HitStage();//ステージの当たり判定
 };
 
-// ステージ描画
 void GameStage::Draw() const {
 	DrawExtendGraph(0, 450, 640, 480, img_sea, FALSE); // 海
 
