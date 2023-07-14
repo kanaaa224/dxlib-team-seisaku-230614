@@ -28,7 +28,7 @@ void GamePlayer::Init() {
 	player.position.y = 380; //380
 
 	player.size.width = 15;
-	player.size.height = 45 / 2;
+	player.size.height = 25;
 
 	speed[MOVE_SPEED] = 0;
 	speed[FALL_SPEED] = 1;
@@ -94,9 +94,10 @@ void GamePlayer::Update() {
 		Init();
 	};
 
-	// 床
+	// 地面
 	if (player.state == 1) {
 		player.position.y -= 0.1;
+		//player.position.y = collideData.ul.y - player.size.height;
 		state = 1;
 		if (speed[FALL_SPEED] > 0.f) {
 			speed[FALL_SPEED] = 0;
@@ -105,10 +106,13 @@ void GamePlayer::Update() {
 
 	bool wallHit = false;
 
+	// 天井
 	if (player.state == 2) {
-		player.position.y = 270 + player.size.height + 1;
+		player.position.y = collideData.lr.y + player.size.height + 1;
 		wallHit = true;
 	};
+
+	// ステージの上端
 	if (player.position.y - player.size.height <= 0) {
 		player.position.y += 0.1;
 		wallHit = true;
@@ -194,7 +198,8 @@ void GamePlayer::Update() {
 
 	// 壁で移動を止める
 	if (player.state == 3) {
-		player.position.x--;
+		//player.position.x--;
+		player.position.x = collideData.ul.x - player.size.width - 1;
 
 		if (player.position.x <= 0) {
 			player.position.x = SCREEN_WIDTH - 1;
@@ -217,7 +222,8 @@ void GamePlayer::Update() {
 	};
 
 	if (player.state == 4) {
-		player.position.x++;
+		//player.position.x++;
+		player.position.x = collideData.lr.x + player.size.width + 1;
 
 		if (player.position.x <= 0) {
 			player.position.x = SCREEN_WIDTH - 1;

@@ -10,15 +10,17 @@ Game::Game() {
 	state = 0;
 
 	// 仮
-	block[0] = 180;
-	block[1] = 250;
-	block[2] = 460;
-	block[3] = 270;
+	blockIndex = 0;
 
-	block[4] = 0;
-	block[5] = SCREEN_HEIGHT - 50;
-	block[6] = 230;
-	block[7] = SCREEN_HEIGHT - 70;
+	block[0][0] = 180;
+	block[0][1] = 250;
+	block[0][2] = 460;
+	block[0][3] = 270;
+
+	block[1][0] = 0;
+	block[1][1] = 430;
+	block[1][2] = 230;
+	block[1][3] = 480;
 };
 
 Game::~Game() {
@@ -27,22 +29,24 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
-	//player.SetState(CheckCollideSquares2(1, player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[2], block[3]));
+	if (blockIndex > 0) {
+		blockIndex = 0;
+	}
+	else {
+		blockIndex++;
+	};
 
-	Collide collide;
-	collide.ul.x = block[0];
-	collide.ul.y = block[1];
-	collide.lr.x = block[2];
-	collide.lr.y = block[3];
-	player.SetCollideData(collide);
-	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[0], block[1], block[2], block[3]));
+	if (player.GetState() == 0) {
+		Collide collide;
+		collide.ul.x = block[blockIndex][0];
+		collide.ul.y = block[blockIndex][1];
+		collide.lr.x = block[blockIndex][2];
+		collide.lr.y = block[blockIndex][3];
+		blockData = collide;
+	};
+	player.SetCollideData(blockData);
+	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y));
 
-	//collide.ul.x = block[4];
-	//collide.ul.y = block[5];
-	//collide.lr.x = block[6];
-	//collide.lr.y = block[7];
-	//player.SetCollideData(collide);
-	//player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, block[4], block[5], block[6], block[7]));
 
 
 	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
@@ -87,11 +91,6 @@ AbstractScene* Game::Update() {
 	player.Update();
 	player.Debug();
 
-	player.SetState(0);
-
-	if (state > 1) {
-		player.SetState(0);
-	};
 
 	return this;
 };
@@ -114,7 +113,7 @@ void Game::Draw() const {
 	};
 
 	// 仮
-	DrawBox(block[0], block[1], block[2], block[3], 0xffffff, FALSE);
-	DrawBox(block[4], block[5], block[6], block[7], 0xffffff, FALSE);
+	DrawBox(block[0][0], block[0][1], block[0][2], block[0][3], 0xffffff, FALSE); // 真ん中
+	DrawBox(block[1][0], block[1][1], block[1][2], block[1][3], 0xffffff, FALSE); // 左下
 };
 
