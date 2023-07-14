@@ -145,7 +145,7 @@ public:
 		printfDx("animState: %d\n", animState);
 		printfDx("turnState: %d\n", turnState);
 	
-		printfDx("\nmoveSpeed: %0.0f - fallSpeed: %0.0f\n", speed[0], speed[1]);
+		printfDx("\nmoveSpeed: %0.1f - fallSpeed: %0.1f\n", speed[0], speed[1]);
 
 		printfDx("\nleftEndX: %0.0f - rightEndX: %0.0f\n", leftEndX, rightEndX);
 
