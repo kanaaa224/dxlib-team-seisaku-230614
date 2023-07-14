@@ -21,18 +21,14 @@ void GamePlayer::Init() {
 	state = 0;
 
 	player.hp = 0;
-
 	player.position.x = 50; //50
 	player.position.y = 380; //380
-
 	player.size.width = 15;
 	player.size.height = 25;
 
 	speed[MOVE_SPEED] = 0;
 	speed[FALL_SPEED] = 1;
-
 	flapCount = 0;
-
 	turnState = true;
 	animState = 0;
 
@@ -47,7 +43,7 @@ void GamePlayer::Update() {
 	frameCounter++;
 
 	//////////////////////////////////////////////////////////////////////
-	// 操作
+	// コントローラー・キーボード操作
 	//////////////////////////////////////////////////////////////////////
 
 	inputX = PadInput::GetLStick().x;
