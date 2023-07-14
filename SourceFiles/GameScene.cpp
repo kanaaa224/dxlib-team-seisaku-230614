@@ -31,8 +31,23 @@ AbstractScene* Game::Update() {
 	};
 	player.SetCollideData(blockData);
 	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y));
-	player.Update();
+	if (state != 1) {
+		player.Update();
+	};
 	player.Debug();
+
+	if (!CheckHitKey(KEY_INPUT_P)) {
+		btn_flg = 0;
+	};
+	if (CheckHitKey(KEY_INPUT_P) && btn_flg == 0) {
+		if (state == 1) {
+			state = 0;
+		}
+		else {
+			state = 1;
+		};
+		btn_flg = 1;
+	};
 
 	/*if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
 		btn_flg = 0;
