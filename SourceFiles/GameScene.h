@@ -18,7 +18,6 @@ private:
 	// 仮
 	Collide blockData;
 	int blockIndex;
-	int block[3][4];
 public:
 	// コンストラクタ
 	Game();
