@@ -12,15 +12,20 @@ Game::Game() {
 	// 仮
 	blockIndex = 0;
 
-	block[0][0] = 180;
+	block[0][0] = 180; // 真ん中
 	block[0][1] = 250;
 	block[0][2] = 460;
 	block[0][3] = 270;
 
-	block[1][0] = 0;
+	block[1][0] = 0; // 左下
 	block[1][1] = 430;
 	block[1][2] = 230;
-	block[1][3] = 480;
+	block[1][3] = SCREEN_HEIGHT;
+
+	block[2][0] = 370; // 右下
+	block[2][1] = 430;
+	block[2][2] = SCREEN_WIDTH;
+	block[2][3] = SCREEN_HEIGHT;
 };
 
 Game::~Game() {
@@ -29,13 +34,13 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
-	if (blockIndex > 0) {
+	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
+	if (blockIndex > 1) {
 		blockIndex = 0;
 	}
 	else {
 		blockIndex++;
 	};
-
 	if (player.GetState() == 0) {
 		Collide collide;
 		collide.ul.x = block[blockIndex][0];
@@ -46,10 +51,11 @@ AbstractScene* Game::Update() {
 	};
 	player.SetCollideData(blockData);
 	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y));
+	player.Update();
+	player.Debug();
 
 
-
-	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
+	/*if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
 		btn_flg = 0;
 	};
 	if (CheckHitKey(KEY_INPUT_0) && btn_flg == 0) {
@@ -86,17 +92,13 @@ AbstractScene* Game::Update() {
 		player.SetState(4);
 
 		btn_flg = 1;
-	};
-
-	player.Update();
-	player.Debug();
+	};*/
 
 
 	return this;
 };
 
 void Game::Draw() const {
-	SetFontSize(16);
 
 	stage.Draw();
 
@@ -104,16 +106,17 @@ void Game::Draw() const {
 
 	//ui.Draw();
 
+	//SetFontSize(16);
 	//DrawFormatString(20, 50, 0xffffff, "ゲームメイン");
-
-	if (state == 0) {
-		//DrawFormatString(20, 100, 0xffffff, "ボタンが押されました");
-	} else if (state == 1) {
-		//DrawFormatString(20,150, 0xffffff, "ボタンが押されました");
-	};
+	//if (state == 0) {
+	//	DrawFormatString(20, 100, 0xffffff, "ボタンが押されました");
+	//} else if (state == 1) {
+	//	DrawFormatString(20,150, 0xffffff, "ボタンが押されました");
+	//};
 
 	// 仮
 	DrawBox(block[0][0], block[0][1], block[0][2], block[0][3], 0xffffff, FALSE); // 真ん中
 	DrawBox(block[1][0], block[1][1], block[1][2], block[1][3], 0xffffff, FALSE); // 左下
+	DrawBox(block[2][0], block[2][1], block[2][2], block[2][3], 0xffffff, FALSE); // 右下
 };
 
