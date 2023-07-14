@@ -103,27 +103,33 @@ public:
 
 
 	// デバッグ表示
-	void Debug() {
-		// 画面クリア
-		clsDx();
+	void Debug() const {
+		int x = 10;  // x座標の初期値
+		int y = 50;  // y座標の初期値
 
-		printfDx("\n\nプレイヤークラス情報\n");
-
-		printfDx("x: %0.0f - y: %0.0f\n", player.position.x, player.position.y);
-		printfDx("playerState: %d\n", player.state);
-
-		printfDx("\ninputX: %0.0f\n", inputX);
-		printfDx("state: %d\n", state);
-		printfDx("flapCount: %d\n", flapCount);
-		printfDx("flightMove: %d\n", flightMove);
-		printfDx("animState: %d\n", animState);
-		printfDx("turnState: %d\n", turnState);
-	
-		printfDx("\nmoveSpeed: %0.1f - fallSpeed: %0.1f\n", speed[0], speed[1]);
-
-		printfDx("\nleftEndX: %0.0f - rightEndX: %0.0f\n", leftEndX, rightEndX);
-
-		printfDx("\nframeCounter: %d\n", frameCounter);
+		DrawFormatString(x, y, GetColor(255, 255, 255), "プレイヤークラスデータ");
+		y += 30;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "x: %0.0f y: %0.0f", player.position.x, player.position.y);
+		y += 30;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "playerState: %d", player.state);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "inputX: %0.1f", inputX);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "state: %d", state);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "flapCount: %d", flapCount);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "flightMove: %d", flightMove);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "animState: %d", animState);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "turnState: %d", turnState);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "moveSpeed: %0.1f - fallSpeed: %0.1f", speed[0], speed[1]);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "leftEndX: %0.0f rightEndX: %0.0f", leftEndX, rightEndX);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "frameCounter: %d", frameCounter);
 	};
 
 

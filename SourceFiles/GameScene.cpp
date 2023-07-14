@@ -16,6 +16,7 @@ Game::Game() {
 	ui.SetState(1);
 	blockIndex = 0;
 	stageIndex = 0;
+	debug = false;
 };
 
 Game::~Game() {
@@ -33,70 +34,31 @@ AbstractScene* Game::Update() {
 	player.SetCollideData(blockData);
 	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y));
 	if (state != 1) player.Update();
-	//player.Debug();
 
 	// 仮 - Pキーでポーズ
-	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O)) btn_flg = 0;
+	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) btn_flg = 0;
 	if (CheckHitKey(KEY_INPUT_P) && btn_flg == 0) {
-		if (state == 1) {
-			state = 0;
-		}
-		else {
-			state = 1;
-		};
+		if (state == 1) state = 0;
+		else state = 1;
 		btn_flg = 1;
 	}
 	// 仮 - OキーでUIテスト
 	else if (CheckHitKey(KEY_INPUT_O) && btn_flg == 0) {
-		if (stageIndex >= 5) {
-			stageIndex = -1;
-		}
-		else {
-			stageIndex++;
-		};
+		if (stageIndex >= 5) stageIndex = -1;
+		else stageIndex++;
 		ui.SetState(stageIndex);
 		ui.SetStock(stageIndex + 1);
 		btn_flg = 1;
-	};
-
-	/*if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
-		btn_flg = 0;
-	};
-	if (CheckHitKey(KEY_INPUT_0) && btn_flg == 0) {
-
-		state = 0;
-		player.SetState(0);
-
-		btn_flg = 1;
 	}
+	// 仮 - 1キーでデバッグモード
 	else if (CheckHitKey(KEY_INPUT_1) && btn_flg == 0) {
-		
-		state = 1;
-		player.SetState(1);
-
+		if (debug) debug = false;
+		else debug = true;
 		btn_flg = 1;
-	}
-	else if (CheckHitKey(KEY_INPUT_2) && btn_flg == 0) {
+	};
 
-		state = 2;
-		player.SetState(2);
-
-		btn_flg = 1;
-	}
-	else if (CheckHitKey(KEY_INPUT_3) && btn_flg == 0) {
-
-		state = 3;
-		player.SetState(3);
-
-		btn_flg = 1;
-	}
-	else if (CheckHitKey(KEY_INPUT_4) && btn_flg == 0) {
-
-		state = 4;
-		player.SetState(4);
-
-		btn_flg = 1;
-	};*/
+	// 仮 - Rキーでリセット
+	if (CheckHitKey(KEY_INPUT_R)) return new Game();
 
 	stage.Update();
 	ui.Update();
@@ -110,12 +72,6 @@ void Game::Draw() const {
 	player.Draw();
 	ui.Draw();
 
-	//SetFontSize(16);
-	//DrawFormatString(20, 50, 0xffffff, "ゲームメイン");
-	//if (state == 0) {
-	//	DrawFormatString(20, 100, 0xffffff, "ボタンが押されました");
-	//} else if (state == 1) {
-	//	DrawFormatString(20,150, 0xffffff, "ボタンが押されました");
-	//};
+	if (debug) player.Debug();
 };
 

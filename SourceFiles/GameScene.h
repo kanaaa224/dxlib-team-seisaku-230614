@@ -20,6 +20,7 @@ private:
 	Collide blockData;
 	int blockIndex;
 	int stageIndex;
+	bool debug;
 
 public:
 	// コンストラクタ
