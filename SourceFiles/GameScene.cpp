@@ -13,7 +13,9 @@ Game::Game() {
 	ui.SetScore(12345);
 	ui.SetHighScore(67890);
 	ui.SetStock(2);
+	ui.SetState(1);
 	blockIndex = 0;
+	stageIndex = 0;
 };
 
 Game::~Game() {
@@ -34,7 +36,7 @@ AbstractScene* Game::Update() {
 	//player.Debug();
 
 	// 仮 - Pキーでポーズ
-	if (!CheckHitKey(KEY_INPUT_P)) btn_flg = 0;
+	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O)) btn_flg = 0;
 	if (CheckHitKey(KEY_INPUT_P) && btn_flg == 0) {
 		if (state == 1) {
 			state = 0;
@@ -42,6 +44,18 @@ AbstractScene* Game::Update() {
 		else {
 			state = 1;
 		};
+		btn_flg = 1;
+	}
+	// 仮 - OキーでUIテスト
+	else if (CheckHitKey(KEY_INPUT_O) && btn_flg == 0) {
+		if (stageIndex >= 5) {
+			stageIndex = -1;
+		}
+		else {
+			stageIndex++;
+		};
+		ui.SetState(stageIndex);
+		ui.SetStock(stageIndex + 1);
 		btn_flg = 1;
 	};
 

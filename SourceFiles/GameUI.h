@@ -8,7 +8,7 @@
 // UIクラス
 class GameUI {
 private:
-	int state;
+	int state, frameCounter;
 	int stock, score, highScore;
 
 	int img_playerScore; // Player1
@@ -36,19 +36,9 @@ public:
 		state = State;
 	};
 
-	// ステートを取得
-	int GetState() {
-		return state;
-	};
-
 	// スコアを設定
 	void SetScore(int Score) {
 		score = Score;
-	};
-
-	// スコアを取得
-	int GetScore() {
-		return score;
 	};
 
 	// ハイスコアを設定
@@ -56,18 +46,8 @@ public:
 		highScore = HighScore;
 	};
 
-	// ハイスコアを取得
-	int GetHighScore() {
-		return highScore;
-	};
-
 	// 残機を設定
 	void SetStock(int Stock) {
 		stock = Stock;
-	};
-
-	// 残機を取得
-	int GetStock() {
-		return stock;
 	};
 };

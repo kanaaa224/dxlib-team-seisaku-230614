@@ -5,7 +5,12 @@
 #include "main.h"
 
 GameUI::GameUI() {
-	// 画像読み込み
+	state = 0;
+	stock = 0;
+	score = 0;
+	highScore = 0;
+	frameCounter = 0;
+
 	img_playerScore = LoadGraph("Resources/Images/UI/UI_Score.png");
 	img_highScore = LoadGraph("Resources/Images/UI/UI_HiScore.png");
 	img_stock = LoadGraph("Resources/Images/UI/UI_Stock.png");
@@ -24,7 +29,17 @@ GameUI::~GameUI() {
 };
 
 void GameUI::Update() {
-	
+	if (state >= 1) {
+		frameCounter++;
+		if (frameCounter % 30 == 0) {
+			if (state >= 10) state -= 10;
+			else state += 10;
+		};
+		if (frameCounter % (60 * 5) == 0) {
+			frameCounter = 0;
+			state = 0;
+		};
+	};
 };
 
 void GameUI::Draw() const {
@@ -52,12 +67,13 @@ void GameUI::Draw() const {
 	};
 
 	// PHASE
-	if (state == 1) {
-		DrawGraph(260, 30, img_phase, TRUE);
-	}
+	if (state >= 1 && state < 10) {
+		DrawGraph(240, 40, img_phase, TRUE);
+		DrawRotaGraph(370, 47, 1.0, 0.0, img_number[state], TRUE);
+	};
 
 	// ゲームオーバー
-	if (state == 9) {
+	if (state == -1) {
 		//DrawString(280, 230, "GameOver", 0xffffff);
 		DrawGraph(220, 220, img_gameOver, TRUE);
 	};
