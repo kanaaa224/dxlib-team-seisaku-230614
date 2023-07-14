@@ -12,6 +12,9 @@ private:
 	int img_footing;  // 足場
 	int img_cloud[2]; // 雲の画像用
 
+	// 仮
+	int block[3][4];
+
 public:
 	// コンストラクタ
 	GameStage();
@@ -26,4 +29,14 @@ public:
 	void Draw() const;
 
 	void HitStage();
+
+	// 引数で指定したブロックの左下、右下の座標えお返す
+	Collide GetBlock(int Index) {
+		Collide collide;
+		collide.ul.x = block[Index][0];
+		collide.ul.y = block[Index][1];
+		collide.lr.x = block[Index][2];
+		collide.lr.y = block[Index][3];
+		return collide;
+	};
 };

@@ -11,21 +11,6 @@ Game::Game() {
 
 	// 仮
 	blockIndex = 0;
-
-	block[0][0] = 180; // 真ん中
-	block[0][1] = 250;
-	block[0][2] = 460;
-	block[0][3] = 270;
-
-	block[1][0] = 0; // 左下
-	block[1][1] = 430;
-	block[1][2] = 230;
-	block[1][3] = SCREEN_HEIGHT;
-
-	block[2][0] = 370; // 右下
-	block[2][1] = 430;
-	block[2][2] = SCREEN_WIDTH;
-	block[2][3] = SCREEN_HEIGHT;
 };
 
 Game::~Game() {
@@ -42,12 +27,7 @@ AbstractScene* Game::Update() {
 		blockIndex++;
 	};
 	if (player.GetState() == 0) {
-		Collide collide;
-		collide.ul.x = block[blockIndex][0];
-		collide.ul.y = block[blockIndex][1];
-		collide.lr.x = block[blockIndex][2];
-		collide.lr.y = block[blockIndex][3];
-		blockData = collide;
+		blockData = stage.GetBlock(blockIndex);
 	};
 	player.SetCollideData(blockData);
 	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y));
@@ -113,10 +93,5 @@ void Game::Draw() const {
 	//} else if (state == 1) {
 	//	DrawFormatString(20,150, 0xffffff, "ボタンが押されました");
 	//};
-
-	// 仮
-	DrawBox(block[0][0], block[0][1], block[0][2], block[0][3], 0xffffff, FALSE); // 真ん中
-	DrawBox(block[1][0], block[1][1], block[1][2], block[1][3], 0xffffff, FALSE); // 左下
-	DrawBox(block[2][0], block[2][1], block[2][2], block[2][3], 0xffffff, FALSE); // 右下
 };
 
