@@ -5,7 +5,7 @@
 #pragma once
 #include "main.h"
 
-// プレイヤークラス
+// UIクラス
 class GameUI {
 private:
 

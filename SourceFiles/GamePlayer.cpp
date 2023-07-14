@@ -4,7 +4,7 @@
 ********************************/
 #include "main.h"
 
-// プレイヤークラスのコンストラクタ
+
 GamePlayer::GamePlayer() {
 	// 初期化処理
 	Init();
@@ -13,7 +13,6 @@ GamePlayer::GamePlayer() {
 	if ((LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player)) == -1) throw "ERROR : PLAYER IMG";
 };
 
-// プレイヤークラスのデストラクタ
 GamePlayer::~GamePlayer() {
 	for (int i = 0; i < 30; i++) {
 		DeleteGraph(img_player[i]);

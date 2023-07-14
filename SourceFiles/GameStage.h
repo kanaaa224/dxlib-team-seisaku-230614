@@ -7,7 +7,7 @@
 
 #define BLOCK_MAX 3
 
-// プレイヤークラス
+// ステージクラス
 class GameStage{
 private:
 	int img_sea;      // 海
