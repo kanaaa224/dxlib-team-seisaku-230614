@@ -23,6 +23,11 @@ struct Size {
 	float height = 0;
 };
 
+// ブロック 構造体
+struct Collide {
+	Position ul, lr;
+};
+
 // 人 構造体
 struct Person {
 	Position position;
@@ -48,6 +53,8 @@ private:
 	int frameCounter;
 
 	int img_player[30];
+
+	Collide collideData;
 
 public:
 	// コンストラクタ
@@ -110,6 +117,14 @@ public:
 	// プレイヤーのサイズを取得（大きさ 構造体）
 	Size GetSize() {
 		return player.size;
+	};
+
+
+	void SetCollideData(Collide CollideData) {
+		collideData.ul.x = CollideData.ul.x;
+		collideData.ul.y = CollideData.ul.y;
+		collideData.lr.x = CollideData.lr.x;
+		collideData.lr.y = CollideData.lr.y;
 	};
 
 

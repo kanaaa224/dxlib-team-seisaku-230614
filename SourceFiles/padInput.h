@@ -26,9 +26,7 @@ private:
 public:
     // 入力状態の更新
     static void Update() {
-
         GetJoypadXInputState(DX_INPUT_KEY_PAD1, &inputState);
-
         for (int i = 0; i < PAD_BUTTONS; i++) {
             oldBtn[i] = nowBtn[i];
             nowBtn[i] = inputState.Buttons[i];
