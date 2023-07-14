@@ -5,7 +5,7 @@
 #pragma once
 #include "main.h"
 
-#define BLOCK_MAX 3
+#define FOOTING_MAX 3 // 足場の最大数（ステージごとで変わるので後で変数にするといいかも）
 
 // ステージクラス
 class GameStage{
@@ -15,7 +15,7 @@ private:
 	int img_cloud[2]; // 雲
 
 	// 仮
-	int block[BLOCK_MAX][4];
+	int block[FOOTING_MAX][4];
 
 public:
 	// コンストラクタ
