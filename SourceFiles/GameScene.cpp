@@ -20,12 +20,6 @@ Game::~Game() {
 AbstractScene* Game::Update() {
 
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
-	if (blockIndex > 1) {
-		blockIndex = 0;
-	}
-	else {
-		blockIndex++;
-	};
 	if (player.GetState() == 0) {
 		blockData = stage.GetBlock(blockIndex);
 	};
@@ -33,7 +27,12 @@ AbstractScene* Game::Update() {
 	player.SetState(CheckCollideBox(player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height, blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y));
 	player.Update();
 	player.Debug();
-
+	if (blockIndex >= (BLOCK_MAX - 1)) {
+		blockIndex = 0;
+	}
+	else {
+		blockIndex++;
+	};
 
 	/*if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
 		btn_flg = 0;
