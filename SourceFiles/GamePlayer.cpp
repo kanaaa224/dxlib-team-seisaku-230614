@@ -4,9 +4,7 @@
 ********************************/
 #include "main.h"
 
-
 GamePlayer::GamePlayer() {
-	// 初期化処理
 	Init();
 
 	// 画像読み込み

@@ -10,6 +10,9 @@ Game::Game() {
 	state = 0;
 
 	// 仮
+	ui.SetScore(12345);
+	ui.SetHighScore(67890);
+	ui.SetStock(2);
 	blockIndex = 0;
 };
 
