@@ -25,7 +25,7 @@ struct Size {
 
 // ブロック 構造体
 struct Collide {
-	Position ul, lr;
+	Position ul, lr; // UpperLeft LowerRight
 };
 
 // 人 構造体
