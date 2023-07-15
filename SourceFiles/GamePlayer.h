@@ -107,7 +107,7 @@ public:
 		int x = 10;  // x座標の初期値
 		int y = 50;  // y座標の初期値
 
-		DrawFormatString(x, y, GetColor(255, 255, 255), "プレイヤークラスデータ");
+		DrawFormatString(x, y, GetColor(255, 255, 255), "プレイヤークラス データ");
 		y += 30;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "x: %0.0f y: %0.0f", player.position.x, player.position.y);
 		y += 30;
@@ -125,7 +125,7 @@ public:
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "turnState: %d", turnState);
 		y += 15;
-		DrawFormatString(x, y, GetColor(255, 255, 255), "moveSpeed: %0.1f - fallSpeed: %0.1f", speed[0], speed[1]);
+		DrawFormatString(x, y, GetColor(255, 255, 255), "moveSpeed: %0.1f fallSpeed: %0.1f", speed[0], speed[1]);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "leftEndX: %0.0f rightEndX: %0.0f", leftEndX, rightEndX);
 		y += 15;

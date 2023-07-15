@@ -109,7 +109,9 @@ void GamePlayer::Update() {
 
 	// ステージの上端
 	if (player.position.y - player.size.height <= 0) {
+		//if (speed[FALL_SPEED] == 0.0) speed[FALL_SPEED] += 1;
 		player.position.y += 0.1;
+		
 		wallHit = true;
 	};
 
