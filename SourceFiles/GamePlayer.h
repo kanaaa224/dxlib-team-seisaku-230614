@@ -5,8 +5,11 @@
 #pragma once
 #include "main.h"
 
-#define MOVE_SPEED 0
-#define FALL_SPEED 1
+#define COLLIDE 0
+#define TURN    1
+#define ANIM    2
+#define MOVE 0
+#define FALL 1
 
 // float型 2次元座標 構造体
 struct Position {
@@ -16,8 +19,8 @@ struct Position {
 
 // 大きさ 構造体
 struct Size {
-	float width = 0;
-	float height = 0;
+	float width = 0.0f;
+	float height = 0.0f;
 };
 
 // ブロック 構造体
@@ -33,18 +36,15 @@ struct Person {
 	int hp = 0;
 };
 
-
 // プレイヤークラス
 class GamePlayer {
 private:
 	Person player;  // プレイヤーの位置、サイズ、状態、風船の状態
 
 	float inputX;   // スティック横軸の入力
-	int state;      // 当たり判定の状態
 	int flapCount;  // ジャンプ数
 	int flightMove; // 空中で羽ばたき中の移動
-	int animState;  // アニメーションの状態
-	bool turnState; // 左右反転状態
+	int state[3];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター
 	float speed[2]; // 移動、落下速度
 
 	float leftEndX, rightEndX; // ワープ、当たり判定用のプレイヤー左右端側のX位置
@@ -104,6 +104,8 @@ public:
 
 	// デバッグ表示
 	void Debug() const {
+		DrawBox((int)(player.position.x - player.size.width), (int)(player.position.y - player.size.height), (int)(player.position.x + player.size.width), (int)(player.position.y + player.size.height), 0xffffff, FALSE);
+
 		int x = 10;  // x座標の初期値
 		int y = 50;  // y座標の初期値
 
@@ -115,15 +117,15 @@ public:
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "inputX: %0.1f", inputX);
 		y += 15;
-		DrawFormatString(x, y, GetColor(255, 255, 255), "state: %d", state);
-		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "flapCount: %d", flapCount);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "flightMove: %d", flightMove);
 		y += 15;
-		DrawFormatString(x, y, GetColor(255, 255, 255), "animState: %d", animState);
+		DrawFormatString(x, y, GetColor(255, 255, 255), "collideState: %d", state[COLLIDE]);
 		y += 15;
-		DrawFormatString(x, y, GetColor(255, 255, 255), "turnState: %d", turnState);
+		DrawFormatString(x, y, GetColor(255, 255, 255), "turnState: %d", state[TURN]);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "animState: %d", state[ANIM]);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "moveSpeed: %0.1f fallSpeed: %0.1f", speed[0], speed[1]);
 		y += 15;
@@ -145,3 +147,7 @@ public:
 	//// 跳ね返りさせる
 	//void Bounce();
 };
+
+//enum struct PlayerState {
+//	stay, walk, flight
+//};
