@@ -51,10 +51,10 @@ void GameUI::Draw() const {
 	};
 
 	// ハイスコア（6桁）
-	DrawGraph(240, 15, img_highScore, TRUE);
+	DrawGraph(225, 15, img_highScore, TRUE);
 	for (int i = 0; i < 6; i++) {
 		int digit = (highScore / static_cast<int>(pow(10, i))) % 10;
-		DrawRotaGraph(390 - (20 * i), 23, 1.0, 0.0, img_number[digit], TRUE);
+		DrawRotaGraph(375 - (20 * i), 23, 1.0, 0.0, img_number[digit], TRUE);
 	};
 
 	// 残機
