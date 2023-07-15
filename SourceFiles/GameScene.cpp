@@ -6,8 +6,8 @@
 
 Game::Game() {
 	// 初期化処理
-	btn_flg = 0;
 	state = 0;
+	btn_flg = 0;
 
 	// 仮
 	ui.SetScore(12345);

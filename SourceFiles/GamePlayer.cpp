@@ -7,7 +7,6 @@
 GamePlayer::GamePlayer() {
 	Init();
 
-	// 画像読み込み
 	if ((LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player)) == -1) throw "ERROR : PLAYER IMG";
 };
 
@@ -60,7 +59,7 @@ void GamePlayer::Update() {
 	// 空中の慣性計算処理
 	//////////////////////////////////////////////////////////////////////
 
-	float jumpForce = -0.1;
+	float jumpForce = -0.1f;
 	float fallSpeedMax = -jumpForce * 21;
 
 	if (flapCount) {
@@ -68,7 +67,7 @@ void GamePlayer::Update() {
 		if (speed[FALL_SPEED] < jumpForce * 25) speed[FALL_SPEED] = jumpForce * 25;
 	}
 	else {
-		speed[FALL_SPEED] += 0.1;
+		speed[FALL_SPEED] += 0.1f;
 		animState++;
 		if (fallSpeedMax < speed[FALL_SPEED]) speed[FALL_SPEED] = fallSpeedMax;
 	};
@@ -87,7 +86,7 @@ void GamePlayer::Update() {
 
 	// 地面
 	if (player.state == 1) {
-		player.position.y -= 0.1;
+		player.position.y -= 0.1f;
 		//player.position.y = collideData.ul.y - player.size.height;
 		//if ((player.position.y + player.size.height - 0.2) > collideData.ul.y) {
 		//	player.position.y -= 0.4;
@@ -110,7 +109,7 @@ void GamePlayer::Update() {
 	// ステージの上端
 	if (player.position.y - player.size.height <= 0) {
 		//if (speed[FALL_SPEED] == 0.0) speed[FALL_SPEED] += 1;
-		player.position.y += 0.1;
+		player.position.y += 0.1f;
 		
 		wallHit = true;
 	};
@@ -121,29 +120,29 @@ void GamePlayer::Update() {
 	// 移動速度・慣性の計算、移動処理
 	//////////////////////////////////////////////////////////////////////
 
-	float moveSpeedMax = 2.3;
+	float moveSpeedMax = 2.3f;
 	if ((state != 0) || flightMove) {
 		if (inputX >= 0.3) {
-			if (speed[MOVE_SPEED] < 0 && (state != 0)) speed[MOVE_SPEED] += 0.2;
+			if (speed[MOVE_SPEED] < 0 && (state != 0)) speed[MOVE_SPEED] += 0.2f;
 			turnState = true;
-			speed[MOVE_SPEED] += 0.2;
+			speed[MOVE_SPEED] += 0.2f;
 			animState++;
 			if (moveSpeedMax < speed[MOVE_SPEED]) speed[MOVE_SPEED] = moveSpeedMax;
 		}
 		else if (inputX <= -0.3) {
-			if (0 < speed[MOVE_SPEED] && (state != 0)) speed[MOVE_SPEED] -= 0.2;
+			if (0 < speed[MOVE_SPEED] && (state != 0)) speed[MOVE_SPEED] -= 0.2f;
 			turnState = false;
-			speed[MOVE_SPEED] -= 0.2;
+			speed[MOVE_SPEED] -= 0.2f;
 			animState++;
 			if (speed[MOVE_SPEED] < -moveSpeedMax) speed[MOVE_SPEED] = -moveSpeedMax;
 		}
 		else if ((state != 0)) {
 			if (0 < speed[MOVE_SPEED]) {
-				speed[MOVE_SPEED] -= 0.2;
+				speed[MOVE_SPEED] -= 0.2f;
 				if (speed[MOVE_SPEED] < 0) speed[MOVE_SPEED] = 0;
 			}
 			else if (speed[MOVE_SPEED] < 0) {
-				speed[MOVE_SPEED] += 0.2;
+				speed[MOVE_SPEED] += 0.2f;
 				if (0 < speed[MOVE_SPEED]) speed[MOVE_SPEED] = 0;
 			};
 			animState = 0;
@@ -192,7 +191,7 @@ void GamePlayer::Update() {
 
 		wallHit = true;
 	};
-	if (wallHit) speed[MOVE_SPEED] *= -0.9;
+	if (wallHit) speed[MOVE_SPEED] *= -0.9f;
 };
 
 void GamePlayer::Draw() const {
@@ -213,10 +212,10 @@ void GamePlayer::Draw() const {
 	};
 
 	// ワープ用にゲーム画面分の間隔をあけて3体描画する
-	DrawRotaGraph2(player.position.x, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
-	DrawRotaGraph2(player.position.x - SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
-	DrawRotaGraph2(player.position.x + SCREEN_WIDTH, player.position.y, 32, 64 - player.size.height, 1, 0, img_player[anim], true, turnState);
+	DrawRotaGraph2((int)player.position.x, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], true, turnState);
+	DrawRotaGraph2((int)player.position.x - SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], true, turnState);
+	DrawRotaGraph2((int)player.position.x + SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], true, turnState);
 
 	// 仮
-	DrawBox(player.position.x - player.size.width, player.position.y - player.size.height, player.position.x + player.size.width, player.position.y + player.size.height, 0xffffff, false);
+	DrawBox((int)(player.position.x - player.size.width), (int)(player.position.y - player.size.height), (int)(player.position.x + player.size.width), (int)(player.position.y + player.size.height), 0xffffff, false);
 };

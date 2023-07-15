@@ -15,7 +15,7 @@ private:
 	int img_cloud[2]; // 雲
 
 	// 仮
-	int block[FOOTING_MAX][4];
+	float block[FOOTING_MAX][4];
 
 public:
 	// コンストラクタ
