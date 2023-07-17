@@ -19,6 +19,9 @@
     <Filter Include="メイン">
       <UniqueIdentifier>{59f620b4-230a-4815-b7f3-2e650058b5ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="シーン">
+      <UniqueIdentifier>{9f4e0dd4-28ce-4bc1-9804-4239e0a8fbf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceFiles\SceneManager.cpp">
@@ -41,6 +44,9 @@
     </ClCompile>
     <ClCompile Include="SourceFiles\GameUI.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\TitleScene.cpp">
+      <Filter>シーン</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\GameUI.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\TitleScene.h">
+      <Filter>シーン</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

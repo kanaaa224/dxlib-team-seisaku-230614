@@ -1,5 +1,5 @@
 ﻿/********************************
-* ゲームプレイヤー
+* ゲームプレイヤー処理
 * 担当：島袋
 ********************************/
 #pragma once
@@ -39,6 +39,8 @@ struct Person {
 // プレイヤークラス
 class GamePlayer {
 private:
+	int frameCounter;
+
 	Person player;  // プレイヤーの位置、サイズ、状態、風船の状態
 
 	float inputX;   // スティック横軸の入力
@@ -48,8 +50,6 @@ private:
 	float speed[2]; // 移動、落下速度
 
 	float leftEndX, rightEndX; // ワープ、当たり判定用のプレイヤー左右端側のX位置
-
-	int frameCounter;
 
 	int img_player[30];
 
@@ -62,7 +62,6 @@ public:
 	// デストラクタ
 	~GamePlayer();
 
-
 	// 初期化
 	void Init();
 
@@ -71,7 +70,6 @@ public:
 
 	// 描画
 	void Draw() const;
-
 
 	// プレイヤーの状態を設定
 	void SetState(int State) {
@@ -100,7 +98,6 @@ public:
 		collideData.lr.x = CollideData.lr.x;
 		collideData.lr.y = CollideData.lr.y;
 	};
-
 
 	// デバッグ表示
 	void Debug() const {
@@ -133,7 +130,6 @@ public:
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "frameCounter: %d", frameCounter);
 	};
-
 
 	//// プレイヤー移動
 	//bool Control();

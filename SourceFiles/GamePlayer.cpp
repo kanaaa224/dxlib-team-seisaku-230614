@@ -7,7 +7,7 @@
 GamePlayer::GamePlayer() {
 	Init();
 
-	if ((LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player)) == -1) throw "ERROR : PLAYER IMG";
+	if (LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player) == -1) throw;
 };
 
 GamePlayer::~GamePlayer() {
@@ -17,6 +17,8 @@ GamePlayer::~GamePlayer() {
 };
 
 void GamePlayer::Init() {
+	frameCounter = 0;
+
 	player.hp = 0;
 	player.position.x = 50; //50
 	player.position.y = 380; //380
@@ -31,8 +33,6 @@ void GamePlayer::Init() {
 	state[ANIM] = 0;
 	speed[MOVE] = 0.0f;
 	speed[FALL] = 1.0f;
-
-	frameCounter = 0;
 
 	leftEndX = player.position.x - player.size.width;
 	rightEndX = player.position.x + player.size.width;
@@ -102,6 +102,7 @@ void GamePlayer::Update() {
 	// 天井
 	if (player.state == 2) {
 		player.position.y = collideData.lr.y + player.size.height + 1;
+
 		wallHit = true;
 	};
 
@@ -151,7 +152,7 @@ void GamePlayer::Update() {
 	player.position.x += speed[MOVE];
 
 	//////////////////////////////////////////////////////////////////////
-	// 壁の判定、移動停止処理
+	// 画面左右端のワープ処理
 	//////////////////////////////////////////////////////////////////////
 
 	if (player.position.x <= 0) player.position.x = SCREEN_WIDTH - 1;      // 画面左端時
@@ -161,30 +162,20 @@ void GamePlayer::Update() {
 	rightEndX = player.position.x + player.size.width;
 	if (SCREEN_WIDTH <= rightEndX) rightEndX = rightEndX - SCREEN_WIDTH;
 
+	//////////////////////////////////////////////////////////////////////
+	// 壁の判定と跳ね返り処理
+	//////////////////////////////////////////////////////////////////////
+
 	wallHit = false;
 	if (player.state == 3) {
 		//player.position.x--;
 		player.position.x = collideData.ul.x - player.size.width - 1;
-
-		if (player.position.x <= 0) player.position.x = SCREEN_WIDTH - 1;
-		else if (SCREEN_WIDTH <= player.position.x) player.position.x = 0 + 1;
-		leftEndX = player.position.x - player.size.width;
-		if (leftEndX <= 0) leftEndX = SCREEN_WIDTH + leftEndX;
-		rightEndX = player.position.x + player.size.width;
-		if (SCREEN_WIDTH <= rightEndX) rightEndX = rightEndX - SCREEN_WIDTH;
 
 		wallHit = true;
 	};
 	if (player.state == 4) {
 		//player.position.x++;
 		player.position.x = collideData.lr.x + player.size.width + 1;
-
-		if (player.position.x <= 0) player.position.x = SCREEN_WIDTH - 1;
-		else if (SCREEN_WIDTH <= player.position.x) player.position.x = 0 + 1;
-		leftEndX = player.position.x - player.size.width;
-		if (leftEndX <= 0) leftEndX = SCREEN_WIDTH + leftEndX;
-		rightEndX = player.position.x + player.size.width;
-		if (SCREEN_WIDTH <= rightEndX) rightEndX = rightEndX - SCREEN_WIDTH;
 
 		wallHit = true;
 	};

@@ -66,6 +66,9 @@ AbstractScene* Game::Update() {
 	// 仮 - Rキーでリセット
 	if (CheckHitKey(KEY_INPUT_R)) return new Game();
 
+	// 仮 - ESCキーでタイトル
+	if (PadInput::OnPress(XINPUT_BUTTON_BACK) || CheckHitKey(KEY_INPUT_ESCAPE)) return new Title();
+
 	stage.Update();
 	ui.Update();
 
