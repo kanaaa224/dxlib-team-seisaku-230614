@@ -6,17 +6,18 @@
 
 GameUI::GameUI() {
 	state = 0;
+	frameCounter = 0;
+
 	stock = 0;
 	score = 0;
 	highScore = 0;
-	frameCounter = 0;
 
-	img_playerScore = LoadGraph("Resources/Images/UI/UI_Score.png");
-	img_highScore = LoadGraph("Resources/Images/UI/UI_HiScore.png");
-	img_stock = LoadGraph("Resources/Images/UI/UI_Stock.png");
-	img_gameOver = LoadGraph("Resources/Images/UI/UI_GameOver.png");
-	img_phase = LoadGraph("Resources/Images/UI/UI_Phase.png");
-	LoadDivGraph("Resources/Images/UI/UI_NumAnimation.png", 10, 10, 1, 32, 32, img_number);
+	if ((img_playerScore = LoadGraph("Resources/Images/UI/UI_Score.png")) == -1) throw;
+	if ((img_highScore = LoadGraph("Resources/Images/UI/UI_HiScore.png")) == -1) throw;
+	if ((img_stock = LoadGraph("Resources/Images/UI/UI_Stock.png")) == -1) throw;
+	if ((img_gameOver = LoadGraph("Resources/Images/UI/UI_GameOver.png")) == -1) throw;
+	if ((img_phase = LoadGraph("Resources/Images/UI/UI_Phase.png")) == -1) throw;
+	if (LoadDivGraph("Resources/Images/UI/UI_NumAnimation.png", 10, 10, 1, 32, 32, img_number) == -1) throw;
 };
 
 GameUI::~GameUI() {
@@ -25,7 +26,9 @@ GameUI::~GameUI() {
 	DeleteGraph(img_stock);
 	DeleteGraph(img_gameOver);
 	DeleteGraph(img_phase);
-	//DeleteGraph(img_number);
+	for (int i = 0; i < 10; i++) {
+		DeleteGraph(img_number[i]);
+	};
 };
 
 void GameUI::Update() {

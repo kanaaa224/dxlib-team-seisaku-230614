@@ -7,7 +7,7 @@
 GamePlayer::GamePlayer() {
 	Init();
 
-	if ((LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player)) == -1) throw "ERROR : PLAYER IMG";
+	if (LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player) == -1) throw;
 };
 
 GamePlayer::~GamePlayer() {
@@ -17,6 +17,8 @@ GamePlayer::~GamePlayer() {
 };
 
 void GamePlayer::Init() {
+	frameCounter = 0;
+
 	player.hp = 0;
 	player.position.x = 50; //50
 	player.position.y = 380; //380
@@ -31,8 +33,6 @@ void GamePlayer::Init() {
 	state[ANIM] = 0;
 	speed[MOVE] = 0.0f;
 	speed[FALL] = 1.0f;
-
-	frameCounter = 0;
 
 	leftEndX = player.position.x - player.size.width;
 	rightEndX = player.position.x + player.size.width;

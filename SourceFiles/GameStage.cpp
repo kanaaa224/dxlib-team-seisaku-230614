@@ -8,9 +8,9 @@ GameStage::GameStage() {
 	// 初期化処理
 	
 	// 画像読み込み
-	img_sea = LoadGraph("Resources/Images/Stage_Sea01.png");
-	img_footing = LoadGraph("Resources/Images/Stage_Footing01.png");
-	LoadDivGraph("Resources/Images/Stage_CloudAnimation.png", 3, 3, 1, 128, 64, img_cloud);
+	img_sea = LoadGraph("Resources/Images/Stage/Stage_Sea01.png");
+	img_footing = LoadGraph("Resources/Images/Stage/Stage_Footing01.png");
+	LoadDivGraph("Resources/Images/Stage/Stage_CloudAnimation.png", 3, 3, 1, 128, 64, img_cloud);
 
 	// 仮 - 足場の当たり判定用ボックス
 	block[0][0] = 180; // 真ん中

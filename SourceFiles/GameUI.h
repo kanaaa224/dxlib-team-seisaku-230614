@@ -1,5 +1,5 @@
 ﻿/********************************
-* ゲームUI
+* ゲームUI処理
 * 担当：島袋
 ********************************/
 #pragma once
@@ -36,17 +36,17 @@ public:
 		state = State;
 	};
 
-	// スコアを設定
+	// 表示するスコアを設定
 	void SetScore(int Score) {
 		score = Score;
 	};
 
-	// ハイスコアを設定
+	// 表示するハイスコアを設定
 	void SetHighScore(int HighScore) {
 		highScore = HighScore;
 	};
 
-	// 残機を設定
+	// 表示する残機を設定
 	void SetStock(int Stock) {
 		stock = Stock;
 	};
