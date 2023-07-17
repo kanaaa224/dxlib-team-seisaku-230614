@@ -9,7 +9,8 @@
 class Title : public AbstractScene {
 private:
 	int state, frameCounter;
-	bool btn_flg;
+
+	bool ctrl;
 
 	int img_logo;
 	int img_mode;
@@ -23,9 +24,9 @@ public:
 	// デストラクタ
 	~Title();
 
-	// 描画以外の更新を実装
+	// 更新
 	virtual AbstractScene* Update() override;
 
-	// 描画に関することを実装
+	// 描画
 	virtual void Draw() const override;
 };

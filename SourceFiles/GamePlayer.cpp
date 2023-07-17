@@ -8,12 +8,24 @@ GamePlayer::GamePlayer() {
 	Init();
 
 	if (LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player) == -1) throw;
+
+	if ((snd_se_flight = LoadSoundMem("Resources/Sounds/SE_PlayerJump.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 50, snd_se_flight);
+
+	if ((snd_se_walk = LoadSoundMem("Resources/Sounds/SE_PlayerWalk.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_walk);
+
+	if ((snd_se_restart = LoadSoundMem("Resources/Sounds/SE_Restart.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_restart);
 };
 
 GamePlayer::~GamePlayer() {
 	for (int i = 0; i < 30; i++) {
 		DeleteGraph(img_player[i]);
 	};
+	DeleteSoundMem(snd_se_flight);
+	DeleteSoundMem(snd_se_walk);
+	DeleteSoundMem(snd_se_restart);
 };
 
 void GamePlayer::Init() {
@@ -51,9 +63,10 @@ void GamePlayer::Update() {
 	else if (PadInput::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || CheckHitKey(KEY_INPUT_D)) inputX = 1.0f;
 
 	if (!flapCount && (PadInput::OnPress(XINPUT_BUTTON_B) || PadInput::OnPressed(XINPUT_BUTTON_A) || CheckHitKey(KEY_INPUT_SPACE))) {
-		flapCount = 12;
+		flapCount = 10; // 慣性の最適値：12
 		state[ANIM] = 0;
 		if (inputX >= 0.3f || inputX <= -0.3f) flightMove = 12;
+		PlaySoundMem(snd_se_flight, DX_PLAYTYPE_BACK, TRUE);
 	};
 
 	//////////////////////////////////////////////////////////////////////
@@ -81,7 +94,7 @@ void GamePlayer::Update() {
 	state[COLLIDE] = 0;
 
 	// 海
-	if (SCREEN_HEIGHT < player.position.y - player.size.height) Init();
+	//if (SCREEN_HEIGHT + 100 < (player.position.y - player.size.height)) Restart();
 
 	// 地面
 	if (player.state == 1) {
@@ -95,7 +108,10 @@ void GamePlayer::Update() {
 		//};
 		state[COLLIDE] = 1;
 		if (speed[FALL] > 0.0f) speed[FALL] = 0;
-	};
+		if (inputX != 0.0f) if (CheckSoundMem(snd_se_walk) == 0) PlaySoundMem(snd_se_walk, DX_PLAYTYPE_BACK, TRUE);
+		//else StopSoundMem(snd_se_walk);
+	}
+	else StopSoundMem(snd_se_walk);
 
 	bool wallHit = false;
 

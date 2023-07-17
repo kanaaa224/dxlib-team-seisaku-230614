@@ -9,16 +9,19 @@
 class Game : public AbstractScene {
 private:
 	int state;
-	int btn_flg;
 
 	GamePlayer player;
 	GameStage stage;
 	GameUI ui;
 
 	// 仮
+	bool ctrlFlg;
 	Collide blockData;
-	int blockIndex, stageIndex;
+	int stock, blockIndex, stageIndex;
 	bool debug;
+
+	int snd_start;
+	int snd_gameOver;
 
 public:
 	// コンストラクタ

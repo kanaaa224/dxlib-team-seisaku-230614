@@ -8,7 +8,7 @@ Title::Title() {
 	state = 0;
 	frameCounter = 0;
 
-	btn_flg = false;
+	ctrl = false;
 
 	if ((img_logo = LoadGraph("Resources/Images/Title/Title_Logo.png")) == -1) throw;
 	if ((img_mode = LoadGraph("Resources/images/Title/Title_ModeSelect.png")) == -1) throw;
@@ -30,16 +30,16 @@ AbstractScene* Title::Update() {
 	if (frameCounter++ % 30 == 0) state++;
 	if ((state % 10) >= 4) state -= 4;
 
-	if ((PadInput::GetLStick().y == 0.0f) && !CheckHitKey(KEY_INPUT_UP) && !CheckHitKey(KEY_INPUT_DOWN) && !CheckHitKey(KEY_INPUT_W) && !CheckHitKey(KEY_INPUT_S)) btn_flg = true;
-	if (PadInput::OnPress(XINPUT_BUTTON_DPAD_UP) || (((PadInput::GetLStick().y >= 0.7f) || CheckHitKey(KEY_INPUT_UP) || CheckHitKey(KEY_INPUT_W)) && btn_flg)) {
+	if ((PadInput::GetLStick().y == 0.0f) && !CheckHitKey(KEY_INPUT_UP) && !CheckHitKey(KEY_INPUT_DOWN) && !CheckHitKey(KEY_INPUT_W) && !CheckHitKey(KEY_INPUT_S)) ctrl = true;
+	if (PadInput::OnPress(XINPUT_BUTTON_DPAD_UP) || (((PadInput::GetLStick().y >= 0.7f) || CheckHitKey(KEY_INPUT_UP) || CheckHitKey(KEY_INPUT_W)) && ctrl)) {
 		if (state < 10) state += 20;
 		else state -= 10;
-		btn_flg = false;
+		ctrl = false;
 	}
-	else if (PadInput::OnPress(XINPUT_BUTTON_BACK) || PadInput::OnPress(XINPUT_BUTTON_DPAD_DOWN) || (((PadInput::GetLStick().y <= -0.7f) || CheckHitKey(KEY_INPUT_DOWN) || CheckHitKey(KEY_INPUT_S)) && btn_flg)) {
+	else if (PadInput::OnPress(XINPUT_BUTTON_BACK) || PadInput::OnPress(XINPUT_BUTTON_DPAD_DOWN) || (((PadInput::GetLStick().y <= -0.7f) || CheckHitKey(KEY_INPUT_DOWN) || CheckHitKey(KEY_INPUT_S)) && ctrl)) {
 		if (state >= 20) state -= 20;
 		else state += 10;
-		btn_flg = false;
+		ctrl = false;
 	}
 	else if (PadInput::OnPress(XINPUT_BUTTON_START) || PadInput::OnPress(XINPUT_BUTTON_B) || CheckHitKey(KEY_INPUT_SPACE)) {
 		if (state >= 0 && state <= 9) return new Game();
