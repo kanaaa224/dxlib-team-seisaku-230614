@@ -52,6 +52,9 @@ private:
 	float leftEndX, rightEndX; // ワープ、当たり判定用のプレイヤー左右端側のX位置
 
 	int img_player[30];
+	int snd_se_flight;
+	int snd_se_walk;
+	int snd_se_restart;
 
 	Collide collideData;
 
@@ -97,6 +100,12 @@ public:
 		collideData.ul.y = CollideData.ul.y;
 		collideData.lr.x = CollideData.lr.x;
 		collideData.lr.y = CollideData.lr.y;
+	};
+
+	// リスポーン
+	void Restart() {
+		Init();
+		PlaySoundMem(snd_se_restart, DX_PLAYTYPE_BACK, TRUE);
 	};
 
 	// デバッグ表示
