@@ -31,9 +31,9 @@ GamePlayer::~GamePlayer() {
 void GamePlayer::Init() {
 	frameCounter = 0;
 
-	player.hp = 0;
-	player.position.x = 50; //50
-	player.position.y = 380; //380
+	player.hp = 2;
+	player.position.x = FIRST_POSITION_X;
+	player.position.y = FIRST_POSITION_Y;
 	player.size.width = 15;
 	player.size.height = 25;
 
