@@ -1,16 +1,21 @@
 ﻿/********************************
-* ゲームステージ
+* ゲームステージ処理
 * 編集者：
 ********************************/
 #pragma once
 #include "main.h"
 
-// プレイヤークラス
+#define FOOTING_MAX 3 // 足場の最大数（ステージごとで変わるので後で変数にするといいかも）
+
+// ステージクラス
 class GameStage{
 private:
-	int img_bg;
-	int img_bg1;
-	int cloudimg[2];//雲の画像用
+	int img_sea;      // 海
+	int img_footing;  // 足場
+	int img_cloud[2]; // 雲
+
+	// 仮
+	float block[FOOTING_MAX][4];
 
 public:
 	// コンストラクタ
@@ -26,4 +31,14 @@ public:
 	void Draw() const;
 
 	void HitStage();
+
+	// 引数で指定したブロックの左下、右下の座標を返す
+	Collide GetBlock(int Index) {
+		Collide collide;
+		collide.ul.x = block[Index][0];
+		collide.ul.y = block[Index][1];
+		collide.lr.x = block[Index][2];
+		collide.lr.y = block[Index][3];
+		return collide;
+	};
 };

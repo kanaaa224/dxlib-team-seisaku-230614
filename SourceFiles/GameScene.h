@@ -8,16 +8,21 @@
 
 class Game : public AbstractScene {
 private:
-	int btn_flg;
 	int state;
-	int img_bg;
 
 	GamePlayer player;
 	GameStage stage;
+	GameUI ui;
 
 	// 仮
-	int block[4];
-	int block1[4];
+	bool ctrlFlg;
+	Collide blockData;
+	int stock, blockIndex, stageIndex;
+	bool debug;
+
+	int snd_start;
+	int snd_gameOver;
+
 public:
 	// コンストラクタ
 	Game();
@@ -31,26 +36,13 @@ public:
 	// 描画に関することを実装
 	virtual void Draw() const override;
 
-
 	// 当たり判定 - 島袋
-	static int CheckCollideSquares(int s1X1, int s1Y1, int s1X2, int s1Y2, int s2X1, int s2Y1, int s2X2, int s2Y2) {
-		// s1がs2の左側にある場合
-		if (s1X2 < s2X1) {
-			return 0;
-		};
-		// s1がs2の右側にある場合
-		if (s1X1 > s2X2) {
-			return 0;
-		};
-		// s1がs2の上側にある場合
-		if (s1Y2 < s2Y1) {
-			return 0;
-		};
-		// s1がs2の下側にある場合
-		if (s1Y1 > s2Y2) {
-			return 0;
-		};
-		// 上記の条件に当てはまらない場合、二つの四角形は重なっている
-		return 1;
+	static int CheckCollideBox(float s1X1, float s1Y1, float s1X2, float s1Y2, float s2X1, float s2Y1, float s2X2, float s2Y2) {
+		if (s1X2 <= s2X1 || s1X1 >= s2X2 || s1Y2 <= s2Y1 || s1Y1 >= s2Y2) return 0;
+		if (fabsf(s1Y2 - s2Y1) < 10) return 1;
+		else if (fabsf(s1Y1 - s2Y2) < 10) return 2;
+		else if (fabsf(s1X2 - s2X1) < 10) return 3;
+		else if (fabsf(s1X1 - s2X2) < 10) return 4;
+		else return 0;
 	};
 };

@@ -2,7 +2,7 @@
 
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
-#define GAME_NAME "バルーンファイト"
+#define GAME_NAME "BALLOON FIGHT"
 
 #include <stdio.h>
 #include <math.h>
@@ -20,16 +20,17 @@ using std::to_string;
 // ゲーム処理のヘッダーファイル
 #include "GamePlayer.h"
 #include "GameStage.h"
+#include "GameUI.h"
 
 // 各シーンのヘッダーファイル
-//#include "Title.h"
+#include "TitleScene.h"
 #include "GameScene.h"
-//#include "Result.h"
-//#include "Help.h"
-//#include "Ranking.h"
-//#include "DrawRanking.h"
-//#include "InputRanking.h"
-//#include "Credit.h"
+//#include "ResultScene.h"
+//#include "HelpScene.h"
+//#include "Ranking.h" // ランキング処理
+//#include "RankingScene.h"
+//#include "InputNameScene.h"
+//#include "CreditScene.h"
 
 // リソース管理
 #define SND 1
