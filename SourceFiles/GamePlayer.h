@@ -112,8 +112,8 @@ public:
 	void Debug() const {
 		DrawBox((int)(player.position.x - player.size.width), (int)(player.position.y - player.size.height), (int)(player.position.x + player.size.width), (int)(player.position.y + player.size.height), 0xffffff, FALSE);
 
-		int x = 10;  // x座標の初期値
-		int y = 50;  // y座標の初期値
+		int x = 10;
+		int y = 50;
 
 		DrawFormatString(x, y, GetColor(255, 255, 255), "プレイヤークラス データ");
 		y += 30;
