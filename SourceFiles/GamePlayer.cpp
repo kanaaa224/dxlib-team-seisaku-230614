@@ -31,9 +31,9 @@ GamePlayer::~GamePlayer() {
 void GamePlayer::Init() {
 	frameCounter = 0;
 
-	player.hp = 0;
-	player.position.x = 50; //50
-	player.position.y = 380; //380
+	player.hp = 2;
+	player.position.x = FIRST_POSITION_X;
+	player.position.y = FIRST_POSITION_Y;
 	player.size.width = 15;
 	player.size.height = 25;
 
@@ -215,7 +215,7 @@ void GamePlayer::Draw() const {
 	};
 
 	// ワープ用にゲーム画面分の間隔をあけて3体描画する
-	DrawRotaGraph2((int)player.position.x, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], TRUE, state[TURN]);
-	DrawRotaGraph2((int)player.position.x - SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], TRUE, state[TURN]);
-	DrawRotaGraph2((int)player.position.x + SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], TRUE, state[TURN]);
+	DrawRotaGraph2((int)player.position.x, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
+	DrawRotaGraph2((int)player.position.x - SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
+	DrawRotaGraph2((int)player.position.x + SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
 };
