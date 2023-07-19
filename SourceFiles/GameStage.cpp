@@ -6,6 +6,10 @@
 
 GameStage::GameStage() {
 	// 初期化処理
+	bubble_width = 200;
+	frequency = 0;
+	bubble_count = 0;
+
 	
 	// 画像読み込み
 	img_sea = LoadGraph("Resources/Images/Stage/Stage_Sea01.png");
@@ -30,6 +34,10 @@ GameStage::GameStage() {
 	block[2][1] = 430;
 	block[2][2] = SCREEN_WIDTH;
 	block[2][3] = SCREEN_HEIGHT;
+
+	//
+	bubble_width = 200;
+	bubble_height = 400;
 };
 
 GameStage::~GameStage() {
@@ -37,9 +45,19 @@ GameStage::~GameStage() {
 };
 
 void GameStage::Update() {
-
+	
 	void HitStage();//ステージの当たり判定
+	
+	float amplitude = 50;
+	float frequency = 0.02;
+	
+	/*if (bubble_count <= 20) {*/
+		yOffset = amplitude * sin(frequency * bubble_count ) /*+ 100*/;//シャボン玉の初期位置を変えたい
 
+		bubble_width = yOffset;
+		bubble_count += 1;
+		bubble_height -=0.5;
+	/*}*/
 };
 
 void GameStage::Draw() const {
@@ -53,10 +71,12 @@ void GameStage::Draw() const {
 
 	DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
 
-	DrawGraph(320, 300, img_bubble[0], TRUE);  // シャボン
+	DrawGraph(bubble_width, bubble_height, img_bubble[0], TRUE);  // シャボン
+
 
 	// 仮 - 足場の当たり判定用ボックス
 	//DrawBox((int)block[0][0], (int)block[0][1], (int)block[0][2], (int)block[0][3], 0xffffff, FALSE); // 真ん中
 	//DrawBox((int)block[1][0], (int)block[1][1], (int)block[1][2], (int)block[1][3], 0xffffff, FALSE); // 左下
 	//DrawBox((int)block[2][0], (int)block[2][1], (int)block[2][2], (int)block[2][3], 0xffffff, FALSE); // 右下
+	DrawFormatString(100, 100,0x00ffff ,"%d", bubble_count);
 };
