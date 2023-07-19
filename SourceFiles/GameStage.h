@@ -13,7 +13,7 @@ private:
 	int img_sea;      // 海
 	int img_footing;  // 足場
 	int img_cloud[2]; // 雲
-
+	int img_bubble[3];//シャボン
 	// 仮
 	float block[FOOTING_MAX][4];
 

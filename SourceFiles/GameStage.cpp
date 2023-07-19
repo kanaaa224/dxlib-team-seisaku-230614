@@ -12,6 +12,9 @@ GameStage::GameStage() {
 	img_footing = LoadGraph("Resources/Images/Stage/Stage_Footing01.png");
 	LoadDivGraph("Resources/Images/Stage/Stage_CloudAnimation.png", 3, 3, 1, 128, 64, img_cloud);
 
+	//シャボン玉画像読込
+	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64 , 64, img_bubble);
+
 	// 仮 - 足場の当たり判定用ボックス
 	block[0][0] = 180; // 真ん中
 	block[0][1] = 250;
@@ -36,6 +39,7 @@ GameStage::~GameStage() {
 void GameStage::Update() {
 
 	void HitStage();//ステージの当たり判定
+
 };
 
 void GameStage::Draw() const {
@@ -48,6 +52,8 @@ void GameStage::Draw() const {
 	DrawGraph(370, 430, img_footing, TRUE); // 右下
 
 	DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+
+	DrawGraph(320, 300, img_bubble[0], TRUE);  // シャボン
 
 	// 仮 - 足場の当たり判定用ボックス
 	//DrawBox((int)block[0][0], (int)block[0][1], (int)block[0][2], (int)block[0][3], 0xffffff, FALSE); // 真ん中
