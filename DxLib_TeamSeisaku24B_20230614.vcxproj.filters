@@ -48,6 +48,9 @@
     <ClCompile Include="SourceFiles\TitleScene.cpp">
       <Filter>シーン</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\GameEnemy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\AbstractScene.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\TitleScene.h">
       <Filter>シーン</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\GameEnemy.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
