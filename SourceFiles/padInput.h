@@ -1,5 +1,5 @@
 ﻿/********************************
-* ボタン・キー入力処理
+* コントローラー入力処理
 * 作成：島袋
 ********************************/
 #pragma once
@@ -26,9 +26,7 @@ private:
 public:
     // 入力状態の更新
     static void Update() {
-
         GetJoypadXInputState(DX_INPUT_KEY_PAD1, &inputState);
-
         for (int i = 0; i < PAD_BUTTONS; i++) {
             oldBtn[i] = nowBtn[i];
             nowBtn[i] = inputState.Buttons[i];
@@ -68,7 +66,7 @@ public:
         // 各ボタンの入力情報出力
         for (int i = 0; i < PAD_BUTTONS; i++) {
             printfDx("OLD: %d\tNOW: %d\n", oldBtn[i], nowBtn[i]);
-        }
+        };
 
         // スティックの入力情報出力
         printfDx("\nスティックの入力情報\n");

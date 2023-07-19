@@ -5,93 +5,102 @@
 #include "main.h"
 
 Game::Game() {
-	// 初期化処理
-	btn_flg = 0;
 	state = 0;
 
+	if ((snd_start = LoadSoundMem("Resources/Sounds/SE_Start.wav")) == -1) throw;
+	if (CheckSoundMem(snd_start) == 0) PlaySoundMem(snd_start, DX_PLAYTYPE_BACK, TRUE);
+
+	if ((snd_gameOver = LoadSoundMem("Resources/Sounds/SE_GameOver.wav")) == -1) throw;
+
 	// 仮
-	block[0] = 200;
-	block[1] = SCREEN_HEIGHT - 180;
-	block[2] = 460;
-	block[3] = SCREEN_HEIGHT - 200;
+	ctrlFlg = false;
+	ui.SetScore(12345);
+	ui.SetHighScore(67890);
+	ui.SetState(1);
+	stock = 2;
+	blockIndex = 0;
+	stageIndex = 0;
+	debug = false;
 };
 
 Game::~Game() {
-	// 終了処理
+	DeleteSoundMem(snd_start);
+	DeleteSoundMem(snd_gameOver);
 };
 
 AbstractScene* Game::Update() {
 
-	player.SetState(CheckCollideSquares(block[0], block[1], block[2], block[3], player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height));
-
-
-	if (!CheckHitKey(KEY_INPUT_0) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_2) && !CheckHitKey(KEY_INPUT_3) && !CheckHitKey(KEY_INPUT_4)) {
-		btn_flg = 0;
+	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
+	if (player.GetState() == 0) {
+		blockData = stage.GetBlock(blockIndex);
+		if (blockIndex >= (FOOTING_MAX - 1)) blockIndex = 0;
+		else blockIndex++;
 	};
-	if (CheckHitKey(KEY_INPUT_0) && btn_flg == 0) {
+	player.SetCollideData(blockData);
+	player.SetState(
+		CheckCollideBox(
+			player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, 
+			player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height,
+			blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y
+		)
+	);
+	if (state != 1) player.Update();
 
-		state = 0;
-		player.SetState(0);
-
-		btn_flg = 1;
-	}
-	else if (CheckHitKey(KEY_INPUT_1) && btn_flg == 0) {
-		
-		state = 1;
-		player.SetState(1);
-
-		btn_flg = 1;
-	}
-	else if (CheckHitKey(KEY_INPUT_2) && btn_flg == 0) {
-
-		state = 2;
-		player.SetState(2);
-
-		btn_flg = 1;
-	}
-	else if (CheckHitKey(KEY_INPUT_3) && btn_flg == 0) {
-
-		state = 3;
-		player.SetState(3);
-
-		btn_flg = 1;
-	}
-	else if (CheckHitKey(KEY_INPUT_4) && btn_flg == 0) {
-
-		state = 4;
-		player.SetState(4);
-
-		btn_flg = 1;
+	// 仮 - 海に落ちた時の残機処理
+	if (SCREEN_HEIGHT + 100 < (player.GetPosition().y - player.GetSize().height)) {
+		if (stock == 0) {
+			state = 1;
+			ui.SetState(-1);
+			PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
+			stock = -1;
+		}
+		else if (stock > 0) {
+			stock--;
+			player.Restart();
+		};
 	};
 
-	player.Update();
-	player.Debug();
-
-	if (state > 1) {
-		player.SetState(0);
+	// 仮 - Pキーでポーズ
+	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
+	if (CheckHitKey(KEY_INPUT_P) && ctrlFlg) {
+		if (state == 1) state = 0;
+		else state = 1;
+		ctrlFlg = false;
+	}
+	// 仮 - OキーでUIテスト
+	else if (CheckHitKey(KEY_INPUT_O) && ctrlFlg) {
+		if (stageIndex >= 5) stageIndex = -1;
+		else stageIndex++;
+		ui.SetState(stageIndex);
+		//ui.SetStock(stageIndex + 1);
+		ctrlFlg = false;
+	}
+	// 仮 - 1キーでデバッグモード
+	else if (CheckHitKey(KEY_INPUT_1) && ctrlFlg) {
+		if (debug) debug = false;
+		else debug = true;
+		ctrlFlg = false;
 	};
+
+	// 仮 - Rキーでリセット
+	if (CheckHitKey(KEY_INPUT_R)) return new Game();
+
+	// 仮 - ESCキーでタイトル
+	if (PadInput::OnPress(XINPUT_BUTTON_BACK) || CheckHitKey(KEY_INPUT_ESCAPE)) return new Title();
+
+	stage.Update();
+	ui.SetStock(stock);
+	ui.Update();
 
 	return this;
 };
 
 void Game::Draw() const {
-	SetFontSize(16);
 
 	stage.Draw();
-
 	player.Draw();
+	ui.Draw();
 
-	//ui.Draw();
-
-	//DrawFormatString(20, 50, 0xffffff, "ゲームメイン");
-
-	if (state == 0) {
-		//DrawFormatString(20, 100, 0xffffff, "ボタンが押されました");
-	} else if (state == 1) {
-		//DrawFormatString(20,150, 0xffffff, "ボタンが押されました");
-	};
-
-	// 仮
-	DrawBox(block[0], block[1], block[2], block[3], 0xffffff, FALSE);
+	if (debug) player.Debug();
 };
 

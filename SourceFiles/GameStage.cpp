@@ -4,61 +4,53 @@
 ********************************/
 #include "main.h"
 
-// ステージクラスのコンストラクタ
 GameStage::GameStage() {
 	// 初期化処理
-	mx0 = StageX - 4;
-	mx1 = StageX + 4;
-	my0 = StageY - 4;
-	my1 = StageY + 4;
-	sx0 = playerX;
-	sx1 = playerX + 60;
-	sy0 = playerY;
-	sy1 = playerY + 8;
-	PlayerAngle = 0.624f;
+	
 	// 画像読み込み
-	img_bg = LoadGraph("Resources/Images/Stage_Sea01.png");
-	img_bg1 = LoadGraph("Resources/Images/Stage_Footing01.png");
+	img_sea = LoadGraph("Resources/Images/Stage/Stage_Sea01.png");
+	img_footing = LoadGraph("Resources/Images/Stage/Stage_Footing01.png");
+	LoadDivGraph("Resources/Images/Stage/Stage_CloudAnimation.png", 3, 3, 1, 128, 64, img_cloud);
+
+	// 仮 - 足場の当たり判定用ボックス
+	block[0][0] = 180; // 真ん中
+	block[0][1] = 250;
+	block[0][2] = 460;
+	block[0][3] = 270;
+
+	block[1][0] = 0;   // 左下
+	block[1][1] = 430;
+	block[1][2] = 230;
+	block[1][3] = SCREEN_HEIGHT;
+
+	block[2][0] = 370; // 右下
+	block[2][1] = 430;
+	block[2][2] = SCREEN_WIDTH;
+	block[2][3] = SCREEN_HEIGHT;
 };
 
-// ステージクラスのデストラクタ
-GameStage::~GameStage()
-{
+GameStage::~GameStage() {
 	// 終了処理
 };
 
-// ステージの更新
-void GameStage::Update() 
-{
+void GameStage::Update() {
+
 	void HitStage();//ステージの当たり判定
-
-
 };
 
-// ステージ描画
-void GameStage::Draw() const
-{
-	// 背景表示
-	DrawExtendGraph(0, 450, 640, 480, img_bg, FALSE);
+void GameStage::Draw() const {
+	DrawExtendGraph(0, 450, 640, 480, img_sea, FALSE); // 海
+
+	// 足場
 	//DrawGraph(-50, 430, img_bg1, FALSE);
-	DrawGraph(370, 430, img_bg1, FALSE);
-	DrawGraph(180, 250, img_bg1, FALSE);
-	DrawBox(0, 430, 230, 480, 0xff0000, FALSE);
-	DrawBox(370, 430, 640, 480, 0xff0000, FALSE);
-	DrawBox(180, 250, 460, 270, 0xff0000, FALSE);
-};
+	DrawGraph(180, 250, img_footing, TRUE); // 真ん中
+	DrawGraph(-50, 430, img_footing, TRUE); // 左下
+	DrawGraph(370, 430, img_footing, TRUE); // 右下
 
-//ステージの当たり判定
-void GameStage::HitStage()
-{
-	//プレイヤーとステージの当たり判定
-	if (sx0 <= mx1 && sx1 >= mx0 && sy0 <= my1 && sy1 >= my0) {
-		if (StageFlg == 0) {
-			PlayerAngle = (0.3f / 60) * (mx1 - sx0) + 0.6f;
-			StageFlg = 1;
-		}
-	}
-	else {
-		if (StageFlg != 2)StageFlg = 0;
-	}
-}
+	DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+
+	// 仮 - 足場の当たり判定用ボックス
+	//DrawBox((int)block[0][0], (int)block[0][1], (int)block[0][2], (int)block[0][3], 0xffffff, FALSE); // 真ん中
+	//DrawBox((int)block[1][0], (int)block[1][1], (int)block[1][2], (int)block[1][3], 0xffffff, FALSE); // 左下
+	//DrawBox((int)block[2][0], (int)block[2][1], (int)block[2][2], (int)block[2][3], 0xffffff, FALSE); // 右下
+};

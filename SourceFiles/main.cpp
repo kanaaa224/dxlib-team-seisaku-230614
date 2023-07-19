@@ -15,8 +15,8 @@ int WINAPI WinMain(_In_ HINSTANCE  hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     if (DxLib_Init() == -1) return -1;             // DXライブラリの初期化処理
     SetDrawScreen(DX_SCREEN_BACK);                 // 描画先画面を裏にする（ダブルバッファリング）
 
-    // タイトル シーンオブジェクト作成（デバッグでゲームメインに変更中）
-    SceneManager* sceneMng = new SceneManager((AbstractScene*) new Game());
+    // タイトル シーンオブジェクト作成
+    SceneManager* sceneMng = new SceneManager((AbstractScene*) new Title());
 
     FPS fps;
 
