@@ -50,14 +50,14 @@ void GameUI::Draw() const {
 	DrawGraph(40, 15, img_playerScore, TRUE);
 	for (int i = 0; i < 6; i++) {
 		int digit = (score / static_cast<int>(pow(10, i))) % 10;
-		DrawRotaGraph(170 - (20 * i), 23, 1.0, 0.0, img_number[digit], TRUE);
+		DrawRotaGraph(170 - (20 * i), 23, 1.0f, 0, img_number[digit], TRUE);
 	};
 
 	// ハイスコア（6桁）
 	DrawGraph(225, 15, img_highScore, TRUE);
 	for (int i = 0; i < 6; i++) {
 		int digit = (highScore / static_cast<int>(pow(10, i))) % 10;
-		DrawRotaGraph(375 - (20 * i), 23, 1.0, 0.0, img_number[digit], TRUE);
+		DrawRotaGraph(375 - (20 * i), 23, 1.0f, 0, img_number[digit], TRUE);
 	};
 
 	// 残機
@@ -72,7 +72,7 @@ void GameUI::Draw() const {
 	// PHASE
 	if (state >= 1 && state < 10) {
 		DrawGraph(240, 40, img_phase, TRUE);
-		DrawRotaGraph(370, 47, 1.0, 0.0, img_number[state], TRUE);
+		DrawRotaGraph(370, 47, 1.0f, 0, img_number[state], TRUE);
 	};
 
 	// ゲームオーバー
