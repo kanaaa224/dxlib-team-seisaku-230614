@@ -11,7 +11,7 @@
 class GameStage{
 private:
 	int img_sea;      // 海
-	int img_footing[2];  // 足場
+	int img_footing[7];  // 足場 画像のStage01から始まり08まである　0から始まる
 	int img_cloud[2]; // 雲
 
 	// 仮
