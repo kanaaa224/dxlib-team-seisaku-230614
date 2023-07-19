@@ -62,7 +62,11 @@ private:
 	int img_player[30];
 	int snd_se_flight;
 	int snd_se_walk;
+	int snd_se_bound;
 	int snd_se_restart;
+	int snd_se_crack;   // 風船が割れた音
+	int snd_se_fall;    // 風船が割れて落下中の音
+	int snd_se_fell;    // 海に落ちた音
 
 	Collide collideData;
 
@@ -116,6 +120,17 @@ public:
 		PlaySoundMem(snd_se_restart, DX_PLAYTYPE_BACK, TRUE);
 	};
 
+	// ダメージ（風船消失、無ければミス）
+	void Damage() {
+		if (player.hp > 0) player.hp--;
+		else Miss(0);
+	};
+
+	// ミス（0で通常ミス、1で感電ミス、2で海落下ミス、3で魚に捕まりミス）
+	void Miss(int MissType) {
+		// Restart();
+	};
+
 	// デバッグ表示
 	void Debug() const {
 		DrawBox((int)(player.position.x - player.size.width), (int)(player.position.y - player.size.height), (int)(player.position.x + player.size.width), (int)(player.position.y + player.size.height), 0xffffff, FALSE);
@@ -128,6 +143,8 @@ public:
 		DrawFormatString(x, y, GetColor(255, 255, 255), "x: %0.0f y: %0.0f", player.position.x, player.position.y);
 		y += 30;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "playerState: %d", player.state);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "playerHP: %d", player.hp);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "inputX: %0.1f", inputX);
 		y += 15;

@@ -15,8 +15,20 @@ GamePlayer::GamePlayer() {
 	if ((snd_se_walk = LoadSoundMem("Resources/Sounds/SE_PlayerWalk.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_walk);
 
+	//if ((snd_se_bound = LoadSoundMem("Resources/Sounds/SE_PlayerBound.wav")) == -1) throw;
+	//ChangeVolumeSoundMem((255 / 100) * 100, snd_se_bound);
+
 	if ((snd_se_restart = LoadSoundMem("Resources/Sounds/SE_Restart.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_restart);
+
+	if ((snd_se_crack = LoadSoundMem("Resources/Sounds/SE_crack.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_crack);
+
+	if ((snd_se_fall = LoadSoundMem("Resources/Sounds/SE_Falling.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_fall);
+
+	if ((snd_se_fell = LoadSoundMem("Resources/Sounds/SE_Splash.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_fell);
 };
 
 GamePlayer::~GamePlayer() {
@@ -25,7 +37,11 @@ GamePlayer::~GamePlayer() {
 	};
 	DeleteSoundMem(snd_se_flight);
 	DeleteSoundMem(snd_se_walk);
+	//DeleteSoundMem(snd_se_bound);
 	DeleteSoundMem(snd_se_restart);
+	DeleteSoundMem(snd_se_crack);
+	DeleteSoundMem(snd_se_fall);
+	DeleteSoundMem(snd_se_fell);
 };
 
 void GamePlayer::Init() {
