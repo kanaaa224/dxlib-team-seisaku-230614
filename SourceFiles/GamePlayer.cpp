@@ -229,10 +229,10 @@ void GamePlayer::Draw() const {
 		anim = anim + 16;		
 	}
 	else if (speed[MOVE] == 0) { // 待機
-		anim = frameCounter / 25 % 3;
+		anim = frameCounter / 25 % 3;//anim += 4;
 	}
 	else if (state[COLLIDE] == 1) { // 地面
-		anim = state[ANIM] / 5 % 3;
+		anim = state[ANIM] / 5 % 3;//anim += 3;
 		if ((inputX > -0.3 && 0.3 > inputX) || (speed[MOVE] < 0 && inputX >= 0.3) || (0 < speed[MOVE] && -0.3 >= inputX)) anim = 11; // スリップ
 		else anim = anim + 8; // 歩行
 	};

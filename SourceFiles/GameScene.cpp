@@ -56,7 +56,7 @@ AbstractScene* Game::Update() {
 		}
 		else if (stock > 0) {
 			stock--;
-			player.Restart();
+			player.Miss(2);
 		};
 	};
 

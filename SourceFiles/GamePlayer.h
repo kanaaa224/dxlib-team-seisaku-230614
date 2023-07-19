@@ -122,13 +122,18 @@ public:
 
 	// ダメージ（風船消失、無ければミス）
 	void Damage() {
-		if (player.hp > 0) player.hp--;
+		if (player.hp > 0) {
+			player.hp--;
+			PlaySoundMem(snd_se_crack, DX_PLAYTYPE_BACK, TRUE);
+		}
 		else Miss(0);
 	};
 
 	// ミス（0で通常ミス、1で感電ミス、2で海落下ミス、3で魚に捕まりミス）
 	void Miss(int MissType) {
-		// Restart();
+		//PlaySoundMem(snd_se_fall, DX_PLAYTYPE_BACK, TRUE);
+		PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
+		Restart();
 	};
 
 	// デバッグ表示
