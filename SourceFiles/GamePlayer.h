@@ -8,6 +8,7 @@
 #define COLLIDE 0
 #define TURN    1
 #define ANIM    2
+#define BLINK 3
 #define MOVE 0
 #define FALL 1
 
@@ -53,7 +54,7 @@ private:
 	float inputX;   // スティック横軸の入力
 	int flapCount;  // ジャンプ数
 	int flightMove; // 空中で羽ばたき中の移動
-	int state[3];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター
+	int state[4];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ
 	float speed[2]; // 移動、落下速度
 
 	float leftEndX, rightEndX; // ワープ、当たり判定用のプレイヤー左右端側のX位置
