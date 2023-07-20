@@ -47,7 +47,7 @@ AbstractScene* Game::Update() {
 	if (state != 1) player.Update();
 
 	// 仮 - 海に落ちた時の残機処理
-	if (SCREEN_HEIGHT + 100 < (player.GetPosition().y - player.GetSize().height)) {
+	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
 		if (stock == 0) {
 			state = 1;
 			ui.SetState(-1);

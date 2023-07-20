@@ -18,14 +18,14 @@ GameStage::GameStage() {
 	block[0][2] = 460;
 	block[0][3] = 270;
 
-	block[1][0] = 0;   // 左下
+	block[1][0] = 0 - 20;   // 左下
 	block[1][1] = 430;
 	block[1][2] = 230;
 	block[1][3] = SCREEN_HEIGHT;
 
 	block[2][0] = 370; // 右下
 	block[2][1] = 430;
-	block[2][2] = SCREEN_WIDTH;
+	block[2][2] = SCREEN_WIDTH + 20;
 	block[2][3] = SCREEN_HEIGHT;
 };
 

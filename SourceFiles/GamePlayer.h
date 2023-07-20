@@ -57,8 +57,6 @@ private:
 	int state[4];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ
 	float speed[2]; // 移動、落下速度
 
-	float leftEndX, rightEndX; // ワープ、当たり判定用のプレイヤー左右端側のX位置
-
 	int img_player[30];
 	int snd_se_flight;
 	int snd_se_walk;
@@ -164,8 +162,6 @@ public:
 		DrawFormatString(x, y, GetColor(255, 255, 255), "animState: %d", state[ANIM]);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "moveSpeed: %0.1f fallSpeed: %0.1f", speed[0], speed[1]);
-		y += 15;
-		DrawFormatString(x, y, GetColor(255, 255, 255), "leftEndX: %0.0f rightEndX: %0.0f", leftEndX, rightEndX);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "frameCounter: %d", frameCounter);
 	};
