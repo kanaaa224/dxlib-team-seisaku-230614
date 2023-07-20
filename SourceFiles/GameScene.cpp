@@ -18,9 +18,17 @@ Game::Game() {
 	ui.SetHighScore(67890);
 	ui.SetState(1);
 	stock = 2;
+	hp = 2;
 	blockIndex = 0;
 	stageIndex = 0;
 	debug = false;
+
+	// 仮 - ダメージブロック
+	damageBlock[0] = 150;
+	damageBlock[1] = 100;
+	damageBlock[2] = damageBlock[0] + 20;
+	damageBlock[3] = damageBlock[1] + 20;
+	damageFlg = false;
 };
 
 Game::~Game() {
@@ -58,6 +66,37 @@ AbstractScene* Game::Update() {
 			stock--;
 			player.Miss(2);
 		};
+	};
+
+	// 仮 - ダメージブロックとの判定、ダメージ処理
+	Collide balloonCollide = player.GetCollideData();
+	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) == 0) damageFlg = true;
+	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) >= 1 && damageFlg) {
+		//if (stock == 0) {
+		//	if (player.GetHP() == -10) {
+		//		state = 1;
+		//		ui.SetState(-1);
+		//		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
+		//		stock = -1;
+		//	};
+		//}
+		//else if (stock > 0) {
+		//	stock--;
+		//};
+		player.Damage();
+		//if (hp == 1) {
+		//	if (player.GetHP() == -10) {
+		//		state = 1;
+		//		ui.SetState(-1);
+		//		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
+		//		stock = -1;
+		//	};
+		//}
+		//else if (hp > 1) {
+		//	hp--;
+		//	player.Miss(2);
+		//};
+		damageFlg = false;
 	};
 
 	// 仮 - Pキーでポーズ
@@ -102,5 +141,7 @@ void Game::Draw() const {
 	ui.Draw();
 
 	if (debug) player.Debug();
+
+	DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xffffff, FALSE);
 };
 

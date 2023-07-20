@@ -17,8 +17,10 @@ private:
 	// 仮
 	bool ctrlFlg;
 	Collide blockData;
-	int stock, blockIndex, stageIndex;
+	int stock, hp, blockIndex, stageIndex;
 	bool debug;
+	int damageBlock[4];
+	bool damageFlg;
 
 	int snd_start;
 	int snd_gameOver;
