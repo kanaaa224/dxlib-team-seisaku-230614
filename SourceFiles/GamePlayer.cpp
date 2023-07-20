@@ -15,8 +15,20 @@ GamePlayer::GamePlayer() {
 	if ((snd_se_walk = LoadSoundMem("Resources/Sounds/SE_PlayerWalk.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_walk);
 
+	//if ((snd_se_bound = LoadSoundMem("Resources/Sounds/SE_PlayerBound.wav")) == -1) throw;
+	//ChangeVolumeSoundMem((255 / 100) * 100, snd_se_bound);
+
 	if ((snd_se_restart = LoadSoundMem("Resources/Sounds/SE_Restart.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_restart);
+
+	if ((snd_se_crack = LoadSoundMem("Resources/Sounds/SE_crack.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_crack);
+
+	if ((snd_se_fall = LoadSoundMem("Resources/Sounds/SE_Falling.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_fall);
+
+	if ((snd_se_fell = LoadSoundMem("Resources/Sounds/SE_Splash.wav")) == -1) throw;
+	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_fell);
 };
 
 GamePlayer::~GamePlayer() {
@@ -25,13 +37,17 @@ GamePlayer::~GamePlayer() {
 	};
 	DeleteSoundMem(snd_se_flight);
 	DeleteSoundMem(snd_se_walk);
+	//DeleteSoundMem(snd_se_bound);
 	DeleteSoundMem(snd_se_restart);
+	DeleteSoundMem(snd_se_crack);
+	DeleteSoundMem(snd_se_fall);
+	DeleteSoundMem(snd_se_fell);
 };
 
 void GamePlayer::Init() {
 	frameCounter = 0;
 
-	player.hp = 2;
+	player.hp = 1;
 	player.position.x = FIRST_POSITION_X;
 	player.position.y = FIRST_POSITION_Y;
 	player.size.width = 15;
@@ -46,9 +62,6 @@ void GamePlayer::Init() {
 	state[BLINK] = 1;
 	speed[MOVE] = 0.0f;
 	speed[FALL] = 1.0f;
-
-	leftEndX = player.position.x - player.size.width;
-	rightEndX = player.position.x + player.size.width;
 };
 
 void GamePlayer::Update() {
@@ -176,10 +189,6 @@ void GamePlayer::Update() {
 
 	if (player.position.x <= 0) player.position.x = SCREEN_WIDTH - 1;      // 画面左端時
 	else if (SCREEN_WIDTH <= player.position.x) player.position.x = 0 + 1; // 画面右端時
-	leftEndX = player.position.x - player.size.width;
-	if (leftEndX <= 0) leftEndX = SCREEN_WIDTH + leftEndX;
-	rightEndX = player.position.x + player.size.width;
-	if (SCREEN_WIDTH <= rightEndX) rightEndX = rightEndX - SCREEN_WIDTH;
 
 	//////////////////////////////////////////////////////////////////////
 	// 壁の判定と跳ね返り処理
@@ -210,15 +219,18 @@ void GamePlayer::Draw() const {
 	else if (state[COLLIDE] == 0) { // 飛行
 		anim = abs(-2 + (flapCount / 3 % 4));
 		if (flapCount == 0) anim += state[ANIM] / 25 % 3;
-		anim = anim + 16;		
+		anim = anim + 17;
+		if (player.hp == 1) anim += 5;
 	}
 	else if (speed[MOVE] == 0) { // 待機
 		anim = frameCounter / 25 % 3;
+		if (player.hp == 1) anim += 4;
 	}
 	else if (state[COLLIDE] == 1) { // 地面
 		anim = state[ANIM] / 5 % 3;
 		if ((inputX > -0.3 && 0.3 > inputX) || (speed[MOVE] < 0 && inputX >= 0.3) || (0 < speed[MOVE] && -0.3 >= inputX)) anim = 11; // スリップ
 		else anim = anim + 8; // 歩行
+		if (player.hp == 1) anim += 5;
 	};
 
 	// ワープ用にゲーム画面分の間隔をあけて3体描画する
