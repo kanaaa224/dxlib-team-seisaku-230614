@@ -4,7 +4,7 @@
 ********************************/
 #include "main.h"
 
-int GameStage::Stage=0;    //0が最初のステージとなる
+//int GameStage::Stage=0;    //0が最初のステージとなる
 
 GameStage::GameStage() {
 	// 初期化処理
@@ -103,9 +103,11 @@ void GameStage::Update() {
 void GameStage::Draw() const {
 	DrawExtendGraph(0, 450, 640, 480, img_sea, FALSE); // 海
 
+	int Stage = 0;
+
 	// 足場
 	//DrawGraph(-50, 430, img_bg1, FALSE);
-	if (Stage += 1) {
+	//if (Stage += 1) {
 		//仮ステージ１の表示
 		if (Stage == 0)
 		{
@@ -160,7 +162,7 @@ void GameStage::Draw() const {
 			DrawGraph(250, 180, img_footing[6], TRUE);
 			DrawGraph(480, 180, img_footing[6], TRUE);
 		}
-	}
+	//}
 
 	
 	DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲

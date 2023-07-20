@@ -5,7 +5,7 @@
 #pragma once
 #include "main.h"
 
-#define FOOTING_MAX 8 // 足場の最大数（ステージごとで変わるので後で変数にするといいかも）
+#define FOOTING_MAX 3 // 足場の最大数（ステージごとで変わるので後で変数にするといいかも）
 
 // ステージクラス
 class GameStage{
