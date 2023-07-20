@@ -8,6 +8,10 @@ int GameStage::Stage=2;    //0が最初のステージとなる
 
 GameStage::GameStage() {
 	// 初期化処理
+	bubble_width = 200;
+	frequency = 0;
+	bubble_count = 0;
+
 	
 	// 画像読み込み
 	img_sea = LoadGraph("Resources/Images/Stage/Stage_Sea01.png");
@@ -18,11 +22,15 @@ GameStage::GameStage() {
 	img_footing[2] = LoadGraph("Resources/Images/Stage/Stage_Footing03.png");
 	LoadDivGraph("Resources/Images/Stage/Stage_CloudAnimation.png", 3, 3, 1, 128, 64, img_cloud);
 
-	// 仮ステージ１ - 足場の当たり判定用ボックス
-	//block[0][0] = 180; // 真ん中
-	//block[0][1] = 280;
-	//block[0][2] = 460;
-	//block[0][3] = 300;
+	//シャボン玉画像読込
+	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64 , 64, img_bubble);
+
+
+	// 仮 - 足場の当たり判定用ボックス
+	block[0][0] = 180; // 真ん中
+	block[0][1] = 250;
+	block[0][2] = 460;
+	block[0][3] = 270;
 
 	block[1][0] = 0;   // 左下
 	block[1][1] = 430;
@@ -33,6 +41,10 @@ GameStage::GameStage() {
 	block[2][1] = 430;
 	block[2][2] = SCREEN_WIDTH;
 	block[2][3] = SCREEN_HEIGHT;
+
+	//
+	bubble_width = 200;
+	bubble_height = 400;
 };
 
 GameStage::~GameStage() {
@@ -40,8 +52,17 @@ GameStage::~GameStage() {
 };
 
 void GameStage::Update() {
+	
+	float amplitude = 50;
+	float frequency = 0.02;
+	
+	/*if (bubble_count <= 20) {*/
+		yOffset = amplitude * sin(frequency * bubble_count ) /*+ 100*/;//シャボン玉の初期位置を変えたい
 
-	void HitStage();	//ステージの当たり判定
+		bubble_width = yOffset;
+		bubble_count += 1;
+		bubble_height -=0.5;
+	/*}*/
 };
 
 void GameStage::Draw() const {
@@ -90,8 +111,13 @@ void GameStage::Draw() const {
 	{
 
 	}
+
+	DrawGraph(bubble_width, bubble_height, img_bubble[0], TRUE);  // シャボン
+
+
 	// 仮 - 足場の当たり判定用ボックス
 	//DrawBox((int)block[0][0], (int)block[0][1], (int)block[0][2], (int)block[0][3], 0xffffff, FALSE); // 真ん中
 	//DrawBox((int)block[1][0], (int)block[1][1], (int)block[1][2], (int)block[1][3], 0xffffff, FALSE); // 左下
 	//DrawBox((int)block[2][0], (int)block[2][1], (int)block[2][2], (int)block[2][3], 0xffffff, FALSE); // 右下
+	DrawFormatString(100, 100,0x00ffff ,"%d", bubble_count);
 };
