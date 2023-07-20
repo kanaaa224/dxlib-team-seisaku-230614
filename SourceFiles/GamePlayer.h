@@ -130,7 +130,7 @@ public:
 
 	// ダメージ（風船消失、無ければミス）
 	void Damage() {
-		if (player.hp > 0) {
+		if (player.hp > 1) {
 			player.hp--;
 			PlaySoundMem(snd_se_crack, DX_PLAYTYPE_BACK, TRUE);
 		}
@@ -139,9 +139,19 @@ public:
 
 	// ミス（0で通常ミス、1で感電ミス、2で海落下ミス、3で魚に捕まりミス）
 	void Miss(int MissType) {
-		//PlaySoundMem(snd_se_fall, DX_PLAYTYPE_BACK, TRUE);
-		PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
-		Restart();
+		if (MissType == 0) player.hp = -1;
+		else if (MissType == 1) player.hp = -2;
+		else if (MissType == 2) player.hp = -3;
+	};
+
+	// プレイヤーのHPを設定
+	void SetHP(int HP) {
+		player.hp = HP;
+	};
+
+	// プレイヤーのHPを取得
+	int GetHP() {
+		return player.hp;
 	};
 
 	// デバッグ表示
