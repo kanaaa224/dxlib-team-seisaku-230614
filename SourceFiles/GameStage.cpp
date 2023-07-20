@@ -4,7 +4,7 @@
 ********************************/
 #include "main.h"
 
-int GameStage::Stage=0;    //0が最初のステージとなる
+int GameStage::Stage=4;    //0が最初のステージとなる
 
 GameStage::GameStage() {
 	// 初期化処理
@@ -75,7 +75,6 @@ void GameStage::Draw() const {
 
 	// 足場
 	//DrawGraph(-50, 430, img_bg1, FALSE);
-	if (Stage += 1) {
 		//仮ステージ１の表示
 		if (Stage == 0)
 		{
@@ -123,14 +122,13 @@ void GameStage::Draw() const {
 		{
 			DrawGraph(0, 430, img_Stage[0], TRUE); // 左下
 			DrawGraph(480, 430, img_Stage[1], TRUE); // 右下
-			DrawGraph(480, 430, img_footing[5], TRUE);
-			DrawGraph(480, 430, img_footing[5], TRUE);
-			DrawGraph(480, 430, img_footing[5], TRUE);
+			DrawGraph(180, 120, img_footing[5], TRUE);
+			DrawGraph(190, 330, img_footing[5], TRUE);
+			DrawGraph(350, 330, img_footing[5], TRUE);
 			DrawGraph(130, 230, img_footing[6], TRUE);
 			DrawGraph(250, 180, img_footing[6], TRUE);
 			DrawGraph(480, 180, img_footing[6], TRUE);
 		}
-	}
 
 	DrawGraph(bubble_width, bubble_height, img_bubble[0], TRUE);  // シャボン
 
