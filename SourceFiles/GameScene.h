@@ -19,6 +19,7 @@ private:
 	Collide blockData;
 	int stock, blockIndex, stageIndex;
 	bool debug;
+	int damageBlock[4];
 
 	int snd_start;
 	int snd_gameOver;

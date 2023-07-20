@@ -21,6 +21,11 @@ Game::Game() {
 	blockIndex = 0;
 	stageIndex = 0;
 	debug = false;
+	// ダメージブロック
+	damageBlock[0] = 0;
+	damageBlock[1] = 0;
+	damageBlock[2] = 0;
+	damageBlock[3] = 0;
 };
 
 Game::~Game() {
