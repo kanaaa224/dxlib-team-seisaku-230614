@@ -33,7 +33,7 @@ AbstractScene* Game::Update() {
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
 	if (player.GetState() == 0) {
 		blockData = stage.GetBlock(blockIndex);
-		if (blockIndex >= (7 - 1)) blockIndex = 0;
+		if (blockIndex >= (FOOTING_MAX - 1)) blockIndex = 0;
 		else blockIndex++;
 	};
 	player.SetCollideData(blockData);

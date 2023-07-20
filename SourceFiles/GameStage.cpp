@@ -4,7 +4,7 @@
 ********************************/
 #include "main.h"
 
-int GameStage::Stage=4;    //0が最初のステージとなる
+//int GameStage::Stage=0;    //0が最初のステージとなる
 
 GameStage::GameStage() {
 	// 初期化処理
@@ -102,6 +102,8 @@ void GameStage::Update() {
 
 void GameStage::Draw() const {
 	DrawExtendGraph(0, 450, 640, 480, img_sea, FALSE); // 海
+
+	int Stage = 0;
 
 	// 足場
 	//DrawGraph(-50, 430, img_bg1, FALSE);
