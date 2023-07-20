@@ -45,16 +45,16 @@ GameStage::GameStage() {
 
 	// 仮 - 足場の当たり判定用ボックス
 	block[0][0] = 180; // 真ん中
-	block[0][1] = 280;
+	block[0][1] = 250;
 	block[0][2] = 460;
-	block[0][3] = 300;
+	block[0][3] = 270;
 
 	block[1][0] = 0 - 20;   // 左下
 	block[1][1] = 430;
-	block[1][2] = 210;
+	block[1][2] = 230;
 	block[1][3] = SCREEN_HEIGHT;
 
-	block[2][0] = 400; // 右下
+	block[2][0] = 370; // 右下
 	block[2][1] = 430;
 	block[2][2] = SCREEN_WIDTH + 20;
 	block[2][3] = SCREEN_HEIGHT;
@@ -82,7 +82,7 @@ void GameStage::Update() {
 		//amplitude波の大きさを決める　//frequency　1秒あたりに何回周期するかを決める
 		bubble_width = bubble_x;
 		bubble_count += 1;
-		bubble_height -=0.5;
+		bubble_height -= 1;
 
 		frameCounter++;
 		if (frameCounter % 20 == 0) {
@@ -104,18 +104,18 @@ void GameStage::Update() {
 void GameStage::Draw() const {
 	DrawExtendGraph(0, 450, 640, 480, img_sea, FALSE); // 海
 
-	int Stage = 3;
+	int Stage = 0;
 
 	// 足場
 	//DrawGraph(-50, 430, img_bg1, FALSE);
 		//仮ステージ１の表示
 		if (Stage == 0)
 		{
-			DrawGraph(180, 280, img_footing[0], TRUE); // 真ん中
+			DrawGraph(180, 250, img_footing[0], TRUE); // 真ん中
 			DrawGraph(-50, 430, img_footing[0], TRUE); // 左下
 			DrawGraph(370, 430, img_footing[0], TRUE); // 右下
 
-			//DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+			DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
 		}
 		//仮ステージ２の表示
 		if (Stage == 1)
@@ -179,6 +179,6 @@ void GameStage::Draw() const {
 	//DrawBox((int)block[1][0], (int)block[1][1], (int)block[1][2], (int)block[1][3], 0xffffff, FALSE); // 左下
 	//DrawBox((int)block[2][0], (int)block[2][1], (int)block[2][2], (int)block[2][3], 0xffffff, FALSE); // 右下
 
-	DrawFormatString(100, 110, 0x00ffff, "%d", bubble_anm);
-	DrawFormatString(100, 120, 0x00ffff, "%d", frameCounter);
+	//DrawFormatString(100, 110, 0x00ffff, "%d", bubble_anm);
+	//DrawFormatString(100, 120, 0x00ffff, "%d", frameCounter);
 };
