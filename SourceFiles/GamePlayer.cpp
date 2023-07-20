@@ -31,9 +31,9 @@ GamePlayer::~GamePlayer() {
 void GamePlayer::Init() {
 	frameCounter = 0;
 
-	player.hp = 0;
-	player.position.x = 50; //50
-	player.position.y = 380; //380
+	player.hp = 2;
+	player.position.x = FIRST_POSITION_X;
+	player.position.y = FIRST_POSITION_Y;
 	player.size.width = 15;
 	player.size.height = 25;
 
@@ -43,6 +43,7 @@ void GamePlayer::Init() {
 	state[COLLIDE] = 0;
 	state[TURN] = 1;
 	state[ANIM] = 0;
+	state[BLINK] = 1;
 	speed[MOVE] = 0.0f;
 	speed[FALL] = 1.0f;
 
@@ -61,10 +62,12 @@ void GamePlayer::Update() {
 	inputX = PadInput::GetLStick().x;
 	if (PadInput::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || CheckHitKey(KEY_INPUT_A)) inputX = -1.0f;
 	else if (PadInput::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || CheckHitKey(KEY_INPUT_D)) inputX = 1.0f;
+	if (inputX != 0.0f || frameCounter >= 700) state[BLINK] = 0;
 
 	if (!flapCount && (PadInput::OnPress(XINPUT_BUTTON_B) || PadInput::OnPressed(XINPUT_BUTTON_A) || CheckHitKey(KEY_INPUT_SPACE))) {
 		flapCount = 10; // 慣性の最適値：12
 		state[ANIM] = 0;
+		state[BLINK] = 0;
 		if (inputX >= 0.3f || inputX <= -0.3f) flightMove = 12;
 		PlaySoundMem(snd_se_flight, DX_PLAYTYPE_BACK, TRUE);
 	};
@@ -200,7 +203,11 @@ void GamePlayer::Update() {
 
 void GamePlayer::Draw() const {
 	int anim = 0;
-	if (state[COLLIDE] == 0) { // 飛行
+	if (state[BLINK]) { // スタート時の点滅
+		if (frameCounter % 20 == 0) anim = 3;
+		else anim = 1;
+	}
+	else if (state[COLLIDE] == 0) { // 飛行
 		anim = abs(-2 + (flapCount / 3 % 4));
 		if (flapCount == 0) anim += state[ANIM] / 25 % 3;
 		anim = anim + 16;		
@@ -215,7 +222,7 @@ void GamePlayer::Draw() const {
 	};
 
 	// ワープ用にゲーム画面分の間隔をあけて3体描画する
-	DrawRotaGraph2((int)player.position.x, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], TRUE, state[TURN]);
-	DrawRotaGraph2((int)player.position.x - SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], TRUE, state[TURN]);
-	DrawRotaGraph2((int)player.position.x + SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1, 0, img_player[anim], TRUE, state[TURN]);
+	DrawRotaGraph2((int)player.position.x, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
+	DrawRotaGraph2((int)player.position.x - SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
+	DrawRotaGraph2((int)player.position.x + SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
 };

@@ -11,9 +11,17 @@
 class GameStage{
 private:
 	int img_sea;      // 海
-	int img_footing;  // 足場
+	int img_footing[7];  // 足場 画像のStage01から始まり08まである　0から始まる
 	int img_cloud[2]; // 雲
 
+	int img_bubble[3];//シャボン
+	int bubble_height;
+	int bubble_width;
+	int frequency;//シャボン玉のの周波数
+	int  bubble_count;
+	float amplitude;
+	float yOffset;
+	float phase;
 	// 仮
 	float block[FOOTING_MAX][4];
 
@@ -41,4 +49,5 @@ public:
 		collide.lr.y = block[Index][3];
 		return collide;
 	};
+	static int Stage;
 };
