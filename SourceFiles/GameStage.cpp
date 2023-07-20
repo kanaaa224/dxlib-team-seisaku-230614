@@ -6,13 +6,10 @@
 
 //int GameStage::Stage=0;    //0が最初のステージとなる
 
+GameStageGimmick bubble;
+
 GameStage::GameStage() {
-	// 初期化処理
-	bubble_width = 200;
-	frequency = 0;
-	bubble_count = 0;
-	frameCounter = 0;
-	bubble_anm = 0;
+
 
 	// 画像読み込み
 	img_sea = LoadGraph("Resources/Images/Stage/Stage_Sea01.png");
@@ -28,19 +25,10 @@ GameStage::GameStage() {
 	img_Stage[0] = LoadGraph("Resources/Images/Stage/Stage_Land_Left02.png");
 	img_Stage[1] = LoadGraph("Resources/Images/Stage/Stage_Land_Right02.png");
 
-	//シャボン玉画像読込
-	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64 , 64, img_bubble);
-
-
 
 	LoadDivGraph("Resources/Images/Stage/Stage_CloudAnimation.png", 3, 3, 1, 128, 64, img_cloud);//雲画像の分割読込
 	LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 128, 64, img_ect);//雷画像の分割読込
 	
-	//シャボン玉画像読込
-	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64 , 64, img_bubble);
-
-	//シャボン玉スコア画像　仮
-	GetScore_500 = LoadGraph("Resources/Images/Stage/GetScore_500.png");
 
 	// 仮 - 足場の当たり判定用ボックス
 	block[0][0] = 180; // 真ん中
@@ -58,9 +46,9 @@ GameStage::GameStage() {
 	block[2][2] = SCREEN_WIDTH + 20;
 	block[2][3] = SCREEN_HEIGHT;
 
-	//
-	bubble_width = 200;
-	bubble_height = 400;
+	// GameStageGimmickオブジェクトの初期化
+	bubble = GameStageGimmick(img_bubble);
+
 };
 
 GameStage::~GameStage() {
@@ -68,35 +56,7 @@ GameStage::~GameStage() {
 };
 
 void GameStage::Update() {
-	
-
-	
-	float amplitude = 50.0f;
-
-	float frequency = 0.02;
-	
-	float bubble_x = 200;
-
-	bubble_x += amplitude * sin(frequency * bubble_count);
-		//amplitude波の大きさを決める　//frequency　1秒あたりに何回周期するかを決める
-		bubble_width = bubble_x;
-		bubble_count += 1;
-		bubble_height -=0.5;
-
-		frameCounter++;
-		if (frameCounter % 20 == 0) {
-			if (bubble_anm == 0) bubble_anm = 1;
-			else if (bubble_anm == 1) bubble_anm = 2;
-		};
-		if (frameCounter % 60  == 0) {
-			frameCounter = 0;
-			bubble_anm = 0;
-		};
-
-		// 仮 - 9キーで雷テスト
-		if (CheckHitKey(KEY_INPUT_9)) {
-			
-		}
+	bubble.bubble_Update();
 };
 	
 
@@ -165,8 +125,9 @@ void GameStage::Draw() const {
 	
 	DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
 	DrawGraph(320, 80, img_ect[0], TRUE);  // 雲
-	DrawGraph(bubble_width, bubble_height, img_bubble[bubble_anm], TRUE);  // シャボン
 
+	  // シャボン
+	bubble.bubble_Draw();
 
 
 	// 仮 - 足場の当たり判定用ボックス
@@ -174,6 +135,5 @@ void GameStage::Draw() const {
 	//DrawBox((int)block[1][0], (int)block[1][1], (int)block[1][2], (int)block[1][3], 0xffffff, FALSE); // 左下
 	//DrawBox((int)block[2][0], (int)block[2][1], (int)block[2][2], (int)block[2][3], 0xffffff, FALSE); // 右下
 
-	DrawFormatString(100, 110, 0x00ffff, "%d", bubble_anm);
-	DrawFormatString(100, 120, 0x00ffff, "%d", frameCounter);
+	
 };

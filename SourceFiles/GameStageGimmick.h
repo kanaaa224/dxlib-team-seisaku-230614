@@ -22,12 +22,10 @@ private:
 	//シャボン玉のアニメーション用
 	int frameCounter;
 	int bubble_anm;
-	// 仮
-	float block[FOOTING_MAX][4];
-	int GetScore_500;//仮りで画像表示するための変数
+
 public:
 	// コンストラクタ
-	GameStageGimmick();
+	GameStageGimmick(int *bubble_images);
 
 	// デストラクタ
 	~GameStageGimmick();
@@ -39,13 +37,5 @@ public:
 	void bubble_Draw() const;
 
 
-	// 引数で指定したブロックの左下、右下の座標を返す
-	Collide GetBlock(int Index) {
-		Collide collide;
-		collide.ul.x = block[Index][0];
-		collide.ul.y = block[Index][1];
-		collide.lr.x = block[Index][2];
-		collide.lr.y = block[Index][3];
-		return collide;
-	};
+
 };

@@ -16,19 +16,7 @@ private:
 	int img_cloud[2]; // 雲
 	int img_ect[2]; //雷
 
-	int img_bubble[3];//シャボン
-	int bubble_height;
-	int bubble_width;
-	int frequency;//シャボン玉のの周波数
-	int  bubble_count;
-	float amplitude;
-	float bubble_x;
-	//シャボン玉のアニメーション用
-	int frameCounter;
-	int bubble_anm;
-	// 仮
-	float block[FOOTING_MAX][4];
-	int GetScore_500;//仮りで画像表示するための変数
+	int img_bubble;
 public:
 	// コンストラクタ
 	GameStage();
@@ -43,6 +31,10 @@ public:
 	void Draw() const;
 
 	void HitStage();
+
+	// 仮
+	float block[FOOTING_MAX][4];
+	int GetScore_500;//仮りで画像表示するための変数
 
 	// 引数で指定したブロックの左下、右下の座標を返す
 	Collide GetBlock(int Index) {
