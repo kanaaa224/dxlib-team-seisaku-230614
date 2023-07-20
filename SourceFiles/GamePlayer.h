@@ -112,6 +112,16 @@ public:
 		collideData.lr.y = CollideData.lr.y;
 	};
 
+	// 風船の部分のボックスデータの取得
+	Collide GetCollideData() {
+		Collide CollideData;
+		CollideData.ul.x = (player.position.x - player.size.width);
+		CollideData.ul.y = (player.position.y - player.size.height);
+		CollideData.lr.x = (player.position.x + player.size.width);
+		CollideData.lr.y = (player.position.y - player.size.height) + 20;
+		return CollideData;
+	};
+
 	// リスポーン
 	void Restart() {
 		Init();

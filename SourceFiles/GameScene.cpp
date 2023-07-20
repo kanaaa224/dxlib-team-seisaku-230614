@@ -21,11 +21,12 @@ Game::Game() {
 	blockIndex = 0;
 	stageIndex = 0;
 	debug = false;
-	// ダメージブロック
-	damageBlock[0] = 0;
-	damageBlock[1] = 0;
-	damageBlock[2] = 0;
-	damageBlock[3] = 0;
+
+	// 仮 - ダメージブロック
+	damageBlock[0] = 150;
+	damageBlock[1] = 100;
+	damageBlock[2] = damageBlock[0] + 20;
+	damageBlock[3] = damageBlock[1] + 20;
 };
 
 Game::~Game() {
@@ -63,6 +64,12 @@ AbstractScene* Game::Update() {
 			stock--;
 			player.Miss(2);
 		};
+	};
+
+	// 仮 - ダメージブロックとの判定、ダメージ処理
+	Collide balloonCollide = player.GetCollideData();
+	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) >= 1) {
+		player.Damage();
 	};
 
 	// 仮 - Pキーでポーズ
@@ -107,5 +114,7 @@ void Game::Draw() const {
 	ui.Draw();
 
 	if (debug) player.Debug();
+
+	DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xffffff, FALSE);
 };
 
