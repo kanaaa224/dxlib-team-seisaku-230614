@@ -5,13 +5,14 @@
 #pragma once
 #include "main.h"
 
-#define FOOTING_MAX 3 // 足場の最大数（ステージごとで変わるので後で変数にするといいかも）
+#define FOOTING_MAX 8 // 足場の最大数（ステージごとで変わるので後で変数にするといいかも）
 
 // ステージクラス
 class GameStage{
 private:
 	int img_sea;      // 海
-	int img_footing[7];  // 足場 画像のStage01から始まり08まである　0から始まる
+	int img_footing[8];  // 足場 画像のStage01から始まり08まである　0から始まる
+	int img_Stage[2];
 	int img_cloud[2]; // 雲
 
 	// 仮
