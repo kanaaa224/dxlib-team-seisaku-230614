@@ -3,8 +3,9 @@
 * 編集者：
 ********************************/
 #include "main.h"
+#include "GameStage.h"
 
-//int GameStage::Stage=0;    //0が最初のステージとなる
+//int GameStage::Stage=3;    //0が最初のステージとなる
 
 GameStage::GameStage() {
 	// 初期化処理
@@ -44,9 +45,9 @@ GameStage::GameStage() {
 
 	// 仮 - 足場の当たり判定用ボックス
 	block[0][0] = 180; // 真ん中
-	block[0][1] = 250;
+	block[0][1] = 280;
 	block[0][2] = 460;
-	block[0][3] = 270;
+	block[0][3] = 300;
 
 	block[1][0] = 0 - 20;   // 左下
 	block[1][1] = 430;
@@ -103,18 +104,18 @@ void GameStage::Update() {
 void GameStage::Draw() const {
 	DrawExtendGraph(0, 450, 640, 480, img_sea, FALSE); // 海
 
-	int Stage = 0;
+	int Stage = 3;
 
 	// 足場
 	//DrawGraph(-50, 430, img_bg1, FALSE);
 		//仮ステージ１の表示
 		if (Stage == 0)
 		{
-			DrawGraph(180, 250, img_footing[0], TRUE); // 真ん中
+			DrawGraph(180, 280, img_footing[0], TRUE); // 真ん中
 			DrawGraph(-50, 430, img_footing[0], TRUE); // 左下
 			DrawGraph(370, 430, img_footing[0], TRUE); // 右下
 
-			DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+			//DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
 		}
 		//仮ステージ２の表示
 		if (Stage == 1)
@@ -122,10 +123,11 @@ void GameStage::Draw() const {
 			DrawGraph(180, 280, img_footing[0], TRUE); // 真ん中
 			DrawGraph(-50, 430, img_footing[0], TRUE); // 左下
 			DrawGraph(370, 430, img_footing[0], TRUE); // 右下
-			DrawGraph(80, 150, img_footing[1], TRUE);
-			DrawGraph(450, 150, img_footing[1], TRUE);
+			DrawGraph(80, 130, img_footing[1], TRUE);
+			DrawGraph(450, 130, img_footing[1], TRUE);
 
-			DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+			DrawGraph(50, 180, img_cloud[0], TRUE);  // 雲
+			DrawGraph(480,180, img_cloud[0], TRUE);  // 雲
 		}
 		//仮ステージ３の表示
 		if (Stage == 2)
@@ -137,17 +139,20 @@ void GameStage::Draw() const {
 			DrawGraph(180, 240, img_footing[3], TRUE); // 左のT字の足場
 			DrawGraph(220, 130, img_footing[4], TRUE); // 左上の小さい足場
 			DrawGraph(270, 330, img_footing[2], TRUE); // 海の上の足場
+
+			//DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+
 		}
 		//仮ステージ４の表示
 		if (Stage == 3)
 		{
-			DrawGraph(-70, 430, img_footing[0], TRUE); // 左下
-			DrawGraph(400, 430, img_footing[0], TRUE); // 右下
-			DrawGraph(250, 110, img_footing[2], TRUE);
-			DrawGraph(100, 210, img_footing[2], TRUE);
-			DrawGraph(400, 180, img_footing[2], TRUE);
-			DrawGraph(230, 250, img_footing[2], TRUE);
-			DrawGraph(300, 330, img_footing[2], TRUE);
+			DrawGraph(0, 430, img_Stage[0], TRUE); // 左下
+			DrawGraph(480, 430, img_Stage[1], TRUE); // 右下
+			DrawGraph(250, 130, img_footing[5], TRUE);
+			DrawGraph(100, 230, img_footing[5], TRUE);
+			DrawGraph(430, 200, img_footing[5], TRUE);
+			DrawGraph(200, 300, img_footing[5], TRUE);
+			DrawGraph(350, 350, img_footing[5], TRUE);
 		}
 		//仮ステージ５の表示
 		if (Stage == 4)
@@ -163,8 +168,8 @@ void GameStage::Draw() const {
 		}
 
 	
-	DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
-	DrawGraph(320, 80, img_ect[0], TRUE);  // 雲
+	//DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+	//DrawGraph(320, 80, img_ect[0], TRUE);  // 雲
 	DrawGraph(bubble_width, bubble_height, img_bubble[bubble_anm], TRUE);  // シャボン
 
 
