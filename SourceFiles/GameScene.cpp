@@ -89,6 +89,9 @@ AbstractScene* Game::Update() {
 	if (PadInput::OnPress(XINPUT_BUTTON_BACK) || CheckHitKey(KEY_INPUT_ESCAPE)) return new Title();
 
 	stage.Update();
+
+	enemy.Update();
+
 	ui.SetStock(stock);
 	ui.Update();
 
@@ -99,6 +102,7 @@ void Game::Draw() const {
 
 	stage.Draw();
 	player.Draw();
+	enemy.Draw();
 	ui.Draw();
 
 	if (debug) player.Debug();

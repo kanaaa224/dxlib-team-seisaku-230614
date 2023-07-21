@@ -6,11 +6,14 @@
 #include "AbstractScene.h"
 #include "main.h"
 
+#include "GameEnemy.h"
+
 class Game : public AbstractScene {
 private:
 	int state;
 
 	GamePlayer player;
+	GameEnemy enemy;
 	GameStage stage;
 	GameUI ui;
 
