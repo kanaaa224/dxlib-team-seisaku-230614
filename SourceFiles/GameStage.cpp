@@ -104,7 +104,7 @@ void GameStage::Update() {
 void GameStage::Draw() const {
 	DrawExtendGraph(0, 450, 640, 480, img_sea, FALSE); // 海
 
-	int Stage = 0;
+	int Stage = 3;
 
 	// 足場
 	//DrawGraph(-50, 430, img_bg1, FALSE);
