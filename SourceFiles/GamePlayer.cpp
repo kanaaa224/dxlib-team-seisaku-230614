@@ -226,7 +226,8 @@ void GamePlayer::Update() {
 
 	}
 	else if (player.hp == -3) {
-
+		PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
+		Restart();
 	};
 };
 
