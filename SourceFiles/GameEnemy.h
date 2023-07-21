@@ -49,19 +49,14 @@ private:
 
 	Enemy enemy;
 
-	int flapCount;  // ジャンプ数
-	int flightMove; // 空中で羽ばたき中の移動
-	int state[4];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ
-	float speed[1];
-
-	float leftEndX, rightEndX; // ワープ、当たり判定用のプレイヤー左右端側のX位置
+	
 
 	int r_enemy[17];
 	int g_enemy[18];
 	int p_enemy[18];
 	int fish[10];
 
-	Collide collideData;
+
 
 public:
 	// コンストラクタ
@@ -87,11 +82,5 @@ public:
 		return enemy.state;
 	}
 
-	// 当たり判定用の左上・右上の座標を設定
-	void SetCollideData(Collide CollideData) {
-		collideData.ul.x = CollideData.ul.x;
-		collideData.ul.y = CollideData.ul.y;
-		collideData.lr.x = CollideData.lr.x;
-		collideData.lr.y = CollideData.lr.y;
-	};
+	
 };
