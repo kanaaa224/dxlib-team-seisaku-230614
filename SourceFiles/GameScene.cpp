@@ -40,8 +40,8 @@ AbstractScene* Game::Update() {
 
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
 	if (player.GetState() == 0) {
-		blockData = stage.GetBlock(blockIndex);
-		if (blockIndex >= (FOOTING_MAX - 1)) blockIndex = 0;
+		blockData = stage.GetBlock(stageIndex, blockIndex);
+		if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) blockIndex = 0;
 		else blockIndex++;
 	};
 	player.SetCollideData(blockData);
@@ -127,6 +127,7 @@ AbstractScene* Game::Update() {
 	// 仮 - ESCキーでタイトル
 	if (PadInput::OnPress(XINPUT_BUTTON_BACK) || CheckHitKey(KEY_INPUT_ESCAPE)) return new Title();
 
+	stage.SetNowStage(stageIndex);
 	stage.Update();
 	ui.SetStock(stock);
 	ui.Update();

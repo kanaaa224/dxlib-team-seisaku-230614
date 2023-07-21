@@ -19,8 +19,8 @@ using std::to_string;
 
 // ゲーム処理のヘッダーファイル
 #include "GamePlayer.h"
-#include "GameStage.h"
 #include "GameStageGimmick.h"
+#include "GameStage.h"
 #include "GameUI.h"
 
 // 各シーンのヘッダーファイル

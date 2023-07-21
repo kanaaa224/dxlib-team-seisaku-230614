@@ -5,30 +5,30 @@
 #pragma once
 #include "main.h"
 
-#define FOOTING_MAX 3 // 足場の最大数（ステージごとで変わるので後で変数にするといいかも）
+#define FOOTING_MAX 8 // 一番足場が多いステージの足場の最大数
+
+// ステージ当たり判定データ 構造体
+struct CollisionData {
+	int footingMax = 0;
+	int footingBlock[FOOTING_MAX][4];
+};
 
 // ステージクラス
 class GameStage{
 private:
-	int img_sea;      // 海
-	int img_footing[8];  // 足場 画像のStage01から始まり08まである　0から始まる
-	int img_Stage[2];
-	int img_cloud[2]; // 雲
-	int img_ect[2]; //雷
+	int img_sea;        // 海
+	int img_footing[8]; // 足場 画像のStage01から始まり08まである　0から始まる
+	int img_land[2];    // 海付き地面
+	int img_cloud[2];   // 雲
+	int img_ect[2];     // 雷
+	
+	GameStageGimmick gimmick; // ギミックオブジェクト
 
-	int img_bubble[3];//シャボン
-	int bubble_height;
-	int bubble_width;
-	int frequency;//シャボン玉のの周波数
-	int  bubble_count;
-	float amplitude;
-	float bubble_x;
-	//シャボン玉のアニメーション用
-	int frameCounter;
-	int bubble_anm;
-	// 仮
-	float block[FOOTING_MAX][4];
-	int GetScore_500;//仮りで画像表示するための変数
+	// 仮 - ステージ当たり判定データ
+	CollisionData collisionData[5];
+
+	int nowStage; // 現在のステージ
+
 public:
 	// コンストラクタ
 	GameStage();
@@ -44,14 +44,22 @@ public:
 
 	void HitStage();
 
+	void SetNowStage(int StaageIndex) {
+		nowStage = StaageIndex;
+	};
+
 	// 引数で指定したブロックの左下、右下の座標を返す
-	Collide GetBlock(int Index) {
+	Collide GetBlock(int StageIndex, int blockIndex) {
 		Collide collide;
-		collide.ul.x = block[Index][0];
-		collide.ul.y = block[Index][1];
-		collide.lr.x = block[Index][2];
-		collide.lr.y = block[Index][3];
+		collide.ul.x = collisionData[StageIndex].footingBlock[blockIndex][0];
+		collide.ul.y = collisionData[StageIndex].footingBlock[blockIndex][1];
+		collide.lr.x = collisionData[StageIndex].footingBlock[blockIndex][2];
+		collide.lr.y = collisionData[StageIndex].footingBlock[blockIndex][3];
 		return collide;
 	};
-	static int Stage;
+
+	// 引数で指定したステージの足場の最大数を返す
+	int GetFootingMax(int StageIndex) {
+		return collisionData[StageIndex].footingMax;
+	};
 };
