@@ -5,6 +5,7 @@
 #pragma once
 #include "main.h"
 
+
 // ステージクラス
 class GameStageGimmick {
 private:
@@ -20,6 +21,11 @@ private:
 	// シャボン玉のアニメーション用
 	int frameCounter;
 	int bubble_anim;
+
+	int bubble_flg;
+	int position;
+	int position_flg;
+	int new_position;
 
 	//int GetScore_500;//仮りで画像表示するための変数
 
@@ -46,3 +52,4 @@ public:
 	// シャボン玉 描画
 	void BubbleDraw() const;
 };
+
