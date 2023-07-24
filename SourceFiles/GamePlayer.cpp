@@ -279,7 +279,4 @@ void GamePlayer::Draw() const {
 	DrawRotaGraph2((int)player.position.x, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
 	DrawRotaGraph2((int)player.position.x - SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
 	DrawRotaGraph2((int)player.position.x + SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
-
-	// ミス時の水しぶき
-	//if (player.hp == -3) {};
 };

@@ -64,9 +64,9 @@ private:
 	int snd_se_walk;
 	int snd_se_bound;
 	int snd_se_restart;
-	int snd_se_crack;   // 風船が割れた音
-	int snd_se_fall;    // 風船が割れて落下中の音
-	int snd_se_fell;    // 海に落ちた音
+	int snd_se_crack;
+	int snd_se_fall;
+	int snd_se_fell;
 
 	Collide collideData;
 
