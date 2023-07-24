@@ -29,6 +29,9 @@ private:
 
 	//int GetScore_500;//仮りで画像表示するための変数
 
+	// プレイヤーの左上・右上座標
+	Collide playerCollide;
+
 public:
 	// コンストラクタ
 	GameStageGimmick();
@@ -51,5 +54,9 @@ public:
 
 	// シャボン玉 描画
 	void BubbleDraw() const;
-};
 
+	// プレイヤーの衝突座標を設定
+	void SetPlayerCollide(Collide collide) {
+		playerCollide = collide;
+	};
+};
