@@ -11,8 +11,10 @@ private:
 	int state;
 
 	GamePlayer player;
-	GameStage stage;
+	GameEffect effect;
 	GameUI ui;
+
+	GameStage stage;
 	GameStageGimmick gimmick; // ギミックオブジェクト
 
 	// 仮
@@ -20,7 +22,7 @@ private:
 	Collide blockData;
 	int blockIndex, stageIndex;
 	bool debug, gameover;
-	int damageBlock[4];
+	int damageBlock[8];
 	bool damageFlg;
 
 	int snd_start;
