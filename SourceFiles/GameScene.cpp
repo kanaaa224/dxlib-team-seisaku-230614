@@ -17,11 +17,11 @@ Game::Game() {
 	ui.SetScore(12345);
 	ui.SetHighScore(67890);
 	ui.SetState(1);
-	stock = 2;
-	hp = 2;
+	player.SetStock(2);
 	blockIndex = 0;
 	stageIndex = 0;
 	debug = false;
+	gameover = false;
 
 	// 仮 - ダメージブロック
 	damageBlock[0] = 150;
@@ -52,50 +52,17 @@ AbstractScene* Game::Update() {
 			blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y
 		)
 	);
-	if (state != 1) player.Update();
 
 	// 仮 - 海に落ちた時の残機処理
 	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
-		if (stock == 0) {
-			state = 1;
-			ui.SetState(-1);
-			PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
-			stock = -1;
-		}
-		else if (stock > 0) {
-			stock--;
-			player.Miss(2);
-		};
+		player.Miss(2);
 	};
 
 	// 仮 - ダメージブロックとの判定、ダメージ処理
 	Collide balloonCollide = player.GetCollideData();
 	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) == 0) damageFlg = true;
 	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) >= 1 && damageFlg) {
-		//if (stock == 0) {
-		//	if (player.GetHP() == -10) {
-		//		state = 1;
-		//		ui.SetState(-1);
-		//		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
-		//		stock = -1;
-		//	};
-		//}
-		//else if (stock > 0) {
-		//	stock--;
-		//};
 		player.Damage();
-		//if (hp == 1) {
-		//	if (player.GetHP() == -10) {
-		//		state = 1;
-		//		ui.SetState(-1);
-		//		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
-		//		stock = -1;
-		//	};
-		//}
-		//else if (hp > 1) {
-		//	hp--;
-		//	player.Miss(2);
-		//};
 		damageFlg = false;
 	};
 
@@ -127,11 +94,21 @@ AbstractScene* Game::Update() {
 	// 仮 - ESCキーでタイトル
 	if (PadInput::OnPress(XINPUT_BUTTON_BACK) || CheckHitKey(KEY_INPUT_ESCAPE)) return new Title();
 
+	//////////////////////////////////////////////////
+
+
 	stage.SetNowStage(stageIndex);
 	stage.Update();
 	gimmick.Update();
 
-	ui.SetStock(stock);
+	if (state != 1) player.Update();
+	if ((player.GetStock() == -1) && !gameover) {
+		state = 1;
+		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
+		gameover = true;
+	};
+
+	ui.SetStock(player.GetStock());
 	ui.Update();
 	
 	return this;
@@ -143,6 +120,7 @@ void Game::Draw() const {
 	gimmick.Draw();
 
 	player.Draw();
+
 	ui.Draw();
 
 	if (debug) player.Debug();

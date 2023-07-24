@@ -5,6 +5,8 @@
 #include "main.h"
 
 GamePlayer::GamePlayer() {
+	stock = 2; // 残機
+
 	Init();
 
 	if (LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player) == -1) throw;
@@ -218,15 +220,22 @@ void GamePlayer::Update() {
 		if (SCREEN_HEIGHT + 10 < (player.position.y - player.size.height)) {
 			StopSoundMem(snd_se_fall);
 			PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
-			player.hp - -10;
-			Restart();
+			stock--;
+			player.hp = -10;
 		};
 	}
 	else if (player.hp == -2) {
-
+		// kaminari
+		PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
+		stock--;
+		player.hp = -10;
 	}
 	else if (player.hp == -3) {
 		PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
+		stock--;
+		player.hp = -10;
+	}
+	else if (player.hp == -10) {
 		Restart();
 	};
 };
