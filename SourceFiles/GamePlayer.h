@@ -56,6 +56,7 @@ private:
 	int flightMove; // 空中で羽ばたき中の移動
 	int state[4];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ
 	float speed[2]; // 移動、落下速度
+	int stock;      // 残機
 
 	int img_player[30];
 	int snd_se_flight;
@@ -139,9 +140,11 @@ public:
 
 	// ミス（0で通常ミス、1で感電ミス、2で海落下ミス、3で魚に捕まりミス）
 	void Miss(int MissType) {
-		if (MissType == 0) player.hp = -1;
-		else if (MissType == 1) player.hp = -2;
-		else if (MissType == 2) player.hp = -3;
+		if (player.hp >= 0) {
+			if (MissType == 0) player.hp = -1;
+			else if (MissType == 1) player.hp = -2;
+			else if (MissType == 2) player.hp = -3;
+		};
 	};
 
 	// プレイヤーのHPを設定
@@ -152,6 +155,16 @@ public:
 	// プレイヤーのHPを取得
 	int GetHP() {
 		return player.hp;
+	};
+
+	// プレイヤーの残機を設定
+	void SetStock(int Stock) {
+		stock = Stock;
+	};
+
+	// プレイヤーの残機を取得
+	int GetStock() {
+		return stock;
 	};
 
 	// デバッグ表示
