@@ -8,14 +8,14 @@ GameStageGimmick::GameStageGimmick() {
 	// シャボン玉画像読込
 	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, img_bubble);
 
-	bubble_width = 200;
 	frequency = 0;
 	bubble_count = 0;
 	frameCounter = 0;
 	bubble_anim = 0;
 
-	bubble_width = 200;
 	bubble_height = 400;
+
+	bubble_flg = 0;
 
 	//シャボン玉スコア画像　仮
 	//GetScore_500 = LoadGraph("Resources/Images/Stage/GetScore_500.png");
@@ -30,23 +30,53 @@ void GameStageGimmick::BubbleUpdate() {
 	float amplitude = 50.0f;
 	float frequency = 0.02;
 	
-	float bubble_x = 200;
 
-	bubble_x += amplitude * sin(frequency * bubble_count);
+	float bubble_x = 100;
+	
+
+	// if (CheckHitKey(KEY_INPUT_B) && !position_flg) {でx取得
+
+	
+	if (CheckHitKey(KEY_INPUT_B) && !position_flg && bubble_flg == 0) {
+		position_flg = true; // フラグを立てる
+		position = GetRand(400);
+	}
+	
+	// フラグが立っていない
+	if (!CheckHitKey(KEY_INPUT_B)) {
+		position_flg = false;
+	}
+
+	if (CheckHitKey(KEY_INPUT_B)) {
+		bubble_flg = 1;
+		
+	}
+	if (bubble_flg == 1) {
+
+
+		bubble_x += amplitude * sin(frequency * bubble_count);
 		//amplitude波の大きさを決める　//frequency　1秒あたりに何回周期するかを決める
 		bubble_width = bubble_x;
+		bubble_width += position;
 		bubble_count += 1;
-		bubble_height -=0.5;
+		bubble_height -= 1;
 
 		frameCounter++;
-		if (frameCounter % 20 == 0) {
-			if (bubble_anim == 0) bubble_anim = 1;
-			else if (bubble_anim == 1) bubble_anim = 2;
+
+		if (frameCounter % 30 == 0) {
+			 bubble_anim++;
 		};
-		if (frameCounter % 60  == 0) {
-			frameCounter = 0;
-			bubble_anim = 0;
-		};
+
+		if (bubble_anim == 3) bubble_anim = 0;
+
+		if (bubble_height == 100) bubble_anim = 3;
+	}
+	if (bubble_height == -10) {
+		bubble_flg = 0;
+		bubble_height = 480;
+	}
+
+
 };
 	
 
@@ -59,6 +89,7 @@ void GameStageGimmick::BubbleDraw() const {
 	//DrawBox((int)block[1][0], (int)block[1][1], (int)block[1][2], (int)block[1][3], 0xffffff, FALSE); // 左下
 	//DrawBox((int)block[2][0], (int)block[2][1], (int)block[2][2], (int)block[2][3], 0xffffff, FALSE); // 右下
 
-	DrawFormatString(100, 110, 0x00ffff, "%d", bubble_anim);
-	DrawFormatString(100, 120, 0x00ffff, "%d", frameCounter);
+	DrawFormatString(100, 110, 0x00ffff, " bubble_anim %d", bubble_anim);
+	DrawFormatString(100, 160, 0x00ffff, "bubble_height %d", bubble_height);
+
 };
