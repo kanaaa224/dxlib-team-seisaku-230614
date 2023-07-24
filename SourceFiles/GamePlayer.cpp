@@ -9,7 +9,7 @@ GamePlayer::GamePlayer() {
 
 	Init();
 
-	if (LoadDivGraph("Resources/Images/Player/Player_animation.png", 30, 8, 4, 64, 64, img_player) == -1) throw;
+	if (LoadDivGraph("Resources/Images/Player/Player_animation.png", 31, 8, 4, 64, 64, img_player) == -1) throw;
 
 	if ((snd_se_flight = LoadSoundMem("Resources/Sounds/SE_PlayerJump.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 50, snd_se_flight);
@@ -34,7 +34,7 @@ GamePlayer::GamePlayer() {
 };
 
 GamePlayer::~GamePlayer() {
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < 31; i++) {
 		DeleteGraph(img_player[i]);
 	};
 	DeleteSoundMem(snd_se_flight);
@@ -62,14 +62,13 @@ void GamePlayer::Init() {
 	state[TURN] = 1;
 	state[ANIM] = 0;
 	state[BLINK] = 1;
+	state[MISS] = 0;
 	speed[MOVE] = 0.0f;
 	speed[FALL] = 1.0f;
 };
 
 void GamePlayer::Update() {
-
 	frameCounter++;
-
 	if (player.hp > 0) {
 
 		//////////////////////////////////////////////////////////////////////
@@ -212,28 +211,33 @@ void GamePlayer::Update() {
 			wallHit = true;
 		};
 		if (wallHit) speed[MOVE] *= -0.9f;
-
 	}
 	else if (player.hp == -1) {
-		if (CheckSoundMem(snd_se_fall) == 0) PlaySoundMem(snd_se_fall, DX_PLAYTYPE_BACK, TRUE);
-		player.position.y += 2.5f;
 		if (SCREEN_HEIGHT + 10 < (player.position.y - player.size.height)) {
 			StopSoundMem(snd_se_fall);
-			PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
-			stock--;
-			player.hp = -10;
+			player.hp = -3;
+		}
+		else {
+			if (CheckSoundMem(snd_se_fall) == 0) {
+				PlaySoundMem(snd_se_fall, DX_PLAYTYPE_BACK, TRUE);
+				speed[FALL] = -3.0f;
+			};
+			speed[FALL] += 0.1f;
+			player.position.y += speed[FALL];
+			state[MISS] = frameCounter;
 		};
 	}
 	else if (player.hp == -2) {
-		// kaminari
-		PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
-		stock--;
-		player.hp = -10;
+		if ((state[MISS] + 60) < frameCounter) player.hp = -1;
 	}
 	else if (player.hp == -3) {
-		PlaySoundMem(snd_se_fell, DX_PLAYTYPE_NORMAL, TRUE);
-		stock--;
-		player.hp = -10;
+		if ((CheckSoundMem(snd_se_fell) == 0) && (frameCounter == (state[MISS] + 2))) {
+			PlaySoundMem(snd_se_fell, DX_PLAYTYPE_BACK, TRUE);
+		};
+		if ((state[MISS] + 90) < frameCounter) {
+			stock--;
+			player.hp = -10;
+		};
 	}
 	else if (player.hp == -10) {
 		Restart();
@@ -247,8 +251,12 @@ void GamePlayer::Draw() const {
 		else anim = 1;
 	}
 	else if (player.hp == -1) { // ミスで落下時
-		anim = frameCounter / 2 % 3;
+		anim = frameCounter / 3 % 3;
 		anim += 27;
+	}
+	else if (player.hp == -2) { // 感電
+		anim = frameCounter / 2 % 2;
+		anim += 29;
 	}
 	else if (state[COLLIDE] == 0) { // 飛行
 		anim = abs(-2 + (flapCount / 3 % 4));
@@ -271,4 +279,7 @@ void GamePlayer::Draw() const {
 	DrawRotaGraph2((int)player.position.x, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
 	DrawRotaGraph2((int)player.position.x - SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
 	DrawRotaGraph2((int)player.position.x + SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
+
+	// ミス時の水しぶき
+	//if (player.hp == -3) {};
 };

@@ -28,6 +28,10 @@ Game::Game() {
 	damageBlock[1] = 100;
 	damageBlock[2] = damageBlock[0] + 20;
 	damageBlock[3] = damageBlock[1] + 20;
+	damageBlock[4] = 250;
+	damageBlock[5] = 100;
+	damageBlock[6] = damageBlock[4] + 20;
+	damageBlock[7] = damageBlock[5] + 20;
 	damageFlg = false;
 };
 
@@ -55,16 +59,23 @@ AbstractScene* Game::Update() {
 
 	// 仮 - 海に落ちた時の残機処理
 	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
-		player.Miss(2);
+		player.Miss(MISS_FALLSEA);
 	};
 
 	// 仮 - ダメージブロックとの判定、ダメージ処理
 	Collide balloonCollide = player.GetCollideData();
-	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) == 0) damageFlg = true;
+	if ((CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) == 0) && (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7]) == 0)) damageFlg = true;
 	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) >= 1 && damageFlg) {
 		player.Damage();
 		damageFlg = false;
+	}
+	else if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7]) >= 1 && damageFlg) {
+		player.Miss(MISS_LIGHTNING);
+		damageFlg = false;
 	};
+
+	// 仮 - 水しぶき
+	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash((player.GetPosition().x - player.GetSize().width), (SCREEN_HEIGHT - 50));
 
 	// 仮 - Pキーでポーズ
 	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
@@ -103,7 +114,7 @@ AbstractScene* Game::Update() {
 		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
 		gameover = true;
 	};
-
+	effect.Update();
 	ui.SetStock(player.GetStock());
 	ui.Update();
 	
@@ -116,13 +127,15 @@ void Game::Draw() const {
 	//gimmick.Draw();
 
 	player.Draw();
-
+	effect.Draw();
 	ui.Draw();
 
 	if (debug) player.Debug();
 	//if (gameover) DrawFormatString(10, 50, 0xffffff, "Rキーでリセット（メモリ占有に注意）");
+	//if (gameover) DrawFormatString(10, 65, 0xffffff, "Pキーでそのまま続行");
 
 	DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xffffff, FALSE);
+	DrawBox(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], 0xffffff, FALSE);
 };
 
 int GameMain::stageIndex = 0;
