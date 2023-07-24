@@ -48,7 +48,7 @@ AbstractScene* Game::Update() {
 		if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) blockIndex = 0;
 		else blockIndex++;
 	};
-	player.SetCollideData(blockData);
+	player.SetCollide(blockData);
 	player.SetState(
 		CheckCollideBox(
 			player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, 
@@ -63,7 +63,7 @@ AbstractScene* Game::Update() {
 	};
 
 	// 仮 - ダメージブロックとの判定、ダメージ処理
-	Collide balloonCollide = player.GetCollideData();
+	Collide balloonCollide = player.GetWeakCollide();
 	if ((CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) == 0) && (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7]) == 0)) damageFlg = true;
 	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) >= 1 && damageFlg) {
 		player.Damage();
@@ -107,6 +107,7 @@ AbstractScene* Game::Update() {
 	stage.SetNowStage(stageIndex);
 	stage.Update();
 	gimmick.Update();
+	gimmick.SetPlayerCollide(player.GetCollide());
 
 	if (state != 1) player.Update();
 	if ((player.GetStock() == -1) && !gameover) {

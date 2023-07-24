@@ -107,15 +107,25 @@ public:
 	};
 
 	// 当たり判定用の左上・右上の座標を設定
-	void SetCollideData(Collide CollideData) {
+	void SetCollide(Collide CollideData) {
 		collideData.ul.x = CollideData.ul.x;
 		collideData.ul.y = CollideData.ul.y;
 		collideData.lr.x = CollideData.lr.x;
 		collideData.lr.y = CollideData.lr.y;
 	};
 
-	// 風船の部分のボックスデータの取得
-	Collide GetCollideData() {
+	// プレイヤー左上・右上の座標の取得
+	Collide GetCollide() {
+		Collide CollideData;
+		CollideData.ul.x = (player.position.x - player.size.width);
+		CollideData.ul.y = (player.position.y - player.size.height);
+		CollideData.lr.x = (player.position.x + player.size.width);
+		CollideData.lr.y = (player.position.y + player.size.height);
+		return CollideData;
+	};
+
+	// 風船エリアの左上・右上の座標の取得
+	Collide GetWeakCollide() {
 		Collide CollideData;
 		CollideData.ul.x = (player.position.x - player.size.width);
 		CollideData.ul.y = (player.position.y - player.size.height);
@@ -280,7 +290,7 @@ public:
 	};
 
 	void Draw() const {
-		if (splash && (splash_anim <= 3)) DrawRotaGraph(splash_x, splash_y, 1.0f, 0, img_splash[splash_anim], TRUE);
+		if (splash && (splash_anim <= 3)) DrawRotaGraph(splash_x + 16, splash_y, 1.0f, 0, img_splash[splash_anim], TRUE);
 	};
 
 	void Splash(int x, int y) {
