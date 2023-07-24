@@ -8,7 +8,7 @@
 // ステージクラス
 class GameStageGimmick {
 private:
-	int img_bubble[3]; // シャボン
+	int img_bubble[4]; // シャボン
 
 	int bubble_height;
 	int bubble_width;

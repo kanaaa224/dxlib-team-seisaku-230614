@@ -13,6 +13,7 @@ private:
 	GamePlayer player;
 	GameStage stage;
 	GameUI ui;
+	GameStageGimmick gimmick; // ギミックオブジェクト
 
 	// 仮
 	bool ctrlFlg;

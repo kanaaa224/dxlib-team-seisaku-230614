@@ -129,15 +129,19 @@ AbstractScene* Game::Update() {
 
 	stage.SetNowStage(stageIndex);
 	stage.Update();
+	gimmick.Update();
+
 	ui.SetStock(stock);
 	ui.Update();
-
+	
 	return this;
 };
 
 void Game::Draw() const {
 
 	stage.Draw();
+	gimmick.Draw();
+
 	player.Draw();
 	ui.Draw();
 
