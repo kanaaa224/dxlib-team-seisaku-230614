@@ -69,6 +69,7 @@ void GameStageGimmick::BubbleUpdate() {
 
 		if (bubble_anim == 3) bubble_anim = 0;
 
+
 		if (bubble_height == 100) bubble_anim = 3;
 	}
 	if (bubble_height == -10) {
