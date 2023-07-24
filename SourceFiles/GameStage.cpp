@@ -49,7 +49,7 @@ GameStage::~GameStage() {
 };
 
 void GameStage::Update() {
-	gimmick.Update();
+	
 };
 
 void GameStage::Draw() const {
@@ -63,7 +63,7 @@ void GameStage::Draw() const {
 
 		DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
 	}
-	//仮ステージ２の表示
+	// 仮ステージ２の表示
 	if (nowStage == 1) {
 		DrawGraph(180, 280, img_footing[0], TRUE); // 真ん中
 		DrawGraph(-50, 430, img_footing[0], TRUE); // 左下
@@ -115,6 +115,4 @@ void GameStage::Draw() const {
 	//DrawBox((int)block[0][0], (int)block[0][1], (int)block[0][2], (int)block[0][3], 0xffffff, FALSE); // 真ん中
 	//DrawBox((int)block[1][0], (int)block[1][1], (int)block[1][2], (int)block[1][3], 0xffffff, FALSE); // 左下
 	//DrawBox((int)block[2][0], (int)block[2][1], (int)block[2][2], (int)block[2][3], 0xffffff, FALSE); // 右下
-
-	gimmick.Draw();
 };

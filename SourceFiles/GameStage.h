@@ -21,8 +21,6 @@ private:
 	int img_land[2];    // 海付き地面
 	int img_cloud[2];   // 雲
 	int img_ect[2];     // 雷
-	
-	GameStageGimmick gimmick; // ギミックオブジェクト
 
 	// 仮 - ステージ当たり判定データ
 	CollisionData collisionData[5];
