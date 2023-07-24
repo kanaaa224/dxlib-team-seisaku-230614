@@ -23,7 +23,7 @@ GameStage::GameStage() {
 	img_land[1] = LoadGraph("Resources/Images/Stage/Stage_Land_Right02.png");
 
 	LoadDivGraph("Resources/Images/Stage/Stage_CloudAnimation.png", 3, 3, 1, 128, 64, img_cloud);       // 雲画像の分割読込
-	LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 128, 64, img_ect); // 雷画像の分割読込
+	//LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 128, 64, img_ect); // 雷画像の分割読込
 
 	// 仮 - ステージ１の足場の当たり判定用ボックス
 	collisionData[0].footingBlock[0][0] = 180;    // 真ん中
