@@ -113,7 +113,7 @@ AbstractScene* Game::Update() {
 void Game::Draw() const {
 
 	stage.Draw();
-	//gimmick.Draw();
+	gimmick.Draw();
 
 	player.Draw();
 
