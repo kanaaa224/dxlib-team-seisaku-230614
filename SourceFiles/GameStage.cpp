@@ -26,6 +26,8 @@ GameStage::GameStage() {
 	LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 128, 64, img_ect); // 雷画像の分割読込
 
 	// 仮 - ステージ１の足場の当たり判定用ボックス
+	collisionData[0].footingMax = 3; // 足場最大数
+
 	collisionData[0].footingBlock[0][0] = 180;    // 真ん中
 	collisionData[0].footingBlock[0][1] = 250;
 	collisionData[0].footingBlock[0][2] = 460;
@@ -41,7 +43,33 @@ GameStage::GameStage() {
 	collisionData[0].footingBlock[2][2] = SCREEN_WIDTH + 20;
 	collisionData[0].footingBlock[2][3] = SCREEN_HEIGHT;
 
-	collisionData[0].footingMax = 3; // 足場最大数
+	//仮ステージ２の足場の当たり判定
+	collisionData[1].footingMax = 5; // 足場最大数
+
+	collisionData[1].footingBlock[0][0] = 180;    // 真ん中
+	collisionData[1].footingBlock[0][1] = 280;
+	collisionData[1].footingBlock[0][2] = 460;
+	collisionData[1].footingBlock[0][3] = 300;
+
+	collisionData[1].footingBlock[1][0] = 0 - 20; // 左下
+	collisionData[1].footingBlock[1][1] = 430;
+	collisionData[1].footingBlock[1][2] = 230;
+	collisionData[1].footingBlock[1][3] = SCREEN_HEIGHT;
+
+	collisionData[1].footingBlock[2][0] = 370;    // 右下
+	collisionData[1].footingBlock[2][1] = 430;
+	collisionData[1].footingBlock[2][2] = SCREEN_WIDTH + 20;
+	collisionData[1].footingBlock[2][3] = SCREEN_HEIGHT;
+
+	collisionData[1].footingBlock[3][0] = 80;    // 左上
+	collisionData[1].footingBlock[3][1] = 130;
+	collisionData[1].footingBlock[3][2] = 270;
+	collisionData[1].footingBlock[3][3] = 130;
+
+	//collisionData[1].footingBlock[4][0] = 180;    // 右上
+	//collisionData[1].footingBlock[4][1] = 280;
+	//collisionData[1].footingBlock[4][2] = 460;
+	//collisionData[1].footingBlock[4][3] = 300;
 };
 
 GameStage::~GameStage() {
@@ -68,8 +96,8 @@ void GameStage::Draw() const {
 		DrawGraph(180, 280, img_footing[0], TRUE); // 真ん中
 		DrawGraph(-50, 430, img_footing[0], TRUE); // 左下
 		DrawGraph(370, 430, img_footing[0], TRUE); // 右下
-		DrawGraph(80, 130, img_footing[1], TRUE);
-		DrawGraph(450, 130, img_footing[1], TRUE);
+		DrawGraph(80, 130, img_footing[1], TRUE);  //左上
+		DrawGraph(450, 130, img_footing[1], TRUE); //右上
 
 		DrawGraph(50, 180, img_cloud[0], TRUE);  // 雲
 		DrawGraph(480,180, img_cloud[0], TRUE);  // 雲
