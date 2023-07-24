@@ -80,7 +80,7 @@ AbstractScene* Game::Update() {
 		ctrlFlg = false;
 	}
 	// 仮 - Oキーでステージ遷移
-	else if (CheckHitKey(KEY_INPUT_O) && ctrlFlg) {
+	else if ((CheckHitKey(KEY_INPUT_O) && ctrlFlg) || PadInput::OnPress(XINPUT_BUTTON_START)) {
 		int si = GameMain::GetNowStageIndex();
 		if (si < 4) GameMain::SetStageIndex(GameMain::GetNowStageIndex() + 1);
 		else GameMain::SetStageIndex(0);
@@ -91,7 +91,7 @@ AbstractScene* Game::Update() {
 	if (CheckHitKey(KEY_INPUT_R)) return new Game();
 
 	// 仮 - ESCキーでタイトル
-	if (PadInput::OnPress(XINPUT_BUTTON_BACK) || CheckHitKey(KEY_INPUT_ESCAPE)) return new Title();
+	if (CheckHitKey(KEY_INPUT_ESCAPE) || PadInput::OnPress(XINPUT_BUTTON_BACK)) return new Title();
 
 	stage.SetNowStage(stageIndex);
 	stage.Update();

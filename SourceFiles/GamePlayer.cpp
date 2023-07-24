@@ -128,7 +128,7 @@ void GamePlayer::Update() {
 			//};
 			state[COLLIDE] = 1;
 			if (speed[FALL] > 0.0f) speed[FALL] = 0;
-			if (inputX != 0.0f) if (CheckSoundMem(snd_se_walk) == 0) PlaySoundMem(snd_se_walk, DX_PLAYTYPE_BACK, TRUE);
+			if (inputX >= 0.3f || inputX <= -0.3f) if (CheckSoundMem(snd_se_walk) == 0) PlaySoundMem(snd_se_walk, DX_PLAYTYPE_BACK, TRUE);
 			//else StopSoundMem(snd_se_walk);
 		}
 		else StopSoundMem(snd_se_walk);
@@ -158,14 +158,14 @@ void GamePlayer::Update() {
 
 		float moveSpeedMax = 2.3f;
 		if ((state[COLLIDE] != 0) || flightMove) {
-			if (inputX >= 0.3) {
+			if (inputX >= 0.3f) {
 				if (speed[MOVE] < 0 && (state[COLLIDE] != 0)) speed[MOVE] += 0.2f;
 				state[TURN] = 1;
 				speed[MOVE] += 0.2f;
 				state[ANIM]++;
 				if (moveSpeedMax < speed[MOVE]) speed[MOVE] = moveSpeedMax;
 			}
-			else if (inputX <= -0.3) {
+			else if (inputX <= -0.3f) {
 				if (0 < speed[MOVE] && (state[COLLIDE] != 0)) speed[MOVE] -= 0.2f;
 				state[TURN] = 0;
 				speed[MOVE] -= 0.2f;
@@ -184,7 +184,7 @@ void GamePlayer::Update() {
 				state[ANIM] = 0;
 			};
 		};
-		if (--flightMove < 0 || (inputX < 0.3 && inputX > -0.3)) flightMove = 0;
+		if (--flightMove < 0 || (inputX < 0.3f && inputX > -0.3f)) flightMove = 0;
 		player.position.x += speed[MOVE];
 
 		//////////////////////////////////////////////////////////////////////
@@ -262,7 +262,7 @@ void GamePlayer::Draw() const {
 	}
 	else if (state[COLLIDE] == 1) { // 地面
 		anim = state[ANIM] / 5 % 3;
-		if ((inputX > -0.3 && 0.3 > inputX) || (speed[MOVE] < 0 && inputX >= 0.3) || (0 < speed[MOVE] && -0.3 >= inputX)) anim = 11; // スリップ
+		if ((inputX > -0.3f && 0.3f > inputX) || (speed[MOVE] < 0 && inputX >= 0.3f) || (0 < speed[MOVE] && -0.3f >= inputX)) anim = 11; // スリップ
 		else anim = anim + 8; // 歩行
 		if (player.hp == 1) anim += 5;
 	};
