@@ -5,7 +5,7 @@
 #include "main.h"
 
 GamePlayer::GamePlayer() {
-	stock = 2; // 残機
+	stock = 2;
 
 	Init();
 

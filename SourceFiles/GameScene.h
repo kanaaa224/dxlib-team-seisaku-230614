@@ -49,3 +49,18 @@ public:
 		else return 0;
 	};
 };
+
+class GameMain {
+private:
+	static int stageIndex;
+	//static int score;
+
+public:
+	static void SetStageIndex(int Index) {
+		stageIndex = Index;
+	};
+
+	static int GetNowStageIndex() {
+		return stageIndex;
+	};
+};

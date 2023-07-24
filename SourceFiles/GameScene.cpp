@@ -14,14 +14,14 @@ Game::Game() {
 
 	// 仮
 	ctrlFlg = false;
-	ui.SetScore(12345);
-	ui.SetHighScore(67890);
-	ui.SetState(1);
-	player.SetStock(2);
 	blockIndex = 0;
-	stageIndex = 0;
+	stageIndex = GameMain::GetNowStageIndex();
 	debug = false;
 	gameover = false;
+	ui.SetScore(12345);
+	ui.SetHighScore(67890);
+	ui.SetState(stageIndex + 1);
+	player.SetStock(2);
 
 	// 仮 - ダメージブロック
 	damageBlock[0] = 150;
@@ -73,19 +73,18 @@ AbstractScene* Game::Update() {
 		else state = 1;
 		ctrlFlg = false;
 	}
-	// 仮 - OキーでUIテスト
-	else if (CheckHitKey(KEY_INPUT_O) && ctrlFlg) {
-		if (stageIndex >= 5) stageIndex = -1;
-		else stageIndex++;
-		ui.SetState(stageIndex);
-		//ui.SetStock(stageIndex + 1);
-		ctrlFlg = false;
-	}
 	// 仮 - 1キーでデバッグモード
 	else if (CheckHitKey(KEY_INPUT_1) && ctrlFlg) {
 		if (debug) debug = false;
 		else debug = true;
 		ctrlFlg = false;
+	}
+	// 仮 - Oキーでステージ遷移
+	else if (CheckHitKey(KEY_INPUT_O) && ctrlFlg) {
+		int si = GameMain::GetNowStageIndex();
+		if (si < 4) GameMain::SetStageIndex(GameMain::GetNowStageIndex() + 1);
+		else GameMain::SetStageIndex(0);
+		return new Game();
 	};
 
 	// 仮 - Rキーでリセット
@@ -93,9 +92,6 @@ AbstractScene* Game::Update() {
 
 	// 仮 - ESCキーでタイトル
 	if (PadInput::OnPress(XINPUT_BUTTON_BACK) || CheckHitKey(KEY_INPUT_ESCAPE)) return new Title();
-
-	//////////////////////////////////////////////////
-
 
 	stage.SetNowStage(stageIndex);
 	stage.Update();
@@ -117,14 +113,16 @@ AbstractScene* Game::Update() {
 void Game::Draw() const {
 
 	stage.Draw();
-	gimmick.Draw();
+	//gimmick.Draw();
 
 	player.Draw();
 
 	ui.Draw();
 
 	if (debug) player.Debug();
+	//if (gameover) DrawFormatString(10, 50, 0xffffff, "Rキーでリセット（メモリ占有に注意）");
 
 	DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xffffff, FALSE);
 };
 
+int GameMain::stageIndex = 0;
