@@ -11,7 +11,7 @@ private:
 	int state, frameCounter;
 	int stock, score, highScore;
 
-	int img_playerScore; // Player1
+	int img_playerScore; // Player1 score
 	int img_highScore;   // High score
 	int img_stock;       // 残機
 	int img_gameOver;    // GAMEOVER

@@ -181,6 +181,8 @@ public:
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "animState: %d", state[ANIM]);
 		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "blinkState: %d", state[BLINK]);
+		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "moveSpeed: %0.1f fallSpeed: %0.1f", speed[0], speed[1]);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "frameCounter: %d", frameCounter);
