@@ -12,9 +12,14 @@ Game::Game() {
 
 	if ((snd_gameOver = LoadSoundMem("Resources/Sounds/SE_GameOver.wav")) == -1) throw;
 
+	if ((LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png",3, 3, 1, 32, 32, Thunder)) == -1) throw;
+
 	// 仮
 	ctrlFlg = false;
 	blockIndex = 0;
+	ThunderAnim = 0;
+	ThunderAnimFlg = 0;
+	AnimChangefps = 3;
 	stageIndex = GameMain::GetNowStageIndex();
 	debug = false;
 	gameover = false;
@@ -76,6 +81,22 @@ AbstractScene* Game::Update() {
 
 	// 仮 - 水しぶき
 	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash((player.GetPosition().x - player.GetSize().width), (SCREEN_HEIGHT - 50));
+	ThunderAnim++;
+	if (ThunderAnim > 0 && ThunderAnim <= AnimChangefps)
+	{
+		ThunderAnimFlg = 0;
+	}
+	else if (ThunderAnim > AnimChangefps && ThunderAnim <= AnimChangefps * 2)
+	{
+		ThunderAnimFlg = 1;
+	}
+	else if (ThunderAnim > AnimChangefps * 2 && ThunderAnim <= AnimChangefps * 3)
+	{
+		ThunderAnimFlg = 2;
+	}
+	else if (ThunderAnim > AnimChangefps * 3) {
+		ThunderAnim = 0;
+	}
 
 	// 仮 - Pキーでポーズ
 	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
@@ -137,6 +158,8 @@ void Game::Draw() const {
 
 	DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xff0000, FALSE);
 	DrawBox(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], 0xffff00, FALSE);
+
+	DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);
 };
 
 int GameMain::stageIndex = 0;

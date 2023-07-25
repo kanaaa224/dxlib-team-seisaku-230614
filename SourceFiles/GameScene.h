@@ -23,11 +23,14 @@ private:
 	int blockIndex, stageIndex;
 	bool debug, gameover;
 	int damageBlock[8];
+	int ThunderAnim;
+	int ThunderAnimFlg;
+	int AnimChangefps;
 	bool damageFlg;
 
 	int snd_start;
 	int snd_gameOver;
-
+	int Thunder[3];
 public:
 	// コンストラクタ
 	Game();
