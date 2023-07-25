@@ -27,9 +27,6 @@
     <ClCompile Include="SourceFiles\SceneManager.cpp">
       <Filter>シーンマネージャー</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\GameScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\GamePlayer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -48,6 +45,12 @@
     <ClCompile Include="SourceFiles\TitleScene.cpp">
       <Filter>シーン</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\GameStageGimmick.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\GameScene.cpp">
+      <Filter>シーン</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceFiles\AbstractScene.h">
@@ -55,9 +58,6 @@
     </ClInclude>
     <ClInclude Include="SourceFiles\SceneManager.h">
       <Filter>シーンマネージャー</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceFiles\GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\GamePlayer.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -78,6 +78,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SourceFiles\TitleScene.h">
+      <Filter>シーン</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\GameStageGimmick.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceFiles\GameScene.h">
       <Filter>シーン</Filter>
     </ClInclude>
   </ItemGroup>

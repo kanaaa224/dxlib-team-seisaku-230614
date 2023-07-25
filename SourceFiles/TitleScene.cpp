@@ -13,7 +13,6 @@ Title::Title() {
 	if ((img_logo = LoadGraph("Resources/Images/Title/Title_Logo.png")) == -1) throw;
 	if ((img_mode = LoadGraph("Resources/images/Title/Title_ModeSelect.png")) == -1) throw;
 	if ((img_credit = LoadGraph("Resources/images/Title/Title_Credit.png")) == -1) throw;
-
 	if (LoadDivGraph("Resources/images/Title/Title_CursorAnimation.png", 4, 4, 1, 32, 64, img_cursor) == -1) throw;
 };
 
@@ -41,7 +40,7 @@ AbstractScene* Title::Update() {
 		else state += 10;
 		ctrl = false;
 	}
-	else if (PadInput::OnPress(XINPUT_BUTTON_START) || PadInput::OnPress(XINPUT_BUTTON_B) || CheckHitKey(KEY_INPUT_SPACE)) {
+	else if (PadInput::OnPress(XINPUT_BUTTON_START) || PadInput::OnPress(XINPUT_BUTTON_B) || CheckHitKey(KEY_INPUT_RETURN)) {
 		if (state >= 0 && state <= 9) return new Game();
 	};
 

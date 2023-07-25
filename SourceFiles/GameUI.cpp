@@ -76,8 +76,5 @@ void GameUI::Draw() const {
 	};
 
 	// ゲームオーバー
-	if (state == -1) {
-		//DrawString(280, 230, "GameOver", 0xffffff);
-		DrawGraph(220, 220, img_gameOver, TRUE);
-	};
+	if (stock == -1) DrawGraph(220, 220, img_gameOver, TRUE);
 };
