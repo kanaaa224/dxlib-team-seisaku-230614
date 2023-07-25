@@ -64,12 +64,12 @@ GameStage::GameStage() {
 	collisionData[1].footingBlock[3][0] = 80;    // 左上
 	collisionData[1].footingBlock[3][1] = 130;
 	collisionData[1].footingBlock[3][2] = 270;
-	collisionData[1].footingBlock[3][3] = 130;
+	collisionData[1].footingBlock[3][3] = 150;
 
-	collisionData[1].footingBlock[4][0] = 180;    // 右上
-	collisionData[1].footingBlock[4][1] = 280;
-	collisionData[1].footingBlock[4][2] = 460;
-	collisionData[1].footingBlock[4][3] = 300;
+	collisionData[1].footingBlock[4][0] = 80;    // 右上
+	collisionData[1].footingBlock[4][1] = 130;
+	collisionData[1].footingBlock[4][2] = 440;
+	collisionData[1].footingBlock[4][3] = 250;
 };
 
 GameStage::~GameStage() {
