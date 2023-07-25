@@ -69,8 +69,6 @@ void GameStageGimmick::BubbleUpdate() {
 
 		if (bubble_anim == 3) bubble_anim = 0;
 
-
-		if (bubble_height == 100) bubble_anim = 3;
 	}
 	if (bubble_height == -10) {
 		bubble_flg = 0;
@@ -90,7 +88,5 @@ void GameStageGimmick::BubbleDraw() const {
 	//DrawBox((int)block[1][0], (int)block[1][1], (int)block[1][2], (int)block[1][3], 0xffffff, FALSE); // 左下
 	//DrawBox((int)block[2][0], (int)block[2][1], (int)block[2][2], (int)block[2][3], 0xffffff, FALSE); // 右下
 
-	DrawFormatString(100, 110, 0x00ffff, " bubble_anim %d", bubble_anim);
-	DrawFormatString(100, 160, 0x00ffff, "bubble_height %d", bubble_height);
 
 };
