@@ -26,6 +26,9 @@ GamePlayer::GamePlayer() {
 	if ((snd_se_crack = LoadSoundMem("Resources/Sounds/SE_crack.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_crack);
 
+	//if ((snd_se_electricShock = LoadSoundMem("Resources/Sounds/SE_.wav")) == -1) throw;
+	//ChangeVolumeSoundMem((255 / 100) * 100, snd_se_electricShock);
+
 	if ((snd_se_fall = LoadSoundMem("Resources/Sounds/SE_Falling.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_fall);
 
@@ -42,6 +45,7 @@ GamePlayer::~GamePlayer() {
 	//DeleteSoundMem(snd_se_bound);
 	DeleteSoundMem(snd_se_restart);
 	DeleteSoundMem(snd_se_crack);
+	//DeleteSoundMem(snd_se_electricShock);
 	DeleteSoundMem(snd_se_fall);
 	DeleteSoundMem(snd_se_fell);
 };
