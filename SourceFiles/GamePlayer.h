@@ -88,7 +88,7 @@ public:
 	void Draw() const;
 
 	// プレイヤーの状態を設定
-	void SetState(int State) {
+	void SetState(int State /*, int isFloor*/) {
 		player.state = State;
 	};
 
