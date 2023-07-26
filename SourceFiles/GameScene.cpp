@@ -56,7 +56,7 @@ AbstractScene* Game::Update() {
 	player.SetCollide(blockData);
 	player.SetState(
 		CheckCollideBox(
-			player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height, 
+			player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height,
 			player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height,
 			blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y
 		)
@@ -81,22 +81,6 @@ AbstractScene* Game::Update() {
 
 	// 仮 - 水しぶき
 	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash((player.GetPosition().x - player.GetSize().width), (SCREEN_HEIGHT - 50));
-	ThunderAnim++;
-	if (ThunderAnim > 0 && ThunderAnim <= AnimChangefps)
-	{
-		ThunderAnimFlg = 0;
-	}
-	else if (ThunderAnim > AnimChangefps && ThunderAnim <= AnimChangefps * 2)
-	{
-		ThunderAnimFlg = 1;
-	}
-	else if (ThunderAnim > AnimChangefps * 2 && ThunderAnim <= AnimChangefps * 3)
-	{
-		ThunderAnimFlg = 2;
-	}
-	else if (ThunderAnim > AnimChangefps * 3) {
-		ThunderAnim = 0;
-	}
 
 	// 仮 - Pキーでポーズ
 	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
@@ -139,6 +123,26 @@ AbstractScene* Game::Update() {
 	effect.Update();
 	ui.SetStock(player.GetStock());
 	ui.Update();
+
+	// 雷
+	ThunderAnim++;
+	if (ThunderAnim > 0 && ThunderAnim <= AnimChangefps)
+	{
+		ThunderAnimFlg = 0;
+	}
+	else if (ThunderAnim > AnimChangefps && ThunderAnim <= AnimChangefps * 2)
+	{
+		ThunderAnimFlg = 1;
+	}
+	else if (ThunderAnim > AnimChangefps * 2 && ThunderAnim <= AnimChangefps * 3)
+	{
+		ThunderAnimFlg = 2;
+	}
+	else if (ThunderAnim > AnimChangefps * 3) {
+		ThunderAnim = 0;
+	};
+
+	enemy.Update();
 	
 	return this;
 };
@@ -151,6 +155,8 @@ void Game::Draw() const {
 	player.Draw();
 	effect.Draw();
 	ui.Draw();
+
+	enemy.Draw();
 
 	if (debug) player.Debug();
 	//if (gameover) DrawFormatString(10, 50, 0xffffff, "Rキーでリセット（メモリ占有に注意）");

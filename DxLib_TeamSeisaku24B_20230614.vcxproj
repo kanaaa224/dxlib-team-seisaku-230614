@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFiles\GameEnemy.cpp" />
     <ClCompile Include="SourceFiles\GamePlayer.cpp" />
     <ClCompile Include="SourceFiles\GameScene.cpp" />
     <ClCompile Include="SourceFiles\GameStage.cpp" />
@@ -152,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="SourceFiles\AbstractScene.h" />
     <ClInclude Include="SourceFiles\fps.h" />
+    <ClInclude Include="SourceFiles\GameEnemy.h" />
     <ClInclude Include="SourceFiles\GamePlayer.h" />
     <ClInclude Include="SourceFiles\GameScene.h" />
     <ClInclude Include="SourceFiles\GameStage.h" />

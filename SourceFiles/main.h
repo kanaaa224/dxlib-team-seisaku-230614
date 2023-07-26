@@ -22,6 +22,7 @@ using std::to_string;
 #include "GameStageGimmick.h"
 #include "GameStage.h"
 #include "GameUI.h"
+#include "GameEnemy.h"
 
 // 各シーンのヘッダーファイル
 #include "TitleScene.h"
