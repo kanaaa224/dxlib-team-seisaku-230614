@@ -1,26 +1,26 @@
-/********************************
-* ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[
-* ì¬ÒF“‡‘Ü
+ï»¿/********************************
+* ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+* ä½œæˆè€…ï¼šå³¶è¢‹
 ********************************/
 #pragma once
 #include "AbstractScene.h"
 
-// ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[ƒNƒ‰ƒX
+// ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‚¯ãƒ©ã‚¹
 class SceneManager : public AbstractScene {
 private:
-	AbstractScene* mScene; // Œ»İ‚ÌƒV[ƒ“
+	AbstractScene* mScene; // ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³
 public:
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	SceneManager(AbstractScene* scene) : mScene(scene) {}
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~SceneManager() {
 		delete mScene;
 	};
 
-	// •`‰æˆÈŠO‚ÌXV‚ğÀ‘•
+	// æç”»ä»¥å¤–ã®æ›´æ–°ã‚’å®Ÿè£…
 	AbstractScene* Update() override;
 
-	// •`‰æ‚ÉŠÖ‚·‚é‚±‚Æ‚ğÀ‘•
+	// æç”»ã«é–¢ã™ã‚‹ã“ã¨ã‚’å®Ÿè£…
 	void Draw() const override;
 };
