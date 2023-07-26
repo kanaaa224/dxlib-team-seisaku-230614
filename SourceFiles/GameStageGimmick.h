@@ -11,6 +11,7 @@ struct Bubble {
 	int flg = 0;
 	float x = 0.0f;
 	float y = 0.0f;
+	bool visible = true;  // シャボン玉を描画するかどうかを示すフラグ
 };
 
 
