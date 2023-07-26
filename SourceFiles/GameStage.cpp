@@ -63,7 +63,7 @@ GameStage::GameStage() {
 
 	collisionData[1].footingBlock[3][0] = 80;    // 左上
 	collisionData[1].footingBlock[3][1] = 130;
-	collisionData[1].footingBlock[3][2] = 270;
+	collisionData[1].footingBlock[3][2] = 170;
 	collisionData[1].footingBlock[3][3] = 150;
 
 	collisionData[1].footingBlock[4][0] = 80;    // 右上
