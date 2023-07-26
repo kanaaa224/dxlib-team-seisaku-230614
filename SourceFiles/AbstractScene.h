@@ -1,18 +1,18 @@
-/********************************
-* �V�[���}�l�[�W���[
-* ��ҁF����
+﻿/********************************
+* シーンマネージャー
+* 作者：島袋
 ********************************/
 #pragma once
 
-// �f�t�H���g�̒��ۃV�[���N���X
+// デフォルトの抽象シーンクラス
 class AbstractScene {
 public:
-	// �f�X�g���N�^
+	// デストラクタ
 	virtual ~AbstractScene() {};
 
-	// �`��ȊO�̍X�V������
+	// 描画以外の更新を実装
 	virtual AbstractScene* Update() = 0;
 
-	// �`��Ɋւ��邱�Ƃ�����
+	// 描画に関することを実装
 	virtual void Draw() const = 0;
 };

@@ -1,22 +1,22 @@
-/********************************
-* ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[
-* ìŽÒF“‡‘Ü
+ï»¿/********************************
+* ã‚·ãƒ¼ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+* ä½œè€…ï¼šå³¶è¢‹
 ********************************/
 #include "SceneManager.h"
 
-// ƒV[ƒ“XVƒƒ“ƒoŠÖ”
+// ã‚·ãƒ¼ãƒ³æ›´æ–°ãƒ¡ãƒ³ãƒé–¢æ•°
 AbstractScene* SceneManager::Update() {
 	AbstractScene* p = mScene->Update();
 
 	if (p != mScene) {
 		delete mScene;
-		mScene = p; // ŽŸ‚É•\Ž¦‚µ‚½‚¢ƒV[ƒ“
+		mScene = p; // æ¬¡ã«è¡¨ç¤ºã—ãŸã„ã‚·ãƒ¼ãƒ³
 	};
 
 	return p;
 };
 
-// ƒV[ƒ“•`‰æƒƒ“ƒoŠÖ”
+// ã‚·ãƒ¼ãƒ³æç”»ãƒ¡ãƒ³ãƒé–¢æ•°
 void SceneManager::Draw() const {
 	mScene->Draw();
 };
