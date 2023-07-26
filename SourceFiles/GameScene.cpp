@@ -29,7 +29,7 @@ Game::Game() {
 	player.SetStock(2);
 
 	// 仮 - ダメージブロック
-	damageBlock[0] = 150;
+	/*damageBlock[0] = 150;
 	damageBlock[1] = 100;
 	damageBlock[2] = damageBlock[0] + 20;
 	damageBlock[3] = damageBlock[1] + 20;
@@ -37,7 +37,7 @@ Game::Game() {
 	damageBlock[5] = 100;
 	damageBlock[6] = damageBlock[4] + 20;
 	damageBlock[7] = damageBlock[5] + 20;
-	damageFlg = false;
+	damageFlg = false;*/
 };
 
 Game::~Game() {
