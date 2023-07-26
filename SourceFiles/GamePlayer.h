@@ -65,6 +65,7 @@ private:
 	int snd_se_bound;
 	int snd_se_restart;
 	int snd_se_crack;
+	int snd_se_electricShock;
 	int snd_se_fall;
 	int snd_se_fell;
 
@@ -87,7 +88,7 @@ public:
 	void Draw() const;
 
 	// プレイヤーの状態を設定
-	void SetState(int State) {
+	void SetState(int State /*, int isFloor*/) {
 		player.state = State;
 	};
 
