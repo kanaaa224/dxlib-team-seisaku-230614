@@ -98,6 +98,10 @@ AbstractScene* Game::Update() {
 		ThunderAnim = 0;
 	}
 
+
+
+
+
 	// 仮 - Pキーでポーズ
 	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
 	if (CheckHitKey(KEY_INPUT_P) && ctrlFlg) {
@@ -129,6 +133,7 @@ AbstractScene* Game::Update() {
 	stage.Update();
 	gimmick.Update();
 	gimmick.SetPlayerCollide(player.GetCollide());
+
 
 	if (state != 1) player.Update();
 	if ((player.GetStock() == -1) && !gameover) {

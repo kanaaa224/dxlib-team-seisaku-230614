@@ -6,9 +6,21 @@
 #include "main.h"
 
 
+struct Bubble {
+	int anim = 0;
+	int flg = 0;
+	float x = 0.0f;
+	float y = 0.0f;
+};
+
+
 // ステージクラス
 class GameStageGimmick {
 private:
+	int i;
+
+	Bubble bubble[10];
+
 	int img_bubble[4]; // シャボン
 
 	int bubble_height;
@@ -27,11 +39,15 @@ private:
 	int position_flg;
 	int new_position;
 
+	int bubble_spwn;//敵が海に落ちたときのシャボン玉のスポーン位置
+
+	
+
 	//int GetScore_500;//仮りで画像表示するための変数
 
 	// プレイヤーの左上・右上座標
 	Collide playerCollide;
-
+	
 public:
 	// コンストラクタ
 	GameStageGimmick();
@@ -59,4 +75,5 @@ public:
 	void SetPlayerCollide(Collide collide) {
 		playerCollide = collide;
 	};
+
 };
