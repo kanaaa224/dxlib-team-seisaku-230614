@@ -17,20 +17,25 @@ private:
 	GameStage stage;
 	GameStageGimmick gimmick; // ギミックオブジェクト
 
+	GameEnemy enemy;
+
 	// 仮
 	bool ctrlFlg;
 	Collide blockData;
 	int blockIndex, stageIndex;
 	bool debug, gameover;
 	int damageBlock[8];
+	bool damageFlg;
+
+	// 雷
+	int Thunder[3];
 	int ThunderAnim;
 	int ThunderAnimFlg;
 	int AnimChangefps;
-	bool damageFlg;
 
 	int snd_start;
 	int snd_gameOver;
-	int Thunder[3];
+	
 public:
 	// コンストラクタ
 	Game();
