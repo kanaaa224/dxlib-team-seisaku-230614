@@ -49,9 +49,9 @@ private:
 
 	Enemy enemy;
 
-	
+	int anim;
 
-	int r_enemy[17];
+	int r_enemy[18];
 	int g_enemy[18];
 	int p_enemy[18];
 	int fish[10];
