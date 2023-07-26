@@ -3,7 +3,6 @@
 * 編集者：
 ********************************/
 #include "main.h"
-#include "GameStage.h"
 
 //int GameStage::Stage=3;    //0が最初のステージとなる
 
