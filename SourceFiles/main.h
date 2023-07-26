@@ -20,6 +20,7 @@ using std::to_string;
 // ゲーム処理のヘッダーファイル
 #include "GamePlayer.h"
 //#include "GameEnemy.h"
+#include "GameStageGimmick.h"
 #include "GameStage.h"
 #include "GameUI.h"
 

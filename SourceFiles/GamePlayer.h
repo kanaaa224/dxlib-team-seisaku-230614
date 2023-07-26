@@ -8,13 +8,14 @@
 #define COLLIDE 0
 #define TURN    1
 #define ANIM    2
-#define BLINK 3
+#define BLINK   3
+#define MISS    4
+
 #define MOVE 0
 #define FALL 1
 
-#define MISS_FALLSEA -1
-#define MISS_BALLOONZERO -2
-#define MISS_LIGHTNING -3
+#define MISS_LIGHTNING   1
+#define MISS_FALLSEA     2
 
 #define FIRST_POSITION_X 50
 #define FIRST_POSITION_Y 405
@@ -54,15 +55,18 @@ private:
 	float inputX;   // スティック横軸の入力
 	int flapCount;  // ジャンプ数
 	int flightMove; // 空中で羽ばたき中の移動
-	int state[4];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ
+	int state[5];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ、ミス時のフレーム
 	float speed[2]; // 移動、落下速度
+	int stock;      // 残機
 
-	float leftEndX, rightEndX; // ワープ、当たり判定用のプレイヤー左右端側のX位置
-
-	int img_player[30];
+	int img_player[31];
 	int snd_se_flight;
 	int snd_se_walk;
+	int snd_se_bound;
 	int snd_se_restart;
+	int snd_se_crack;
+	int snd_se_fall;
+	int snd_se_fell;
 
 	Collide collideData;
 
@@ -103,17 +107,77 @@ public:
 	};
 
 	// 当たり判定用の左上・右上の座標を設定
-	void SetCollideData(Collide CollideData) {
+	void SetCollide(Collide CollideData) {
 		collideData.ul.x = CollideData.ul.x;
 		collideData.ul.y = CollideData.ul.y;
 		collideData.lr.x = CollideData.lr.x;
 		collideData.lr.y = CollideData.lr.y;
 	};
 
+	// プレイヤー左上・右上の座標の取得
+	Collide GetCollide() {
+		Collide CollideData;
+		CollideData.ul.x = (player.position.x - player.size.width);
+		CollideData.ul.y = (player.position.y - player.size.height);
+		CollideData.lr.x = (player.position.x + player.size.width);
+		CollideData.lr.y = (player.position.y + player.size.height);
+		return CollideData;
+	};
+
+	// 風船エリアの左上・右上の座標の取得
+	Collide GetWeakCollide() {
+		Collide CollideData;
+		CollideData.ul.x = (player.position.x - player.size.width);
+		CollideData.ul.y = (player.position.y - player.size.height);
+		CollideData.lr.x = (player.position.x + player.size.width);
+		CollideData.lr.y = (player.position.y - player.size.height) + 20;
+		return CollideData;
+	};
+
 	// リスポーン
 	void Restart() {
 		Init();
 		PlaySoundMem(snd_se_restart, DX_PLAYTYPE_BACK, TRUE);
+	};
+
+	// ダメージ（風船消失、無ければミス）
+	void Damage() {
+		if (player.hp > 1) {
+			player.hp--;
+			PlaySoundMem(snd_se_crack, DX_PLAYTYPE_BACK, TRUE);
+		}
+		else Miss(0);
+	};
+
+	// ミス（0で通常ミス、1で感電ミス、2で海落下ミス、3で魚に捕まりミス）
+	void Miss(int MissType) {
+		if (player.hp >= 0) {
+			if (MissType == 0) player.hp = -1;
+			else if (MissType == 1) player.hp = -2;
+			else if (MissType == 2) player.hp = -3;
+			//else if (MissType == 3) player.hp = -4;
+			state[MISS] = frameCounter;
+		};
+	};
+
+	// プレイヤーのHPを設定
+	void SetHP(int HP) {
+		player.hp = HP;
+	};
+
+	// プレイヤーのHPを取得
+	int GetHP() {
+		return player.hp;
+	};
+
+	// プレイヤーの残機を設定
+	void SetStock(int Stock) {
+		stock = Stock;
+	};
+
+	// プレイヤーの残機を取得
+	int GetStock() {
+		return stock;
 	};
 
 	// デバッグ表示
@@ -129,6 +193,8 @@ public:
 		y += 30;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "playerState: %d", player.state);
 		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "playerHP: %d", player.hp);
+		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "inputX: %0.1f", inputX);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "flapCount: %d", flapCount);
@@ -141,12 +207,21 @@ public:
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "animState: %d", state[ANIM]);
 		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "blinkState: %d", state[BLINK]);
+		y += 15;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "missState: %d", state[MISS]);
+		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "moveSpeed: %0.1f fallSpeed: %0.1f", speed[0], speed[1]);
 		y += 15;
-		DrawFormatString(x, y, GetColor(255, 255, 255), "leftEndX: %0.0f rightEndX: %0.0f", leftEndX, rightEndX);
-		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "frameCounter: %d", frameCounter);
+		y += 30;
+		DrawFormatString(x, y, GetColor(255, 255, 255), "stock: %d", stock);
 	};
+
+	//// ミス時の水しぶきエフェクト
+	//void DrawSplashEffect(int frame) {
+
+	//};
 
 	//// プレイヤー移動
 	//bool Control();
@@ -164,3 +239,65 @@ public:
 //enum struct PlayerState {
 //	stay, walk, flight
 //};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// エフェクトクラス
+class GameEffect {
+private:
+	int state, frameCounter;
+
+	bool splash;
+	int splash_anim, splash_x, splash_y;
+
+	int img_splash[4];
+
+public:
+	GameEffect() {
+		state = 0;
+		frameCounter = 0;
+
+		splash = false;
+		splash_anim = 0;
+		splash_x = 0;
+		splash_y = 0;
+
+		if (LoadDivGraph("Resources/images/Stage/Stage_SplashAnimation.png", 4, 4, 1, 64, 32, img_splash) == -1) throw;
+	};
+
+	~GameEffect() {
+		for (int i = 0; i < 4; i++) {
+			DeleteGraph(img_splash[i]);
+		};
+	};
+
+	void Update() {
+		if (!splash) {
+			frameCounter = 0;
+			splash_anim = 0;
+		};
+		if (splash) {
+			frameCounter++;
+			if (frameCounter % 5 == 0) {
+				if (splash_anim < 4) {
+					splash_anim++;
+				}
+				else {
+					splash = false;
+				};
+			};
+		};
+	};
+
+	void Draw() const {
+		if (splash && (splash_anim <= 3)) DrawRotaGraph(splash_x + 16, splash_y, 1.0f, 0, img_splash[splash_anim], TRUE);
+	};
+
+	void Splash(int x, int y) {
+		if (!splash) {
+			splash_x = x;
+			splash_y = y;
+			splash = true;
+		};
+	};
+};
