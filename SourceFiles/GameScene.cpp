@@ -13,13 +13,13 @@ Game::Game() {
 	if ((snd_gameOver = LoadSoundMem("Resources/Sounds/SE_GameOver.wav")) == -1) throw;
 
 	if ((LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png",3, 3, 1, 32, 32, Thunder)) == -1) throw;
-
-	// 仮
-	ctrlFlg = false;
-	blockIndex = 0;
 	ThunderAnim = 0;
 	ThunderAnimFlg = 0;
 	AnimChangefps = 3;
+
+	// 仮 - プレイヤー関連
+	ctrlFlg = false;
+	blockIndex = 0;
 	stageIndex = GameMain::GetNowStageIndex();
 	debug = false;
 	gameover = false;
@@ -27,8 +27,6 @@ Game::Game() {
 	ui.SetHighScore(67890);
 	ui.SetState(stageIndex + 1);
 	player.SetStock(2);
-
-	// 仮 - ダメージブロック
 	damageBlock[0] = 150;
 	damageBlock[1] = 100;
 	damageBlock[2] = damageBlock[0] + 20;
@@ -109,11 +107,6 @@ AbstractScene* Game::Update() {
 	// 仮 - ESCキーでタイトル
 	if (CheckHitKey(KEY_INPUT_ESCAPE) || PadInput::OnPress(XINPUT_BUTTON_BACK)) return new Title();
 
-	stage.SetNowStage(stageIndex);
-	stage.Update();
-	gimmick.Update();
-	gimmick.SetPlayerCollide(player.GetCollide());
-
 	if (state != 1) player.Update();
 	if ((player.GetStock() == -1) && !gameover) {
 		state = 1;
@@ -123,6 +116,11 @@ AbstractScene* Game::Update() {
 	effect.Update();
 	ui.SetStock(player.GetStock());
 	ui.Update();
+
+	stage.SetNowStage(stageIndex);
+	stage.Update();
+	gimmick.Update();
+	gimmick.SetPlayerCollide(player.GetCollide());
 
 	// 雷
 	ThunderAnim++;
