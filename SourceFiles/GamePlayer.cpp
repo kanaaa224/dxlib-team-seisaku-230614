@@ -26,6 +26,9 @@ GamePlayer::GamePlayer() {
 	if ((snd_se_crack = LoadSoundMem("Resources/Sounds/SE_crack.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_crack);
 
+	//if ((snd_se_electricShock = LoadSoundMem("Resources/Sounds/SE_.wav")) == -1) throw;
+	//ChangeVolumeSoundMem((255 / 100) * 100, snd_se_electricShock);
+
 	if ((snd_se_fall = LoadSoundMem("Resources/Sounds/SE_Falling.wav")) == -1) throw;
 	ChangeVolumeSoundMem((255 / 100) * 100, snd_se_fall);
 
@@ -42,6 +45,7 @@ GamePlayer::~GamePlayer() {
 	//DeleteSoundMem(snd_se_bound);
 	DeleteSoundMem(snd_se_restart);
 	DeleteSoundMem(snd_se_crack);
+	//DeleteSoundMem(snd_se_electricShock);
 	DeleteSoundMem(snd_se_fall);
 	DeleteSoundMem(snd_se_fell);
 };
@@ -70,6 +74,7 @@ void GamePlayer::Init() {
 void GamePlayer::Update() {
 	frameCounter++;
 	if (player.hp > 0) {
+		//if (player.state >= 1) PlaySoundMem(snd_se_bound, DX_PLAYTYPE_BACK, TRUE);
 
 		//////////////////////////////////////////////////////////////////////
 		// コントローラー・キーボード操作
@@ -115,8 +120,14 @@ void GamePlayer::Update() {
 		// 海
 		//if (SCREEN_HEIGHT + 100 < (player.position.y - player.size.height)) Restart();
 
+		bool wallHit = false;
+
 		// 地面
 		if (player.state == 1) {
+
+			//player.position.y = collideData.ul.y - player.size.height - 1;
+			//wallHit = true;
+			
 			player.position.y -= 0.1f;
 			//player.position.y = collideData.ul.y - player.size.height;
 			//if ((player.position.y + player.size.height - 0.2) > collideData.ul.y) {
@@ -129,10 +140,9 @@ void GamePlayer::Update() {
 			if (speed[FALL] > 0.0f) speed[FALL] = 0;
 			if (inputX >= 0.3f || inputX <= -0.3f) if (CheckSoundMem(snd_se_walk) == 0) PlaySoundMem(snd_se_walk, DX_PLAYTYPE_BACK, TRUE);
 			//else StopSoundMem(snd_se_walk);
+			
 		}
 		else StopSoundMem(snd_se_walk);
-
-		bool wallHit = false;
 
 		// 天井
 		if (player.state == 2) {
@@ -228,7 +238,11 @@ void GamePlayer::Update() {
 		};
 	}
 	else if (player.hp == -2) {
-		if ((state[MISS] + 60) < frameCounter) player.hp = -1;
+		//PlaySoundMem(snd_se_electricShock, DX_PLAYTYPE_BACK, TRUE);
+		if ((state[MISS] + 60) < frameCounter) {
+			//StopSoundMem(snd_se_electricShock);
+			player.hp = -1;
+		};
 	}
 	else if (player.hp == -3) {
 		if ((CheckSoundMem(snd_se_fell) == 0) && (frameCounter == (state[MISS] + 2))) {
