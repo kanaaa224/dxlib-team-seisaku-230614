@@ -104,7 +104,7 @@ GameStage::GameStage() {
 	collisionData[2].footingBlock[5][2] = 570;
 	collisionData[2].footingBlock[5][3] = 150;
 
-	collisionData[2].footingBlock[6][0] = 270;    
+	collisionData[2].footingBlock[6][0] = 270;	//海の上の足場    
 	collisionData[2].footingBlock[6][1] = 310;
 	collisionData[2].footingBlock[6][2] = 350;
 	collisionData[2].footingBlock[6][3] = 350;
@@ -145,9 +145,13 @@ void GameStage::Draw() const {
 		DrawGraph(-70, 430, img_footing[0], TRUE); // 左下
 		DrawGraph(400, 430, img_footing[0], TRUE); // 右下
 		DrawGraph(470, 100, img_footing[3], TRUE); // 右のT字の足場
+		DrawBox(470, 100, 530, 170, 0xffffff, FALSE);
 		DrawGraph(330, 180, img_footing[3], TRUE); // 真ん中のT字の足場
+		DrawBox(330, 180, 390, 250, 0xffffff, FALSE);
 		DrawGraph(180, 240, img_footing[3], TRUE); // 左のT字の足場
+		DrawBox(180, 240, 240, 310, 0xffffff, FALSE);
 		DrawGraph(220, 130, img_footing[4], TRUE); // 左上の小さい足場
+		DrawBox(220, 130, 265, 150, 0xffffff, FALSE);
 		DrawGraph(270, 330, img_footing[2], TRUE); // 海の上の足場
 		DrawBox(270, 330, 350, 350, 0xffffff, FALSE);
 
