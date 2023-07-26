@@ -12,12 +12,12 @@ private:
 
 	GamePlayer player;
 	GameEffect effect;
-	GameEnemy enemy;
-	GameStage stage;
 	GameUI ui;
 
 	GameStage stage;
 	GameStageGimmick gimmick; // ギミックオブジェクト
+
+	GameEnemy enemy;
 
 	// 仮
 	bool ctrlFlg;

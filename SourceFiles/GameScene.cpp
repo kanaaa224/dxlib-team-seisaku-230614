@@ -138,11 +138,9 @@ AbstractScene* Game::Update() {
 	};
 	effect.Update();
 	ui.SetStock(player.GetStock());
+	ui.Update();
 
 	enemy.Update();
-
-	ui.SetStock(stock);
-	ui.Update();
 	
 	return this;
 };
@@ -154,8 +152,9 @@ void Game::Draw() const {
 
 	player.Draw();
 	effect.Draw();
-	enemy.Draw();
 	ui.Draw();
+
+	enemy.Draw();
 
 	if (debug) player.Debug();
 	//if (gameover) DrawFormatString(10, 50, 0xffffff, "Rキーでリセット（メモリ占有に注意）");
