@@ -73,7 +73,7 @@ GameStage::GameStage() {
 	//仮ステージ３の足場の当たり判定
 	collisionData[2].footingMax = 7; // 足場最大数
 
-	collisionData[2].footingBlock[0][0] = 180;    // 真ん中
+	collisionData[2].footingBlock[0][0] = 180;    // 左上の小さい足場
 	collisionData[2].footingBlock[0][1] = 280;
 	collisionData[2].footingBlock[0][2] = 460;
 	collisionData[2].footingBlock[0][3] = 300;
@@ -88,17 +88,17 @@ GameStage::GameStage() {
 	collisionData[2].footingBlock[2][2] = SCREEN_WIDTH + 20;
 	collisionData[2].footingBlock[2][3] = SCREEN_HEIGHT;
 
-	collisionData[2].footingBlock[3][0] = 80;    
+	collisionData[2].footingBlock[3][0] = 80;    //右のT字の足場
 	collisionData[2].footingBlock[3][1] = 130;
 	collisionData[2].footingBlock[3][2] = 200;
 	collisionData[2].footingBlock[3][3] = 150;
 
-	collisionData[2].footingBlock[4][0] = 450;    
+	collisionData[2].footingBlock[4][0] = 450;    //真ん中のT字の足場
 	collisionData[2].footingBlock[4][1] = 130;
 	collisionData[2].footingBlock[4][2] = 570;
 	collisionData[2].footingBlock[4][3] = 150;
 
-	collisionData[2].footingBlock[5][0] = 450;    
+	collisionData[2].footingBlock[5][0] = 450;    //左のT字の足場
 	collisionData[2].footingBlock[5][1] = 130;
 	collisionData[2].footingBlock[5][2] = 570;
 	collisionData[2].footingBlock[5][3] = 150;
