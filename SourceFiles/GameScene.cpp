@@ -35,7 +35,7 @@ Game::Game() {
 	damageBlock[5] = 100;
 	damageBlock[6] = damageBlock[4] + 20;
 	damageBlock[7] = damageBlock[5] + 20;
-	damageFlg = false;*/
+	damageFlg = false;
 };
 
 Game::~Game() {
