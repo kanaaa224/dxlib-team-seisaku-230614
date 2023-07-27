@@ -17,10 +17,7 @@ GameStageGimmick::GameStageGimmick() {
 	bubble_height = 400;
 
 
-//フラグの初期化
-	for (int i = 0; i < 10; i++) {　
-		bubble[i].flg = 0;
-	}
+
 
 };
 
