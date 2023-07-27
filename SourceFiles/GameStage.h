@@ -40,6 +40,9 @@ public:
 	// 描画
 	void Draw() const;
 
+	// 海の描画
+	void DrawSea() const;
+
 	void HitStage();
 
 	void SetNowStage(int StaageIndex) {
