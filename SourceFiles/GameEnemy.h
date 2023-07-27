@@ -53,43 +53,59 @@ public:
 };
 class EnemyFish {
 private:
-	int fish[10];
-	int Flg;
-	int x;
-	int y;
-	int anim;
 	int frameCounter;
 
-public:
+	int img[10];
 
+	int flg, anim;
+	int x;
+	int y;
+
+public:
 	EnemyFish() {
-		Flg = 0;
+		frameCounter = 0;
+
+		flg = 0;
 		anim = 0;
-		LoadDivGraph("Resources/Images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, fish);
+		x = 0;
+		y = 0;
+
+		LoadDivGraph("Resources/Images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, img);
 	};
+
 	~EnemyFish() {
 		for (int i = 0; i < 10; i++) {
-			DeleteGraph(fish[i]);
+			DeleteGraph(img[i]);
 		}
 	};
 
 	void Update() {
 		x = 300;
 		y = SCREEN_HEIGHT - 50;
-		if (Flg) {
-			if (frameCounter % 5 == 0) {
-				if (anim < 3) {
-					anim++;
+
+		if (flg) {
+			if (frameCounter++ % 7 == 0) {
+				if (flg == 1) {
+					if (anim < 2) {
+						anim++;
+					}
 				}
+				else if (flg == 2) {
+					if (anim > 0) {
+						anim--;
+					}
+					else flg = 0;
+				};
 			}
 		}
 	};
 
 	void Draw() const {
-		DrawRotaGraph(x, y, 1.0f, 0, fish[anim], TRUE);
+		if(flg) DrawRotaGraph(x, y, 1.0f, 0, img[anim], TRUE);
 	};
-	void Spawn() {
-		Flg = 1;
 
-	}
+	void Spawn() {
+		if (!flg) flg = 1;
+		else if (flg && anim == 2) flg = 2;
+	};
 };
