@@ -85,7 +85,10 @@ AbstractScene* Game::Update() {
 	};
 
 	// 仮 - 水しぶき
-	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash((player.GetPosition().x - player.GetSize().width), (SCREEN_HEIGHT - 50));
+	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash(player.GetPosition().x, (SCREEN_HEIGHT - 50));
+
+	// 仮 - 2キーかL/Rボタンを押すとプレイヤーの上にゲットポイント表示
+	if(PadInput::OnPressed(XINPUT_BUTTON_LEFT_SHOULDER) || PadInput::OnPressed(XINPUT_BUTTON_RIGHT_SHOULDER) || CheckHitKey(KEY_INPUT_2)) effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
 
 	// 仮 - Pキーでポーズ
 	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
