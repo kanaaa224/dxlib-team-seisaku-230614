@@ -24,8 +24,8 @@ GameEnemy::~GameEnemy() {
 void GameEnemy::Init() {
 
 	enemy.hp = 1;
-	enemy.position.x = FIRST_POSITION_X + 15;
-	enemy.position.y = FIRST_POSITION_Y - 200;
+	enemy.position.x = 50 + 15;
+	enemy.position.y = 405 - 200;
 	enemy.size.width = 15;
 	enemy.size.height = 25;
 
