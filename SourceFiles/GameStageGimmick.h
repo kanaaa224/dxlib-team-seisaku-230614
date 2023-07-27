@@ -11,15 +11,16 @@ struct Bubble {
 	int flg = 0;
 	float x = 0.0f;
 	float y = 0.0f;
-	bool visible = true;  // シャボン玉を描画するかどうかを示すフラグ
+	float spawnX = 0;
 };
 
 
 // ステージクラス
 class GameStageGimmick {
 private:
-	int i;
-
+	int count = 0;
+	int i = 0;
+	int b = 0;
 	Bubble bubble[10];
 
 	int img_bubble[4]; // シャボン
