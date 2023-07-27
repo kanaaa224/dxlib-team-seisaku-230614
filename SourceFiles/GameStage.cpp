@@ -232,7 +232,8 @@ void GameStage::Draw() const {
 		DrawGraph(220, 130, img_footing[4], TRUE); // 左上の小さい足場
 		DrawGraph(270, 330, img_footing[2], TRUE); // 海の上の足場
 
-		DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+		DrawGraph(50, 130, img_cloud[0], TRUE);  // 雲
+		DrawGraph(450, 230, img_cloud[0], TRUE);  // 雲
 	}
 	// ステージ４の表示
 	else if (nowStage == 3) {
@@ -246,6 +247,10 @@ void GameStage::Draw() const {
 		DrawGraph(430, 200, img_footing[5], TRUE);  //一番右の足場
 		DrawGraph(200, 300, img_footing[5], TRUE);  //左の足場
 		DrawGraph(350, 350, img_footing[5], TRUE);  //右の足場
+
+		DrawGraph(50, 100, img_cloud[0], TRUE);  // 雲
+		DrawGraph(480, 150, img_cloud[0], TRUE);  // 雲
+
 	}
 	// ステージ５の表示
 	else if (nowStage == 4) {
@@ -253,17 +258,15 @@ void GameStage::Draw() const {
 		DrawGraph(480, 430, img_land[3], TRUE); // 右下
 
 		DrawGraph(180, 120, img_footing[5], TRUE);  //上の足場
-		DrawBox(180, 120, 240, 140, 0xffffff, FALSE);
 		DrawGraph(190, 330, img_footing[5], TRUE);  //左の足場
-		DrawBox(190, 330, 250, 350, 0xffffff, FALSE); 
 		DrawGraph(350, 330, img_footing[5], TRUE);   //右の足場
-		DrawBox(350, 330, 410, 350, 0xffffff, FALSE);
 		DrawGraph(130, 230, img_footing[6], TRUE);   //左のT字の足場
-		DrawBox(130, 230, 150, 280, 0xffffff, FALSE);
 		DrawGraph(250, 180, img_footing[6], TRUE);   //真ん中のT字の足場
-		DrawBox(250, 180, 270, 230, 0xffffff, FALSE);
 		DrawGraph(480, 180, img_footing[6], TRUE);   //右のT字の足場
-		DrawBox(480, 180, 500, 230, 0xffffff, FALSE);
+
+		DrawGraph(50, 100, img_cloud[0], TRUE);  // 雲
+		DrawGraph(300, 160, img_cloud[0], TRUE);  // 雲
+
 	};
 
 
