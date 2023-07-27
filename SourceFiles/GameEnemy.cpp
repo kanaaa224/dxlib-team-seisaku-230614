@@ -33,10 +33,22 @@ void GameEnemy::Init() {
 };
 
 void GameEnemy::Update() {
+	GamePlayer player;
 	frameCounter++;
 
 	if (frameCounter % 3 == 0) anim++;
 	if (anim >= 12) anim = 8;
+
+	Position playerposition = player.GetPosition();
+
+	if (playerposition.x <= enemy.position.x)
+	{
+		enemy.position.x--;
+	}
+	else if (playerposition.x >= enemy.position.x)
+	{
+		enemy.position.x++;
+	}
 }
 
 void GameEnemy::Draw() const{
