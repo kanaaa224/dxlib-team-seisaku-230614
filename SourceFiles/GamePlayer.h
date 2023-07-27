@@ -251,40 +251,55 @@ public:
 // エフェクトクラス
 class GameEffect {
 private:
-	int state, frameCounter;
+	int state, frameCounter[2];
 
 	bool splash;
 	int splash_anim, splash_x, splash_y;
 
-	int img_splash[4];
+	int point, point_x, point_y;
 
+	int img_splash[4];
+	int img_point[5];
 public:
 	GameEffect() {
 		state = 0;
-		frameCounter = 0;
+		frameCounter[0] = 0;
+		frameCounter[1] = 0;
 
 		splash = false;
 		splash_anim = 0;
 		splash_x = 0;
 		splash_y = 0;
 
+		point = 0;
+		point_x = 0;
+		point_y = 0;
+
 		if (LoadDivGraph("Resources/images/Stage/Stage_SplashAnimation.png", 4, 4, 1, 64, 32, img_splash) == -1) throw;
+		if ((img_point[0] = LoadGraph("Resources/Images/Score/GetScore_500.png")) == -1) throw;
+		if ((img_point[1] = LoadGraph("Resources/Images/Score/GetScore_750.png")) == -1) throw;
+		if ((img_point[2] = LoadGraph("Resources/Images/Score/GetScore_1000.png")) == -1) throw;
+		if ((img_point[3] = LoadGraph("Resources/Images/Score/GetScore_1500.png")) == -1) throw;
+		if ((img_point[4] = LoadGraph("Resources/Images/Score/GetScore_2000.png")) == -1) throw;
 	};
 
 	~GameEffect() {
 		for (int i = 0; i < 4; i++) {
 			DeleteGraph(img_splash[i]);
 		};
+		for (int i = 0; i < 5; i++) {
+			DeleteGraph(img_point[i]);
+		};
 	};
 
 	void Update() {
 		if (!splash) {
-			frameCounter = 0;
+			frameCounter[0] = 0;
 			splash_anim = 0;
 		};
 		if (splash) {
-			frameCounter++;
-			if (frameCounter % 5 == 0) {
+			frameCounter[0]++;
+			if (frameCounter[0] % 5 == 0) {
 				if (splash_anim < 4) {
 					splash_anim++;
 				}
@@ -293,10 +308,13 @@ public:
 				};
 			};
 		};
+		if (!point) frameCounter[1] = 0;
+		if (point) if (frameCounter[1]++ % 90 == 0) point = 0;
 	};
 
 	void Draw() const {
-		if (splash && (splash_anim <= 3)) DrawRotaGraph(splash_x + 16, splash_y, 1.0f, 0, img_splash[splash_anim], TRUE);
+		if (splash && (splash_anim <= 3)) DrawRotaGraph(splash_x, splash_y, 1.0f, 0, img_splash[splash_anim], TRUE);
+		if (point) DrawRotaGraph(point_x, point_y - 20, 1.0f, 0, img_point[point - 1], TRUE);
 	};
 
 	void Splash(int x, int y) {
@@ -304,6 +322,14 @@ public:
 			splash_x = x;
 			splash_y = y;
 			splash = true;
+		};
+	};
+
+	void Point(int x, int y, int p) {
+		if (!point) {
+			point_x = x;
+			point_y = y;
+			point = p;
 		};
 	};
 };
