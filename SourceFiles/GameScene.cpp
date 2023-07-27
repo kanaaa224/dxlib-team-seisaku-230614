@@ -128,6 +128,7 @@ AbstractScene* Game::Update() {
 	
 	stage.SetNowStage(stageIndex);
 	gimmick.SetPlayerCollide(player.GetCollide());
+	enemy.SetPlayerCollide(player.GetCollide());
 
 	if (state != 1) { // ポーズか否か
 		effect.Update();
@@ -155,7 +156,9 @@ AbstractScene* Game::Update() {
 			ThunderAnim = 0;
 		};
 
+		if (CheckHitKey(KEY_INPUT_E)) fish.Spawn();
 		enemy.Update();
+		fish.Update();
 	};
 	
 	return this;
@@ -173,6 +176,7 @@ void Game::Draw() const {
 	stage.DrawSea();
 
 	enemy.Draw();
+	fish.Draw();
 
 	if (debug) player.Debug();
 	//if (gameover) DrawFormatString(10, 50, 0xffffff, "Rキーでリセット（メモリ占有に注意）");

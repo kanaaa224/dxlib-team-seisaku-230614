@@ -18,6 +18,7 @@ private:
 	GameStageGimmick gimmick; // ギミックオブジェクト
 
 	GameEnemy enemy;
+	EnemyFish fish;
 
 	// 仮
 	bool ctrlFlg;
