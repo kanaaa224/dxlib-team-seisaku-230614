@@ -27,6 +27,10 @@ Game::Game() {
 	ui.SetHighScore(67890);
 	ui.SetState(stageIndex + 1);
 	player.SetStock(2);
+	Position p;
+	p.x = 50;
+	p.y = 405;
+	player.SetPosition(p); // ステージによって変わるかもしれないので念のため
 	damageBlock[0] = 150;
 	damageBlock[1] = 100;
 	damageBlock[2] = damageBlock[0] + 20;
@@ -52,13 +56,7 @@ AbstractScene* Game::Update() {
 		else blockIndex++;
 	};
 	player.SetCollide(blockData);
-	player.SetState(
-		CheckCollideBox(
-			player.GetPosition().x - player.GetSize().width, player.GetPosition().y - player.GetSize().height,
-			player.GetPosition().x + player.GetSize().width, player.GetPosition().y + player.GetSize().height,
-			blockData.ul.x, blockData.ul.y, blockData.lr.x, blockData.lr.y
-		)
-	);
+	player.SetState(CheckCollide(player.GetCollide(), blockData));
 
 	// 仮 - 海に落ちた時の残機処理
 	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
@@ -66,23 +64,35 @@ AbstractScene* Game::Update() {
 	};
 
 	// 仮 - ダメージブロックとの判定、ダメージ処理
-	Collide balloonCollide = player.GetWeakCollide();
-	if ((CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) == 0) && (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7]) == 0)) damageFlg = true;
-	if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3]) >= 1 && damageFlg) {
+	Collide collideA, collideB, collideC;
+	collideA = player.GetWeakCollide();
+	collideB.ul.x = damageBlock[0];
+	collideB.ul.y = damageBlock[1];
+	collideB.lr.x = damageBlock[2];
+	collideB.lr.y = damageBlock[3];
+	collideC.ul.x = damageBlock[4];
+	collideC.ul.y = damageBlock[5];
+	collideC.lr.x = damageBlock[6];
+	collideC.lr.y = damageBlock[7];
+	if ((CheckCollide(collideA, collideB) == 0) && (CheckCollide(collideA, collideC) == 0)) damageFlg = true;
+	if (CheckCollide(collideA, collideB) >= 1 && damageFlg) {
 		player.Damage();
 		damageFlg = false;
 	}
-	else if (CheckCollideBox(balloonCollide.ul.x, balloonCollide.ul.y, balloonCollide.lr.x, balloonCollide.lr.y, damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7]) >= 1 && damageFlg) {
+	else if (CheckCollide(collideA, collideC) >= 1 && damageFlg) {
 		player.Miss(MISS_LIGHTNING);
 		damageFlg = false;
 	};
 
 	// 仮 - 水しぶき
-	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash((player.GetPosition().x - player.GetSize().width), (SCREEN_HEIGHT - 50));
+	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash(player.GetPosition().x, (SCREEN_HEIGHT - 50));
+
+	// 仮 - 2キーかL/Rボタンを押すとプレイヤーの上にゲットポイント表示
+	if(PadInput::OnPressed(XINPUT_BUTTON_LEFT_SHOULDER) || PadInput::OnPressed(XINPUT_BUTTON_RIGHT_SHOULDER) || CheckHitKey(KEY_INPUT_2)) effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
 
 	// 仮 - Pキーでポーズ
 	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
-	if (CheckHitKey(KEY_INPUT_P) && ctrlFlg) {
+	if ((CheckHitKey(KEY_INPUT_P) && ctrlFlg) || PadInput::OnPress(XINPUT_BUTTON_START)) {
 		if (state == 1) state = 0;
 		else state = 1;
 		ctrlFlg = false;
@@ -94,7 +104,7 @@ AbstractScene* Game::Update() {
 		ctrlFlg = false;
 	}
 	// 仮 - Oキーでステージ遷移
-	else if ((CheckHitKey(KEY_INPUT_O) && ctrlFlg) || PadInput::OnPress(XINPUT_BUTTON_START)) {
+	else if ((CheckHitKey(KEY_INPUT_O) && ctrlFlg) || PadInput::OnPress(XINPUT_BUTTON_X)) {
 		int si = GameMain::GetNowStageIndex();
 		if (si < 4) GameMain::SetStageIndex(GameMain::GetNowStageIndex() + 1);
 		else GameMain::SetStageIndex(0);
@@ -102,7 +112,7 @@ AbstractScene* Game::Update() {
 	};
 
 	// 仮 - Rキーでリセット
-	if (CheckHitKey(KEY_INPUT_R)) return new Game();
+	if (CheckHitKey(KEY_INPUT_R) || PadInput::OnPress(XINPUT_BUTTON_Y)) return new Game();
 
 	// 仮 - ESCキーでタイトル
 	if (CheckHitKey(KEY_INPUT_ESCAPE) || PadInput::OnPress(XINPUT_BUTTON_BACK)) return new Title();
@@ -113,34 +123,40 @@ AbstractScene* Game::Update() {
 		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
 		gameover = true;
 	};
-	effect.Update();
-	ui.SetStock(player.GetStock());
-	ui.Update();
 
+	ui.SetStock(player.GetStock());
+	
 	stage.SetNowStage(stageIndex);
-	stage.Update();
-	gimmick.Update();
 	gimmick.SetPlayerCollide(player.GetCollide());
 
-	// 雷
-	ThunderAnim++;
-	if (ThunderAnim > 0 && ThunderAnim <= AnimChangefps)
-	{
-		ThunderAnimFlg = 0;
-	}
-	else if (ThunderAnim > AnimChangefps && ThunderAnim <= AnimChangefps * 2)
-	{
-		ThunderAnimFlg = 1;
-	}
-	else if (ThunderAnim > AnimChangefps * 2 && ThunderAnim <= AnimChangefps * 3)
-	{
-		ThunderAnimFlg = 2;
-	}
-	else if (ThunderAnim > AnimChangefps * 3) {
-		ThunderAnim = 0;
-	};
+	if (state != 1) { // ポーズか否か
+		effect.Update();
 
-	enemy.Update();
+		ui.Update();
+
+		stage.Update();
+		gimmick.Update();
+
+		// 雷
+		ThunderAnim++;
+		if (ThunderAnim > 0 && ThunderAnim <= AnimChangefps)
+		{
+			ThunderAnimFlg = 0;
+		}
+		else if (ThunderAnim > AnimChangefps && ThunderAnim <= AnimChangefps * 2)
+		{
+			ThunderAnimFlg = 1;
+		}
+		else if (ThunderAnim > AnimChangefps * 2 && ThunderAnim <= AnimChangefps * 3)
+		{
+			ThunderAnimFlg = 2;
+		}
+		else if (ThunderAnim > AnimChangefps * 3) {
+			ThunderAnim = 0;
+		};
+
+		enemy.Update();
+	};
 	
 	return this;
 };
