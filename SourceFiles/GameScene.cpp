@@ -27,6 +27,10 @@ Game::Game() {
 	ui.SetHighScore(67890);
 	ui.SetState(stageIndex + 1);
 	player.SetStock(2);
+	Position p;
+	p.x = 50;
+	p.y = 405;
+	player.SetPosition(p); // ステージによって変わるかもしれないので念のため
 	damageBlock[0] = 150;
 	damageBlock[1] = 100;
 	damageBlock[2] = damageBlock[0] + 20;
