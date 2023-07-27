@@ -17,8 +17,8 @@
 #define MISS_LIGHTNING   1
 #define MISS_FALLSEA     2
 
-#define FIRST_POSITION_X 50
-#define FIRST_POSITION_Y 405
+#define PLAYER_DEFAULT_POSITION_X 50
+#define PLAYER_DEFAULT_POSITION_Y 405
 
 // float型 2次元座標 構造体
 struct Position {
@@ -95,6 +95,11 @@ public:
 	// プレイヤーの状態を取得
 	int GetState() {
 		return player.state;
+	};
+
+	// プレイヤーの位置を設定（float型 座標 構造体）
+	void SetPosition(Position _Position) {
+		player.position = _Position;
 	};
 
 	// プレイヤーの位置を取得（float型 座標 構造体）
