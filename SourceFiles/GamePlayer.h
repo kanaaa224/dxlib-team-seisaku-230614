@@ -17,8 +17,8 @@
 #define MISS_LIGHTNING   1
 #define MISS_FALLSEA     2
 
-#define FIRST_POSITION_X 50
-#define FIRST_POSITION_Y 405
+#define PLAYER_DEFAULT_POSITION_X 50
+#define PLAYER_DEFAULT_POSITION_Y 405
 
 // float型 2次元座標 構造体
 struct Position {
@@ -95,6 +95,11 @@ public:
 	// プレイヤーの状態を取得
 	int GetState() {
 		return player.state;
+	};
+
+	// プレイヤーの位置を設定（float型 座標 構造体）
+	void SetPosition(Position _Position) {
+		player.position = _Position;
 	};
 
 	// プレイヤーの位置を取得（float型 座標 構造体）
@@ -246,40 +251,55 @@ public:
 // エフェクトクラス
 class GameEffect {
 private:
-	int state, frameCounter;
+	int state, frameCounter[2];
 
 	bool splash;
 	int splash_anim, splash_x, splash_y;
 
-	int img_splash[4];
+	int point, point_x, point_y;
 
+	int img_splash[4];
+	int img_point[5];
 public:
 	GameEffect() {
 		state = 0;
-		frameCounter = 0;
+		frameCounter[0] = 0;
+		frameCounter[1] = 0;
 
 		splash = false;
 		splash_anim = 0;
 		splash_x = 0;
 		splash_y = 0;
 
+		point = 0;
+		point_x = 0;
+		point_y = 0;
+
 		if (LoadDivGraph("Resources/images/Stage/Stage_SplashAnimation.png", 4, 4, 1, 64, 32, img_splash) == -1) throw;
+		if ((img_point[0] = LoadGraph("Resources/Images/Score/GetScore_500.png")) == -1) throw;
+		if ((img_point[1] = LoadGraph("Resources/Images/Score/GetScore_750.png")) == -1) throw;
+		if ((img_point[2] = LoadGraph("Resources/Images/Score/GetScore_1000.png")) == -1) throw;
+		if ((img_point[3] = LoadGraph("Resources/Images/Score/GetScore_1500.png")) == -1) throw;
+		if ((img_point[4] = LoadGraph("Resources/Images/Score/GetScore_2000.png")) == -1) throw;
 	};
 
 	~GameEffect() {
 		for (int i = 0; i < 4; i++) {
 			DeleteGraph(img_splash[i]);
 		};
+		for (int i = 0; i < 5; i++) {
+			DeleteGraph(img_point[i]);
+		};
 	};
 
 	void Update() {
 		if (!splash) {
-			frameCounter = 0;
+			frameCounter[0] = 0;
 			splash_anim = 0;
 		};
 		if (splash) {
-			frameCounter++;
-			if (frameCounter % 5 == 0) {
+			frameCounter[0]++;
+			if (frameCounter[0] % 5 == 0) {
 				if (splash_anim < 4) {
 					splash_anim++;
 				}
@@ -288,10 +308,13 @@ public:
 				};
 			};
 		};
+		if (!point) frameCounter[1] = 0;
+		if (point) if (frameCounter[1]++ % 90 == 0) point = 0;
 	};
 
 	void Draw() const {
-		if (splash && (splash_anim <= 3)) DrawRotaGraph(splash_x + 16, splash_y, 1.0f, 0, img_splash[splash_anim], TRUE);
+		if (splash && (splash_anim <= 3)) DrawRotaGraph(splash_x, splash_y, 1.0f, 0, img_splash[splash_anim], TRUE);
+		if (point) DrawRotaGraph(point_x, point_y - 20, 1.0f, 0, img_point[point - 1], TRUE);
 	};
 
 	void Splash(int x, int y) {
@@ -301,4 +324,35 @@ public:
 			splash = true;
 		};
 	};
+
+	void Point(int x, int y, int p) {
+		if (!point) {
+			point_x = x;
+			point_y = y;
+			point = p;
+		};
+	};
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+class Collider {
+public:
+	static int CheckCollide(Collide collideA, Collide collideB) {
+		if (collideA.lr.x <= collideB.ul.x || collideA.ul.x >= collideB.lr.x || collideA.lr.y <= collideB.ul.y || collideA.ul.y >= collideB.lr.y) return 0;
+		if (fabsf(collideA.lr.y - collideB.ul.y) < 10) return 1;
+		else if (fabsf(collideA.ul.y - collideB.lr.y) < 10) return 2;
+		else if (fabsf(collideA.lr.x - collideB.ul.x) < 10) return 3;
+		else if (fabsf(collideA.ul.x - collideB.lr.x) < 10) return 4;
+		else return 0;
+	};
+
+	static int CheckCollideBox(float s1X1, float s1Y1, float s1X2, float s1Y2, float s2X1, float s2Y1, float s2X2, float s2Y2) {
+		if (s1X2 <= s2X1 || s1X1 >= s2X2 || s1Y2 <= s2Y1 || s1Y1 >= s2Y2) return 0;
+		if (fabsf(s1Y2 - s2Y1) < 10) return 1;
+		else if (fabsf(s1Y1 - s2Y2) < 10) return 2;
+		else if (fabsf(s1X2 - s2X1) < 10) return 3;
+		else if (fabsf(s1X1 - s2X2) < 10) return 4;
+		else return 0;
+	};
+};*/
