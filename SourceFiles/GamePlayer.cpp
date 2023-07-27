@@ -83,7 +83,7 @@ void GamePlayer::Update() {
 		inputX = PadInput::GetLStick().x;
 		if (PadInput::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || CheckHitKey(KEY_INPUT_A)) inputX = -1.0f;
 		else if (PadInput::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || CheckHitKey(KEY_INPUT_D)) inputX = 1.0f;
-		if (inputX != 0.0f || frameCounter >= 700) state[BLINK] = 0;
+		if ((inputX > 0.3f || inputX < -0.3f) || frameCounter >= 700) state[BLINK] = 0;
 
 		if (!flapCount && (PadInput::OnPress(XINPUT_BUTTON_B) || PadInput::OnPressed(XINPUT_BUTTON_A) || CheckHitKey(KEY_INPUT_SPACE))) {
 			flapCount = 10; // 慣性の最適値：12
