@@ -39,7 +39,7 @@ void GameEnemy::Update() {
 
 	if (frameCounter % 3 == 0) anim++;
 	if (anim >= 12) anim = 8;
-	enemy.position.x = playerCollide.ul.x;
+	//enemy.position.x = playerCollide.ul.x;
 	//Position playerposition = player.GetPosition();
 
 	//if (playerposition.x <= enemy.position.x)
