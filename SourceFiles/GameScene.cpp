@@ -170,6 +170,8 @@ void Game::Draw() const {
 	effect.Draw();
 	ui.Draw();
 
+	stage.DrawSea();
+
 	enemy.Draw();
 
 	if (debug) player.Debug();
