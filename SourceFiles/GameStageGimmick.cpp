@@ -85,8 +85,5 @@ void GameStageGimmick::BubbleDraw() const {
 		}
 	}
 
-	
-	DrawFormatString(100, 130, 0x00ffff, "count %d", count);
-	DrawFormatString(100, 100, 0x00ffff, "%d", bubble[0].y);
-	DrawFormatString(100, 160, 0x00ffff, "player %f", playerCollide.ul.y);
+
 };
