@@ -52,10 +52,10 @@ public:
 	// 当たり判定 - 島袋
 	static int CheckCollide(Collide collideA, Collide collideB) {
 		if (collideA.lr.x <= collideB.ul.x || collideA.ul.x >= collideB.lr.x || collideA.lr.y <= collideB.ul.y || collideA.ul.y >= collideB.lr.y) return 0;
-		if (fabsf(collideA.lr.y - collideB.ul.y) < 10) return 1;
-		else if (fabsf(collideA.ul.y - collideB.lr.y) < 10) return 2;
-		else if (fabsf(collideA.lr.x - collideB.ul.x) < 10) return 3;
-		else if (fabsf(collideA.ul.x - collideB.lr.x) < 10) return 4;
+		if (fabsf(collideA.lr.y - collideB.ul.y) < 15) return 1;
+		else if (fabsf(collideA.ul.y - collideB.lr.y) < 15) return 2;
+		else if (fabsf(collideA.lr.x - collideB.ul.x) < 15) return 3;
+		else if (fabsf(collideA.ul.x - collideB.lr.x) < 15) return 4;
 		else return 0;
 	};
 };
