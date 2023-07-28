@@ -10,7 +10,7 @@ struct Bubble {
 	int anim = 0;
 	int flg = 0;
 	float x = 0.0f;
-	float y = 0.0f;
+	int y = 0;
 	float spawnX = 0;
 };
 
@@ -18,9 +18,12 @@ struct Bubble {
 // ステージクラス
 class GameStageGimmick {
 private:
-	int count = 0;
+	int count;
+	int bcount = 0;
 	int i = 0;
-	int b = 0;
+	int spawnflg;
+
+	int max_bubbles = 10;
 	Bubble bubble[10];
 
 	int img_bubble[4]; // シャボン
