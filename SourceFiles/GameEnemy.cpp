@@ -10,6 +10,7 @@ GameEnemy::GameEnemy() {
 	LoadDivGraph("Resources/Images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, g_enemy);
 	LoadDivGraph("Resources/Images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, p_enemy);
 
+
 	anim = 8;
 };
 
@@ -24,8 +25,8 @@ GameEnemy::~GameEnemy() {
 void GameEnemy::Init() {
 
 	enemy.hp = 1;
-	enemy.position.x = FIRST_POSITION_X + 15;
-	enemy.position.y = FIRST_POSITION_Y - 200;
+	enemy.position.x = 50 + 15;
+	enemy.position.y = 405 - 200;
 	enemy.size.width = 15;
 	enemy.size.height = 25;
 
@@ -33,10 +34,23 @@ void GameEnemy::Init() {
 };
 
 void GameEnemy::Update() {
+	
 	frameCounter++;
 
 	if (frameCounter % 3 == 0) anim++;
 	if (anim >= 12) anim = 8;
+	//enemy.position.x = playerCollide.ul.x;
+	//Position playerposition = player.GetPosition();
+
+	//if (playerposition.x <= enemy.position.x)
+	//{
+	//	enemy.position.x--;
+	//}
+	//else if (playerposition.x >= enemy.position.x)
+	//{
+	//	enemy.position.x++;
+	//}
+	
 }
 
 void GameEnemy::Draw() const{
@@ -62,5 +76,4 @@ void GameEnemy::Draw() const{
 	DrawRotaGraph2((int)enemy.position.x + 60, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
-
 }

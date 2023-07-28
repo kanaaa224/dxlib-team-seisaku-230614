@@ -13,7 +13,7 @@ GameStageGimmick::GameStageGimmick() {
 	frameCounter = 0;
 	bubble_anim = 0;
 
-	bubble_height = 400;
+	bubble_height = 600;
 
 	bubble_flg = 0;
 
