@@ -167,25 +167,29 @@ AbstractScene* Game::Update() {
 void Game::Draw() const {
 
 	stage.Draw();
-	gimmick.Draw();
 
-	player.Draw();
-	effect.Draw();
 	ui.Draw();
 
+	if (state != 1) {
+		gimmick.Draw();
+
+		player.Draw();
+		effect.Draw();
+
+		enemy.Draw();
+		fish.Draw();
+
+		if (debug) player.Debug();
+		//if (gameover) DrawFormatString(10, 50, 0xffffff, "Rキーでリセット（メモリ占有に注意）");
+		//if (gameover) DrawFormatString(10, 65, 0xffffff, "Pキーでそのまま続行");
+
+		DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xff0000, FALSE);
+		DrawBox(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], 0xffff00, FALSE);
+
+		DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);
+	};
+
 	stage.DrawSea();
-
-	enemy.Draw();
-	fish.Draw();
-
-	if (debug) player.Debug();
-	//if (gameover) DrawFormatString(10, 50, 0xffffff, "Rキーでリセット（メモリ占有に注意）");
-	//if (gameover) DrawFormatString(10, 65, 0xffffff, "Pキーでそのまま続行");
-
-	DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xff0000, FALSE);
-	DrawBox(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], 0xffff00, FALSE);
-
-	DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);
 };
 
 int GameMain::stageIndex = 0;
