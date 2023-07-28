@@ -35,12 +35,12 @@ public:
 
 	// 更新
 	void Update() {
-		BubbleUpdate();
+		UpdateBubble();
 	};
 
 	// 描画
 	void Draw() const {
-		BubbleDraw();
+		DrawBubble();
 	};
 
 	/////////////////////////////////////////////////////////
@@ -53,13 +53,13 @@ public:
 	};
 
 	// シャボン玉 更新
-	void BubbleUpdate();
+	void UpdateBubble();
 
 	// シャボン玉 描画
-	void BubbleDraw() const;
+	void DrawBubble() const;
 
 	// シャボン玉を出現させる
-	void BubbleSpawn(float x) {
+	void SpawnBubble(float x) {
 		for (int i = 0; i < BUBBLE_MAX; i++) {
 			if (!bubble[i].flg) {
 				bubble[i].flg = GetRand(1) + 1;
@@ -71,6 +71,24 @@ public:
 				i = BUBBLE_MAX;
 			};
 		};
+	};
+
+	Collide GetBubbleCollide(int index) {
+		Collide collide;
+		int padding = 20;
+		collide.ul.x = bubble[index].drawX - 20;
+		collide.ul.y = bubble[index].y - 20;
+		collide.lr.x = bubble[index].drawX + 20;
+		collide.lr.y = bubble[index].y + 20;
+		return collide;
+	};
+
+	void SetBubbleFlg(int index, int flg) {
+		bubble[index].flg = flg;
+	};
+
+	int GetBubbleFlg(int index) {
+		return bubble[index].flg;
 	};
 
 	// プレイヤーの衝突座標を設定

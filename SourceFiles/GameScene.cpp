@@ -12,6 +12,8 @@ Game::Game() {
 
 	if ((snd_gameOver = LoadSoundMem("Resources/Sounds/SE_GameOver.wav")) == -1) throw;
 
+	if ((snd_bubble = LoadSoundMem("Resources/Sounds/SE_Bubble.wav")) == -1) throw;
+
 	if ((LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png",3, 3, 1, 32, 32, Thunder)) == -1) throw;
 	ThunderAnim = 0;
 	ThunderAnimFlg = 0;
@@ -45,6 +47,7 @@ Game::Game() {
 Game::~Game() {
 	DeleteSoundMem(snd_start);
 	DeleteSoundMem(snd_gameOver);
+	DeleteSoundMem(snd_bubble);
 };
 
 AbstractScene* Game::Update() {
@@ -86,6 +89,20 @@ AbstractScene* Game::Update() {
 		damageFlg = false;
 	};
 
+	// 仮 - バブルとの当たり判定
+	collideA = player.GetCollide();
+	for (int i = 0; i < BUBBLE_MAX; i++) {
+		if (gimmick.GetBubbleFlg(i)) {
+			collideB = gimmick.GetBubbleCollide(i);
+			int isCollide = CheckCollide(collideA, collideB);
+			if (isCollide) {
+				gimmick.SetBubbleFlg(i, 10);
+				effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
+				if (CheckSoundMem(snd_bubble) == 0) PlaySoundMem(snd_bubble, DX_PLAYTYPE_BACK, TRUE);
+			}; // スコア表示されない・バブルが消えない時あり
+		};
+	};
+
 	// 仮 - 水しぶき
 	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash(player.GetPosition().x, (SCREEN_HEIGHT - 50));
 
@@ -114,7 +131,7 @@ AbstractScene* Game::Update() {
 	}
 	// 仮 - Bキーでシャボン玉
 	else if (CheckHitKey(KEY_INPUT_B) && ctrlFlg) {
-		gimmick.BubbleSpawn(player.GetPosition().x);
+		gimmick.SpawnBubble(player.GetPosition().x);
 		ctrlFlg = false;
 	};
 
