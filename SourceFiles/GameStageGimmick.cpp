@@ -16,9 +16,10 @@ GameStageGimmick::GameStageGimmick() {
 
 	bubble_height = 400;
 
+	bubble_flg = 0;
 
-
-
+	//シャボン玉スコア画像　仮
+	//GetScore_500 = LoadGraph("Resources/Images/Stage/GetScore_500.png");
 };
 
 GameStageGimmick::~GameStageGimmick() {
@@ -40,7 +41,7 @@ void GameStageGimmick::BubbleUpdate() {
 
 	if (playerCollide.ul.y >= 500 && bubble[count].flg == 0) {
 		bubble[count].flg = 1;
-		bubble[count].y = 300;
+		bubble[count].y = 480;
 		bubble[count].spawnX = playerCollide.ul.x;
 	}
 
@@ -50,10 +51,8 @@ void GameStageGimmick::BubbleUpdate() {
 
 	// シャボン玉が上昇中の処理
 
-	/*for (count =  0; count < 10; count++) {*/   //これつけると残像は消えるけど一つしかでない
-
-		if (bubble[count].flg == 1) {
-
+	if (bubble[count].flg == 1) {
+		if (bubble[count].y >= 0) {
 
 			bubble_x += amplitude * sin(frequency * bubble_count) - 140;
 			//amplitude波の大きさを決める　//frequency　1秒あたりに何回周期するかを決める
@@ -71,15 +70,21 @@ void GameStageGimmick::BubbleUpdate() {
 			if (bubble[count].anim == 3) bubble[count].anim = 0;
 
 		}
-	//}
-		if (bubble[count].y == 0) {
+
+		else {
 			bubble[count].flg = 0;
+			bubble[count].y = 480;
 		}
 
-	
-	//if (playerCollide.ul.y >= 500) {
-	//	count++; // 次のシャボン玉へ
-	//}
+		/*if (bubble[count].y == -1) {
+			bubble[count].flg = 0;
+			bubble[count].y = 480;
+		}*/
+
+	}
+	if (playerCollide.ul.y >= 500) {
+		count++; // 次のシャボン玉へ
+	}
 	if (count >= 10) {
 		count = 0; // シャボン玉が10個以上なら最初のシャボン玉に戻る
 	}
