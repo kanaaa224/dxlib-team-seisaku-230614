@@ -50,14 +50,6 @@ Game::~Game() {
 AbstractScene* Game::Update() {
 
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
-	//if (player.GetState() == 0) {
-	//	blockData = stage.GetBlock(stageIndex, blockIndex);
-	//	if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) blockIndex = 0;
-	//	else blockIndex++;
-	//};
-	//player.SetCollide(blockData);
-	//player.SetState(CheckCollide(player.GetCollide(), blockData));
-
 	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
 		if (player.GetState() == 0) {
 			blockData = stage.GetBlock(stageIndex, blockIndex);
