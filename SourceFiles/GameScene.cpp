@@ -93,7 +93,7 @@ AbstractScene* Game::Update() {
 	if(PadInput::OnPressed(XINPUT_BUTTON_LEFT_SHOULDER) || PadInput::OnPressed(XINPUT_BUTTON_RIGHT_SHOULDER) || CheckHitKey(KEY_INPUT_2)) effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
 
 	// 仮 - Pキーでポーズ
-	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
+	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_B)) ctrlFlg = true;
 	if ((CheckHitKey(KEY_INPUT_P) && ctrlFlg) || PadInput::OnPress(XINPUT_BUTTON_START)) {
 		if (state == 1) state = 0;
 		else state = 1;
@@ -111,6 +111,11 @@ AbstractScene* Game::Update() {
 		if (si < 4) GameMain::SetStageIndex(GameMain::GetNowStageIndex() + 1);
 		else GameMain::SetStageIndex(0);
 		return new Game();
+	}
+	// 仮 - Bキーでシャボン玉
+	else if (CheckHitKey(KEY_INPUT_B) && ctrlFlg) {
+		gimmick.BubbleSpawn(player.GetPosition().x);
+		ctrlFlg = false;
 	};
 
 	// 仮 - Rキーでリセット
