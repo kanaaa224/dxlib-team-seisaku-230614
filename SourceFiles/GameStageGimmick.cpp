@@ -30,6 +30,11 @@ void GameStageGimmick::BubbleUpdate() {
 
 				if (bubble[i].flg == 1) bubble[i].drawX = bubble[i].x + moveX;
 				else bubble[i].drawX = bubble[i].x - moveX;
+
+				if (bubble[i].frameCounter % 30 == 0) {
+					if (bubble[i].anim >= 2) bubble[i].anim = 0;
+					else bubble[i].anim++;
+				};
 			};
 		};
 	};
