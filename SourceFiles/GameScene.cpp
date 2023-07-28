@@ -57,6 +57,17 @@ AbstractScene* Game::Update() {
 	};
 	player.SetCollide(blockData);
 	player.SetState(CheckCollide(player.GetCollide(), blockData));
+	//if (player.GetState() == 0) {
+	//	for (int i = 0; i < (stage.GetFootingMax(stageIndex) - 1); i++) {
+	//		blockData = stage.GetBlock(stageIndex, i);
+	//		player.SetCollide(blockData);
+	//		player.SetState(CheckCollide(player.GetCollide(), blockData));
+	//	};
+	//}
+	//else {
+	//	player.SetCollide(blockData);
+	//	player.SetState(CheckCollide(player.GetCollide(), blockData));
+	//}
 
 	// 仮 - 海に落ちた時の残機処理
 	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
