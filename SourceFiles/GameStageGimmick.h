@@ -8,7 +8,7 @@
 #define BUBBLE_MAX 100
 
 struct Bubble {
-	int frameCounter = 0;;
+	int frameCounter = 0;
 	int anim = 0;
 	int flg = 0;
 	float x = 0.0f;
@@ -24,7 +24,7 @@ private:
 	int img_bubble[4];
 
 	// プレイヤーの左上・右上座標
-	Collide playerCollide;
+	//Collide playerCollide;
 	
 public:
 	// コンストラクタ
@@ -92,7 +92,7 @@ public:
 	};
 
 	// プレイヤーの衝突座標を設定
-	void SetPlayerCollide(Collide collide) {
-		playerCollide = collide;
-	};
+	//void SetPlayerCollide(Collide collide) {
+	//	playerCollide = collide;
+	//};
 };
