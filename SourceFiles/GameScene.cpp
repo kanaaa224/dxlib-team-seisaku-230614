@@ -12,6 +12,8 @@ Game::Game() {
 
 	if ((snd_gameOver = LoadSoundMem("Resources/Sounds/SE_GameOver.wav")) == -1) throw;
 
+	if ((snd_bubble = LoadSoundMem("Resources/Sounds/SE_Bubble.wav")) == -1) throw;
+
 	if ((LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png",3, 3, 1, 32, 32, Thunder)) == -1) throw;
 	ThunderAnim = 0;
 	ThunderAnimFlg = 0;
@@ -45,22 +47,21 @@ Game::Game() {
 Game::~Game() {
 	DeleteSoundMem(snd_start);
 	DeleteSoundMem(snd_gameOver);
+	DeleteSoundMem(snd_bubble);
 };
 
 AbstractScene* Game::Update() {
 
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
-	if (player.GetState() == 0) {
-		blockData = stage.GetBlock(stageIndex, blockIndex);
-		if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) {
-			blockIndex = 0;
-		}
-		else {
-			blockIndex++;
-		}
+	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
+		if (player.GetState() == 0) {
+			blockData = stage.GetBlock(stageIndex, blockIndex);
+			if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) blockIndex = 0;
+			else blockIndex++;
+		};
+		player.SetCollide(blockData);
+		player.SetState(CheckCollide(player.GetCollide(), blockData));
 	};
-	player.SetCollide(blockData);
-	player.SetState(CheckCollide(player.GetCollide(), blockData));
 
 	// 仮 - 海に落ちた時の残機処理
 	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
@@ -88,6 +89,20 @@ AbstractScene* Game::Update() {
 		damageFlg = false;
 	};
 
+	// 仮 - バブルとの当たり判定
+	collideA = player.GetCollide();
+	for (int i = 0; i < BUBBLE_MAX; i++) {
+		if (gimmick.GetBubbleFlg(i)) {
+			collideB = gimmick.GetBubbleCollide(i);
+			int isCollide = CheckCollide(collideA, collideB);
+			if (isCollide /* && (gimmick.GetBubbleFlg(i) != 11) */) {
+				gimmick.SetBubbleFlg(i, 10);
+				effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
+				if (CheckSoundMem(snd_bubble) == 0) PlaySoundMem(snd_bubble, DX_PLAYTYPE_BACK, TRUE);
+			}; // スコア表示されない・バブルが消えない時あり
+		};
+	};
+
 	// 仮 - 水しぶき
 	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash(player.GetPosition().x, (SCREEN_HEIGHT - 50));
 
@@ -95,7 +110,7 @@ AbstractScene* Game::Update() {
 	if(PadInput::OnPressed(XINPUT_BUTTON_LEFT_SHOULDER) || PadInput::OnPressed(XINPUT_BUTTON_RIGHT_SHOULDER) || CheckHitKey(KEY_INPUT_2)) effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
 
 	// 仮 - Pキーでポーズ
-	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1)) ctrlFlg = true;
+	if (!CheckHitKey(KEY_INPUT_P) && !CheckHitKey(KEY_INPUT_O) && !CheckHitKey(KEY_INPUT_1) && !CheckHitKey(KEY_INPUT_B)) ctrlFlg = true;
 	if ((CheckHitKey(KEY_INPUT_P) && ctrlFlg) || PadInput::OnPress(XINPUT_BUTTON_START)) {
 		if (state == 1) state = 0;
 		else state = 1;
@@ -113,6 +128,11 @@ AbstractScene* Game::Update() {
 		if (si < 4) GameMain::SetStageIndex(GameMain::GetNowStageIndex() + 1);
 		else GameMain::SetStageIndex(0);
 		return new Game();
+	}
+	// 仮 - Bキーでシャボン玉
+	else if (CheckHitKey(KEY_INPUT_B) && ctrlFlg) {
+		gimmick.SpawnBubble(player.GetPosition().x);
+		ctrlFlg = false;
 	};
 
 	// 仮 - Rキーでリセット
@@ -131,7 +151,7 @@ AbstractScene* Game::Update() {
 	ui.SetStock(player.GetStock());
 	
 	stage.SetNowStage(stageIndex);
-	gimmick.SetPlayerCollide(player.GetCollide());
+	//gimmick.SetPlayerCollide(player.GetCollide());
 	enemy.SetPlayerCollide(player.GetCollide());
 
 	if (state != 1) { // ポーズか否か
