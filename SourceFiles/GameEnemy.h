@@ -55,6 +55,7 @@ class EnemyFish {
 private:
 	int frameCounter;
 
+
 	int img[10];
 
 	int flg, anim;
