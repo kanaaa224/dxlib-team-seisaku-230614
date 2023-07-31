@@ -16,9 +16,9 @@ GameEnemy::GameEnemy() {
 
 GameEnemy::~GameEnemy() {
 	for (int i = 0; i < 18; i++) {
-		DeleteGraph(r_enemy[i]);
-		DeleteGraph(g_enemy[i]);
-		DeleteGraph(p_enemy[i]);
+		DeleteGraph(r_enemy[i]);//黄色の敵
+		DeleteGraph(g_enemy[i]);//緑色の敵
+		DeleteGraph(p_enemy[i]);//ピンクの敵
 	}
 }
 
