@@ -1,89 +1,55 @@
-﻿/********************************
+﻿
+/********************************
 * ゲームステージギミック処理
 * 編集者：
 ********************************/
+#define _USE_MATH_DEFINES
 #include "main.h"
 
 GameStageGimmick::GameStageGimmick() {
 	// シャボン玉画像読込
 	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, img_bubble);
-
-	frequency = 0;
-	bubble_count = 0;
-	frameCounter = 0;
-	bubble_anim = 0;
-
-	bubble_height = 600;
-
-	bubble_flg = 0;
-
-	count = 0;
-	spawnflg = 0; // 追加：プレイヤーが500以上に行った時のフラグ
-
-	//シャボン玉スコア画像　仮
-	//GetScore_500 = LoadGraph("Resources/Images/Stage/GetScore_500.png");
 };
 
 GameStageGimmick::~GameStageGimmick() {
-
+	for (int i = 0; i < 4; i++) {
+		DeleteGraph(img_bubble[i]);
+	};
 };
 
-void GameStageGimmick::BubbleUpdate() {
+void GameStageGimmick::UpdateBubble() {
+	for (int i = 0; i < BUBBLE_MAX; i++) {
+		if (bubble[i].flg) {
+			bubble[i].frameCounter++;
+			if (bubble[i].flg == 11) bubble[i].flg = 0;
+			else if (bubble[i].flg == 10) {
+				bubble[i].anim = 3;
+				bubble[i].flg = 11;
+			}
+			else if (bubble[i].y < -70) bubble[i].flg = 0;
+			else {
+				bubble[i].y--;
 
-	float amplitude = 50.0f;
-	float frequency = 0.02;
+				float swingMax = 100.0f;
+				float moveX = swingMax * sin(2 * M_PI * bubble[i].frameCounter / 240.0f);
 
-	float bubble_x = 100;
+				if (bubble[i].flg == 1) bubble[i].drawX = bubble[i].x + moveX;
+				else bubble[i].drawX = bubble[i].x - moveX;
 
-    /* if (CheckHitKey(KEY_INPUT_B) && !position_flg) {でx取得*/
+				if (bubble[i].frameCounter % 30 == 0) {
+					if (bubble[i].anim >= 2) bubble[i].anim = 0;
+					else bubble[i].anim++;
+				};
+			};
+		};
+	};
+};
 
-    if (playerCollide.ul.y >= 500 && bubble[count].flg == 0) {
-        spawnflg = 1;
-        bubble[count].flg = 1;
-        bubble[count].y = 500;
-        bubble[count].spawnX = playerCollide.ul.x;
-    }
-
-    // countを1だけプラスする（プレイヤーが500以上のy座標に到達した後に一度だけ実行される）
-    if (playerCollide.ul.y >= 500 && !spawnflg) {
-        count++;
-        if (count >= max_bubbles) {
-            count = 0; // countがmax_bubbles以上になった場合、最初のシャボン玉に戻る
-        }
-        spawnflg = 1;
-    }
-    else if (playerCollide.ul.y < 500) {
-        spawnflg = 0; // プレイヤーが500未満の場合、フラグをリセット
-    }
-
-    // シャボン玉が上昇中の処理
-    for (int i = 0; i < max_bubbles; i++) {
-        if (bubble[i].flg == 1) {
-            bubble_x = 100; // 初期位置に戻す
-            bubble_x += amplitude * sin(frequency * bubble_count) - 140;
-            bubble[i].x = bubble_x + bubble[i].spawnX;
-            bubble_count++;
-            bubble[i].y--;
-            if (bubble[i].y < 0) {
-                bubble[i].flg = 0;
-                bubble[i].y = 480;
-            }
-            if (bubble_count % 30 == 0) {
-                bubble[i].anim++;
-            }
-            if (bubble[i].anim == 3) {
-                bubble[i].anim = 0;
-            }
-        }
-    }
-}
-void GameStageGimmick::BubbleDraw() const {
-	// 全てのシャボン玉を描画
-	for (int i = 0; i < max_bubbles; i++) {
-		if (bubble[i].flg == 1) {
-			DrawGraph(bubble[i].x, bubble[i].y, img_bubble[bubble[i].anim], TRUE);
-		}
-	}
-
-
+void GameStageGimmick::DrawBubble() const {
+	// シャボン玉の描画
+	for (int i = 0; i < BUBBLE_MAX; i++) {
+		if (bubble[i].flg) DrawRotaGraph(bubble[i].drawX, bubble[i].y, 1.0f, 0, img_bubble[bubble[i].anim], TRUE);
+		//if (bubble[i].flg) DrawBox(bubble[i].drawX - 32, bubble[i].y - 32, bubble[i].drawX + 32, bubble[i].y + 32, 0xffffff, FALSE);
+		//DrawFormatString(10, 50 + (15 * i), 0xffffff, "%d : x:%f y:%f flg:%d drawX:%f", i, bubble[i].x, bubble[i].y, bubble[i].flg, bubble[i].drawX);
+	};
 };

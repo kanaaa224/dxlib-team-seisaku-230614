@@ -5,53 +5,26 @@
 #pragma once
 #include "main.h"
 
+#define BUBBLE_MAX 100
 
 struct Bubble {
+	int frameCounter = 0;
 	int anim = 0;
 	int flg = 0;
 	float x = 0.0f;
-	int y = 0;
-	float spawnX = 0;
+	float y = 0.0f;
+	float drawX = 0.0f;
 };
-
 
 // ステージクラス
 class GameStageGimmick {
 private:
-	int count;
-	int bcount = 0;
-	int i = 0;
-	int spawnflg;
+	Bubble bubble[BUBBLE_MAX];
 
-	int max_bubbles = 10;
-	Bubble bubble[10];
-
-	int img_bubble[4]; // シャボン
-
-	int bubble_height;
-	int bubble_width;
-	int frequency; // シャボン玉のの周波数
-	int  bubble_count;
-	float amplitude;
-	float bubble_x;
-
-	// シャボン玉のアニメーション用
-	int frameCounter;
-	int bubble_anim;
-
-	int bubble_flg;
-	int position;
-	int position_flg;
-	int new_position;
-
-	int bubble_spwn;//敵が海に落ちたときのシャボン玉のスポーン位置
-
-	
-
-	//int GetScore_500;//仮りで画像表示するための変数
+	int img_bubble[4];
 
 	// プレイヤーの左上・右上座標
-	Collide playerCollide;
+	//Collide playerCollide;
 	
 public:
 	// コンストラクタ
@@ -62,23 +35,64 @@ public:
 
 	// 更新
 	void Update() {
-		BubbleUpdate();
+		UpdateBubble();
 	};
 
 	// 描画
 	void Draw() const {
-		BubbleDraw();
+		DrawBubble();
+	};
+
+	/////////////////////////////////////////////////////////
+
+	// シャボン玉リセット
+	void BubbleReset() {
+		for (int i = 0; i < BUBBLE_MAX; i++) {
+			bubble[i].flg = 0;
+		};
 	};
 
 	// シャボン玉 更新
-	void BubbleUpdate();
+	void UpdateBubble();
 
 	// シャボン玉 描画
-	void BubbleDraw() const;
+	void DrawBubble() const;
 
-	// プレイヤーの衝突座標を設定
-	void SetPlayerCollide(Collide collide) {
-		playerCollide = collide;
+	// シャボン玉を出現させる
+	void SpawnBubble(float x) {
+		for (int i = 0; i < BUBBLE_MAX; i++) {
+			if (!bubble[i].flg) {
+				bubble[i].flg = GetRand(1) + 1;
+				bubble[i].frameCounter = 0;
+				bubble[i].anim = 0;
+				bubble[i].x = x;
+				bubble[i].y = SCREEN_HEIGHT + 70;
+				bubble[i].drawX = x;
+				i = BUBBLE_MAX;
+			};
+		};
 	};
 
+	Collide GetBubbleCollide(int index) {
+		Collide collide;
+		int padding = 20;
+		collide.ul.x = bubble[index].drawX - 20;
+		collide.ul.y = bubble[index].y - 20;
+		collide.lr.x = bubble[index].drawX + 20;
+		collide.lr.y = bubble[index].y + 20;
+		return collide;
+	};
+
+	void SetBubbleFlg(int index, int flg) {
+		bubble[index].flg = flg;
+	};
+
+	int GetBubbleFlg(int index) {
+		return bubble[index].flg;
+	};
+
+	// プレイヤーの衝突座標を設定
+	//void SetPlayerCollide(Collide collide) {
+	//	playerCollide = collide;
+	//};
 };
