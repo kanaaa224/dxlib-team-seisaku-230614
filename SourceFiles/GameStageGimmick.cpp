@@ -46,7 +46,6 @@ void GameStageGimmick::UpdateBubble() {
 };
 
 void GameStageGimmick::DrawBubble() const {
-
 	// シャボン玉の描画
 	for (int i = 0; i < BUBBLE_MAX; i++) {
 		if (bubble[i].flg) DrawRotaGraph(bubble[i].drawX, bubble[i].y, 1.0f, 0, img_bubble[bubble[i].anim], TRUE);
@@ -54,5 +53,3 @@ void GameStageGimmick::DrawBubble() const {
 		//DrawFormatString(10, 50 + (15 * i), 0xffffff, "%d : x:%f y:%f flg:%d drawX:%f", i, bubble[i].x, bubble[i].y, bubble[i].flg, bubble[i].drawX);
 	};
 };
-
-

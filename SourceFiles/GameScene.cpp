@@ -95,7 +95,7 @@ AbstractScene* Game::Update() {
 		if (gimmick.GetBubbleFlg(i)) {
 			collideB = gimmick.GetBubbleCollide(i);
 			int isCollide = CheckCollide(collideA, collideB);
-			if (isCollide) {
+			if (isCollide /* && (gimmick.GetBubbleFlg(i) != 11) */) {
 				gimmick.SetBubbleFlg(i, 10);
 				effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
 				if (CheckSoundMem(snd_bubble) == 0) PlaySoundMem(snd_bubble, DX_PLAYTYPE_BACK, TRUE);
@@ -151,7 +151,7 @@ AbstractScene* Game::Update() {
 	ui.SetStock(player.GetStock());
 	
 	stage.SetNowStage(stageIndex);
-	gimmick.SetPlayerCollide(player.GetCollide());
+	//gimmick.SetPlayerCollide(player.GetCollide());
 	enemy.SetPlayerCollide(player.GetCollide());
 
 	if (state != 1) { // ポーズか否か
