@@ -11,7 +11,6 @@ private:
 	int frameCounter;
 
 	Person enemy;
-	
 
 	int anim;
 
