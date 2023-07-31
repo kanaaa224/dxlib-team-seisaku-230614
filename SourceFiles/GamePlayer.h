@@ -190,6 +190,8 @@ public:
 	void Debug() const {
 		DrawBox((int)(player.position.x - player.size.width), (int)(player.position.y - player.size.height), (int)(player.position.x + player.size.width), (int)(player.position.y + player.size.height), 0xffffff, FALSE);
 
+		DrawBox(collideData.ul.x, collideData.ul.y, collideData.lr.x, collideData.lr.y, 0xffffff, FALSE);
+
 		int x = 10;
 		int y = 50;
 
