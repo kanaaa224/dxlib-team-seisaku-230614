@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string>
+#include <stdlib.h>
 using std::string;
 using std::to_string;
 #include <time.h>
