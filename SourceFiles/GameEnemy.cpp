@@ -10,6 +10,9 @@ GameEnemy::GameEnemy() {
 	LoadDivGraph("Resources/Images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, g_enemy);
 	LoadDivGraph("Resources/Images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, p_enemy);
 
+	isChasingPlayer = false;
+	nextStateChange = rand() % 300 + 180;
+	currentStateDuration = 0;
 
 	anim = 8;
 };
@@ -39,18 +42,31 @@ void GameEnemy::Update() {
 
 	if (frameCounter % 3 == 0) anim++;
 	if (anim >= 12) anim = 8;
-	enemy.position.x = playerCollide.ul.x;
-	//Position playerposition = player.GetPosition();
 
-	//if (playerposition.x <= enemy.position.x)
-	//{
-	//	enemy.position.x--;
-	//}
-	//else if (playerposition.x >= enemy.position.x)
-	//{
-	//	enemy.position.x++;
-	//}
-	
+	currentStateDuration++;
+
+	if (currentStateDuration >= nextStateChange) {
+		int randomValue = rand() % 100;
+
+		int runawayPersent = 100;
+		int chasingpersent = 0;
+
+		if (randomValue < runawayPersent) {
+			isChasingPlayer = false;
+		}
+		else {
+			isChasingPlayer = true;
+		}
+
+		currentStateDuration = 0;
+		nextStateChange = rand() % 300 + 180;
+	}
+	if (isChasingPlayer) {
+		ChacePlayer();
+	}
+	else {
+		RunAwayfromPlayer();
+	}
 }
 
 void GameEnemy::Draw() const{
@@ -63,8 +79,6 @@ void GameEnemy::Draw() const{
 	////anim +=  14;		
 	////}  
 
-	
-
 	DrawRotaGraph2((int)enemy.position.x, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
@@ -76,4 +90,95 @@ void GameEnemy::Draw() const{
 	DrawRotaGraph2((int)enemy.position.x + 60, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
+}
+void GameEnemy::ChacePlayer() {
+	const float moveSpeedMax = 2.3f;
+
+	float targetSpeedX = (playerCollide.ul.x - enemy.position.x) * 0.1f;
+	moveSpeed = moveSpeed * inertiaCoefficient + targetSpeedX * (1.0f - inertiaCoefficient);
+
+	float targetSpeedY = (playerCollide.ul.y - enemy.position.y) * 0.1f;
+	moveSpeed = moveSpeed * inertiaCoefficient + targetSpeedY * (1.0f - inertiaCoefficient);
+
+	if (lagCounter <= lagTime) {
+		float Progress = static_cast<float>(lagCounter) / lagTime;
+		moveSpeedX = moveSpeed * inertiaCoefficient + targetSpeedX * (1.0f - inertiaCoefficient);
+		moveSpeedY = moveSpeedY * inertiaCoefficient + targetSpeedY * (1.0f - inertiaCoefficient);
+		lagCounter++;
+	}
+	else {
+		moveSpeedX = targetSpeedX;
+		moveSpeedY = targetSpeedY;
+	}
+
+	if (moveSpeed > moveSpeedMax) {
+		moveSpeed = moveSpeedMax;
+	}
+	else if (moveSpeed < -moveSpeedMax) {
+		moveSpeed = -moveSpeedMax;
+	}
+
+	if (moveSpeed > moveSpeedMax) {
+		moveSpeed = moveSpeedMax;
+	}
+	else if (moveSpeed < moveSpeedMax) {
+		moveSpeed = -moveSpeedMax;
+	}
+
+	enemy.position.x = playerCollide.ul.x;
+	enemy.position.y = playerCollide.ul.y;
+
+	enemy.position.x += moveSpeedX;
+	enemy.position.y += moveSpeedY;
+}
+void GameEnemy::RunAwayfromPlayer()
+{
+	const float RunawaySpeedMax = 2.3f;
+
+	float EscapeSpeedX = (enemy.position.x - playerCollide.ul.x) * 0.1f;
+	moveSpeed = moveSpeed * inertiaCoefficient + EscapeSpeedX * (1.0f - inertiaCoefficient);
+
+	float EscapeSpeedY = (enemy.position.y - playerCollide.ul.y) * 0.1f;
+	moveSpeed = moveSpeed * inertiaCoefficient + EscapeSpeedY * (1.0f - inertiaCoefficient);
+
+	EscapeSpeedX = -EscapeSpeedX;
+	EscapeSpeedY = -EscapeSpeedY;
+
+	if (lagCounter <= lagTime) {
+		float Progress = static_cast<float>(lagCounter) / lagTime;
+		moveSpeedX = moveSpeedX * inertiaCoefficient + EscapeSpeedX * (1.0f - inertiaCoefficient);
+		moveSpeedY = moveSpeedY * inertiaCoefficient + EscapeSpeedY * (1.0f - inertiaCoefficient);
+		lagCounter++;
+	}
+	else {
+		moveSpeedX = EscapeSpeedX;
+		moveSpeedY = EscapeSpeedY;
+	}
+
+	//if (moveSpeed > moveSpeedMax) {
+	//	moveSpeed = moveSpeedMax;
+	//}
+	//else if (moveSpeed < -moveSpeedMax) {
+	//	moveSpeed = -moveSpeedMax;
+	//}
+
+	//if (moveSpeed > moveSpeedMax) {
+	//	moveSpeed = moveSpeedMax;
+	//}
+	//else if (moveSpeed < moveSpeedMax) {
+	//	moveSpeed = -moveSpeedMax;
+	//}
+
+	//enemy.position.x = playerCollide.ul.x;
+	//enemy.position.y = playerCollide.ul.y;
+
+	float currentSpeed = sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY);
+	if (currentSpeed > RunawaySpeedMax) {
+		float ratio = RunawaySpeedMax / currentSpeed;
+		moveSpeedX *= ratio;
+		moveSpeedY *= ratio;
+	}
+
+	enemy.position.x += moveSpeedX;
+	enemy.position.y += moveSpeedY;
 }
