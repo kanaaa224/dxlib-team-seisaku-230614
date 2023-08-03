@@ -11,7 +11,6 @@ private:
 	int frameCounter;
 
 	Person enemy;
-	
 
 	int anim;
 
@@ -54,6 +53,7 @@ public:
 class EnemyFish {
 private:
 	int frameCounter;
+
 
 	int img[10];
 

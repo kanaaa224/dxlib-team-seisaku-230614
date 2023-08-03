@@ -16,7 +16,6 @@ using std::to_string;
 #include "fps.h"
 
 #include "DxLib.h"
-
 // ゲーム処理のヘッダーファイル
 #include "GamePlayer.h"
 #include "GameStageGimmick.h"

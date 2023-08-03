@@ -1,6 +1,6 @@
 ﻿/********************************
 * ゲームステージ処理
-* 編集者：
+* 編集者：照屋
 ********************************/
 #include "main.h"
 
@@ -149,7 +149,7 @@ GameStage::GameStage() {
 	collisionData[3].footingBlock[6][3] = 320;
 
 	//ステージ5の当たり判定
-	collisionData[4].footingMax = 7; // 足場最大数
+	collisionData[4].footingMax = 8; // 足場最大数
 
 	collisionData[4].footingBlock[0][0] = 180;    //上の足場
 	collisionData[4].footingBlock[0][1] = 120;
@@ -181,15 +181,15 @@ GameStage::GameStage() {
 	collisionData[4].footingBlock[5][2] = 150;
 	collisionData[4].footingBlock[5][3] = 280;
 
-	collisionData[4].footingBlock[6][0] = 250;	  //真ん中のT字の足場
+	collisionData[4].footingBlock[6][0] = 245;	  //真ん中のT字の足場
 	collisionData[4].footingBlock[6][1] = 180;
-	collisionData[4].footingBlock[6][2] = 270;
+	collisionData[4].footingBlock[6][2] = 275;
 	collisionData[4].footingBlock[6][3] = 230;
 
-	collisionData[4].footingBlock[6][0] = 480;	  //右のT字の足場
-	collisionData[4].footingBlock[6][1] = 180;
-	collisionData[4].footingBlock[6][2] = 500;
-	collisionData[4].footingBlock[6][3] = 230;
+	collisionData[4].footingBlock[7][0] = 475;	  //右のT字の足場
+	collisionData[4].footingBlock[7][1] = 180;
+	collisionData[4].footingBlock[7][2] = 505;
+	collisionData[4].footingBlock[7][3] = 230;
 
 };
 
@@ -238,10 +238,8 @@ void GameStage::Draw() const {
 	// ステージ４の表示
 	else if (nowStage == 3) {
 		DrawGraph(0, 430, img_land[2], TRUE); // 左下
-		DrawBox(0, 430, 160, 480, 0xffffff, FALSE);
 		DrawGraph(480, 430, img_land[3], TRUE); // 右下
-		DrawBox(480, 430, 640, 480, 0xffffff, FALSE);
-
+		
 		DrawGraph(250, 130, img_footing[5], TRUE);  //一番上の足場
 		DrawGraph(100, 230, img_footing[5], TRUE);  //一番左の足場
 		DrawGraph(430, 200, img_footing[5], TRUE);  //一番右の足場
@@ -263,7 +261,7 @@ void GameStage::Draw() const {
 		DrawGraph(130, 230, img_footing[6], TRUE);   //左のT字の足場
 		DrawGraph(250, 180, img_footing[6], TRUE);   //真ん中のT字の足場
 		DrawGraph(480, 180, img_footing[6], TRUE);   //右のT字の足場
-
+		
 		DrawGraph(50, 100, img_cloud[0], TRUE);  // 雲
 		DrawGraph(300, 160, img_cloud[0], TRUE);  // 雲
 
