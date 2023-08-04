@@ -37,8 +37,6 @@ private:
 	int snd_start;
 	int snd_gameOver;
 	int snd_bubble;
-
-	int Enemyflg;  //敵の当たり判定のフラグ
 	
 public:
 	// コンストラクタ

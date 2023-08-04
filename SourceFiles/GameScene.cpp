@@ -6,7 +6,6 @@
 
 Game::Game() {
 	state = 0;
-	Enemyflg = 0;
 
 	if ((snd_start = LoadSoundMem("Resources/Sounds/SE_Start.wav")) == -1) throw;
 	if (CheckSoundMem(snd_start) == 0) PlaySoundMem(snd_start, DX_PLAYTYPE_BACK, TRUE);
@@ -103,13 +102,6 @@ AbstractScene* Game::Update() {
 			}; // スコア表示されない・バブルが消えない時あり
 		};
 	};
-
-	if (Enemyflg == 0)
-	{
-		Enemyflg = 1;
-		//パラシュート状態に持っていく
-
-	}
 
 	// 仮 - 水しぶき
 	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash(player.GetPosition().x, (SCREEN_HEIGHT - 50));
