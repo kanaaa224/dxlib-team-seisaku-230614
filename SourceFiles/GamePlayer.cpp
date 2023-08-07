@@ -120,7 +120,7 @@ void GamePlayer::Update() {
 		player.position.y += speed[FALL];
 
 		//////////////////////////////////////////////////////////////////////
-		// 地面・天井・海との判定、慣性計算、移動処理
+		// 地面・天井・壁との判定、慣性計算、移動処理
 		//////////////////////////////////////////////////////////////////////
 
 		state[COLLIDE] = 0;
@@ -151,6 +151,24 @@ void GamePlayer::Update() {
 		};
 
 		if (wallHit) speed[FALL] *= -1;
+
+		wallHit = false;
+
+		// 壁
+		if (player.state == 3) {
+			//player.position.x--;
+			player.position.x = collideData.ul.x - player.size.width - 1;
+
+			wallHit = true;
+		};
+		if (player.state == 4) {
+			//player.position.x++;
+			player.position.x = collideData.lr.x + player.size.width + 1;
+
+			wallHit = true;
+		};
+
+		if (wallHit) speed[MOVE] = -speed[MOVE];
 
 		//////////////////////////////////////////////////////////////////////
 		// 移動速度・慣性計算、移動処理
@@ -238,28 +256,7 @@ void GamePlayer::Update() {
 		//////////////////////////////////////////////////////////////////////
 
 		if (player.position.x <= 0) player.position.x = SCREEN_WIDTH - 1;      // 画面左端時
-		else if (SCREEN_WIDTH <= player.position.x) player.position.x = 0 + 1; // 画面右端時
-
-		//////////////////////////////////////////////////////////////////////
-		// 壁の判定と跳ね返り処理
-		//////////////////////////////////////////////////////////////////////
-
-		wallHit = false;
-
-		if (player.state == 3) {
-			//player.position.x--;
-			player.position.x = collideData.ul.x - player.size.width - 1;
-
-			wallHit = true;
-		};
-		if (player.state == 4) {
-			//player.position.x++;
-			player.position.x = collideData.lr.x + player.size.width + 1;
-
-			wallHit = true;
-		};
-
-		if (wallHit) speed[MOVE] *= -0.9f;
+		else if (SCREEN_WIDTH <= player.position.x) player.position.x = 0 + 1; // 画面右端時		
 	}
 
 	//////////////////////////////////////////////////////////////////////
