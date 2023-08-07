@@ -63,6 +63,17 @@ AbstractScene* Game::Update() {
 		player.SetState(CheckCollide(player.GetCollide(), blockData));
 	};
 
+	// 仮 - 敵とプレイヤーの当たり判定
+	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
+		if (player.GetState() == 0) {
+			blockData = stage.GetBlock(stageIndex, blockIndex);
+			if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) blockIndex = 0;
+			else blockIndex++;
+		};
+		player.SetCollide(blockData);
+		player.SetState(CheckCollide(player.GetCollide(), blockData));
+	};
+
 	// 仮 - 海に落ちた時の残機処理
 	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
 		player.Miss(MISS_FALLSEA);
