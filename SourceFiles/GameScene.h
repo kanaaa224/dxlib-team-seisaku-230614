@@ -37,7 +37,7 @@ private:
 	int snd_start;
 	int snd_gameOver;
 	int snd_bubble;
-	
+
 public:
 	// コンストラクタ
 	Game();
