@@ -18,16 +18,22 @@ private:
 	int lagCounter;
 	int lagTime;
 
+	int TimeDuration = 60;
+	int currenttime = 0;
+
 	struct Vector {
 		float x;
 		float y;
 	};
 
 	enum class EnemyState {
-		chase,
-		Escape,
+		CHASE,
+		CONTINUE_CHASE,
+		ESCAPE,
+		AVOID
 	};
-	EnemyState currentState;
+
+	EnemyState currentState = EnemyState::CHASE;
 	int stateTimer;
 	int stateDuration;
 
@@ -81,6 +87,7 @@ public:
 	};
 	void ChacePlayer();
 	void RunAwayfromPlayer();
+	void AvoidPlayer();
 };
 class EnemyFish {
 private:
