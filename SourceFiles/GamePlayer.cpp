@@ -83,33 +83,41 @@ void GamePlayer::Update() {
 		inputX = PadInput::GetLStick().x;
 		if (PadInput::OnPressed(XINPUT_BUTTON_DPAD_LEFT) || CheckHitKey(KEY_INPUT_A)) inputX = -1.0f;
 		else if (PadInput::OnPressed(XINPUT_BUTTON_DPAD_RIGHT) || CheckHitKey(KEY_INPUT_D)) inputX = 1.0f;
-		if ((inputX > 0.3f || inputX < -0.3f) || frameCounter >= 700) state[BLINK] = 0;
 
 		if (!flapCount && (PadInput::OnPress(XINPUT_BUTTON_B) || PadInput::OnPressed(XINPUT_BUTTON_A) || CheckHitKey(KEY_INPUT_SPACE))) {
 			flapCount = 10; // 慣性の最適値：12
 			state[ANIM] = 0;
 			state[BLINK] = 0;
-			if (inputX >= 0.3f || inputX <= -0.3f) flightMove = 12;
+			if (inputX >= INPUT_X_MAGIN || inputX <= -INPUT_X_MAGIN) flightMove = 12;
 			PlaySoundMem(snd_se_flight, DX_PLAYTYPE_BACK, TRUE);
 		};
+
+		if ((inputX > INPUT_X_MAGIN || inputX < -INPUT_X_MAGIN) || frameCounter >= 700) state[BLINK] = 0;
+
+		if (inputX >= INPUT_X_MAGIN) state[TURN] = 1;
+		else if (inputX <= -INPUT_X_MAGIN) state[TURN] = 0;
 
 		//////////////////////////////////////////////////////////////////////
 		// 空中の慣性計算、落下処理
 		//////////////////////////////////////////////////////////////////////
 
-		float jumpForce = -0.1f;
-		float fallSpeedMax = -jumpForce * 21.0f;
+		float jumpForce = 0.08f,
+		   jumpSpeedMax = 2.5f,
+		   fallSpeedMax = 2.1f;
+
 		if (flapCount) {
-			speed[FALL] += jumpForce;
-			if (speed[FALL] < jumpForce * 25.0f) speed[FALL] = jumpForce * 25.0f;
+			speed[FALL] -= jumpForce;
+			if (speed[FALL] < -jumpSpeedMax) speed[FALL] = -jumpSpeedMax;
 		}
 		else {
-			speed[FALL] += 0.1f;
 			state[ANIM]++;
-			if (fallSpeedMax < speed[FALL]) speed[FALL] = fallSpeedMax;
+			speed[FALL] += jumpForce;
+			if (speed[FALL] > fallSpeedMax) speed[FALL] = fallSpeedMax;
 		};
-		player.position.y += speed[FALL];
+
 		if (--flapCount < 0) flapCount = 0;
+
+		player.position.y += speed[FALL];
 
 		//////////////////////////////////////////////////////////////////////
 		// 地面・天井・海との判定、慣性計算、移動処理
@@ -117,30 +125,14 @@ void GamePlayer::Update() {
 
 		state[COLLIDE] = 0;
 
-		// 海
-		//if (SCREEN_HEIGHT + 100 < (player.position.y - player.size.height)) Restart();
-
 		bool wallHit = false;
 
 		// 地面
 		if (player.state == 1) {
-
-			//player.position.y = collideData.ul.y - player.size.height - 1;
-			//wallHit = true;
-			
-			player.position.y -= 0.1f;
-			//player.position.y = collideData.ul.y - player.size.height;
-			//if ((player.position.y + player.size.height - 0.2) > collideData.ul.y) {
-			//	player.position.y -= 0.4;
-			//}
-			//else {
-			//	player.position.y -= 0.1;
-			//};
+			player.position.y -= jumpForce;
 			state[COLLIDE] = 1;
 			if (speed[FALL] > 0.0f) speed[FALL] = 0;
-			if (inputX >= 0.3f || inputX <= -0.3f) if (CheckSoundMem(snd_se_walk) == 0) PlaySoundMem(snd_se_walk, DX_PLAYTYPE_BACK, TRUE);
-			//else StopSoundMem(snd_se_walk);
-			
+			if (inputX >= INPUT_X_MAGIN || inputX <= -INPUT_X_MAGIN) if (CheckSoundMem(snd_se_walk) == 0) PlaySoundMem(snd_se_walk, DX_PLAYTYPE_BACK, TRUE);
 		}
 		else StopSoundMem(snd_se_walk);
 
@@ -151,9 +143,8 @@ void GamePlayer::Update() {
 			wallHit = true;
 		};
 
-		// ステージの上端
+		// ステージ（画面）の上端
 		if (player.position.y - player.size.height <= 0) {
-			//if (speed[FALL] == 0.0) speed[FALL] += 1;
 			player.position.y += 0.1f;
 
 			wallHit = true;
@@ -162,38 +153,84 @@ void GamePlayer::Update() {
 		if (wallHit) speed[FALL] *= -1;
 
 		//////////////////////////////////////////////////////////////////////
-		// 移動速度・慣性の計算、移動処理
+		// 移動速度・慣性計算、移動処理
 		//////////////////////////////////////////////////////////////////////
 
-		float moveSpeedMax = 2.3f;
-		if ((state[COLLIDE] != 0) || flightMove) {
-			if (inputX >= 0.3f) {
-				if (speed[MOVE] < 0 && (state[COLLIDE] != 0)) speed[MOVE] += 0.2f;
-				state[TURN] = 1;
-				speed[MOVE] += 0.2f;
-				state[ANIM]++;
-				if (moveSpeedMax < speed[MOVE]) speed[MOVE] = moveSpeedMax;
+		float moveSpeed, moveSpeedMax = 2.3f;
+
+		if (flightMove) {
+			moveSpeed = 0.15f;
+			if (inputX >= INPUT_X_MAGIN) {
+				if (speed[MOVE] < 0) speed[MOVE] += 0.05f;
+				else speed[MOVE] += moveSpeed;
+   				state[ANIM]++;
+				if (speed[MOVE] > moveSpeedMax) speed[MOVE] = moveSpeedMax;
 			}
-			else if (inputX <= -0.3f) {
-				if (0 < speed[MOVE] && (state[COLLIDE] != 0)) speed[MOVE] -= 0.2f;
-				state[TURN] = 0;
-				speed[MOVE] -= 0.2f;
+			else if (inputX <= -INPUT_X_MAGIN) {
+				if (speed[MOVE] > 0) speed[MOVE] -= 0.05f;
+				else speed[MOVE] -= moveSpeed;
+				state[ANIM]++;
+				if (speed[MOVE] < -moveSpeedMax) speed[MOVE] = -moveSpeedMax;
+			};
+		}
+		else if (state[COLLIDE]) {
+			moveSpeed = 0.2f;
+			if (inputX >= INPUT_X_MAGIN) {
+				speed[MOVE] += moveSpeed;
+				state[ANIM]++;
+				if (speed[MOVE] > moveSpeedMax) speed[MOVE] = moveSpeedMax;
+			}
+			else if (inputX <= -INPUT_X_MAGIN) {
+				speed[MOVE] -= moveSpeed;
 				state[ANIM]++;
 				if (speed[MOVE] < -moveSpeedMax) speed[MOVE] = -moveSpeedMax;
 			}
-			else if (state[COLLIDE] != 0) {
-				if (0 < speed[MOVE]) {
-					speed[MOVE] -= 0.2f;
+			else {
+				moveSpeed = 0.1f;
+				if (speed[MOVE] > 0) {
+					speed[MOVE] -= moveSpeed;
 					if (speed[MOVE] < 0) speed[MOVE] = 0;
 				}
 				else if (speed[MOVE] < 0) {
-					speed[MOVE] += 0.2f;
+					speed[MOVE] += moveSpeed;
+					if (speed[MOVE] > 0) speed[MOVE] = 0;
+				};
+				state[ANIM] = 0;
+			};
+		};
+		/*
+		if (state[COLLIDE] || flightMove) {
+			if (inputX >= INPUT_X_MAGIN) {
+				if (speed[MOVE] < 0 && state[COLLIDE]) speed[MOVE] += 0.2f;
+				else speed[MOVE] += 0.2f;
+				state[TURN] = 1;
+				state[ANIM]++;
+				if (moveSpeedMax < speed[MOVE]) speed[MOVE] = moveSpeedMax;
+			}
+			else if (inputX <= -INPUT_X_MAGIN) {
+				if (0 < speed[MOVE] && state[COLLIDE]) speed[MOVE] -= 0.2f;
+				else speed[MOVE] -= 0.2f;
+				state[TURN] = 0;
+				state[ANIM]++;
+				if (speed[MOVE] < -moveSpeedMax) speed[MOVE] = -moveSpeedMax;
+			}
+			else if (state[COLLIDE]) {
+				moveSpeed = 0.1f;
+				if (0 < speed[MOVE]) {
+					speed[MOVE] -= moveSpeed;
+					if (speed[MOVE] < 0) speed[MOVE] = 0;
+				}
+				else if (speed[MOVE] < 0) {
+					speed[MOVE] += moveSpeed;
 					if (0 < speed[MOVE]) speed[MOVE] = 0;
 				};
 				state[ANIM] = 0;
 			};
 		};
-		if (--flightMove < 0 || (inputX < 0.3f && inputX > -0.3f)) flightMove = 0;
+		*/
+
+		if (--flightMove < 0 || (inputX < INPUT_X_MAGIN && inputX > -INPUT_X_MAGIN)) flightMove = 0;
+
 		player.position.x += speed[MOVE];
 
 		//////////////////////////////////////////////////////////////////////
@@ -208,6 +245,7 @@ void GamePlayer::Update() {
 		//////////////////////////////////////////////////////////////////////
 
 		wallHit = false;
+
 		if (player.state == 3) {
 			//player.position.x--;
 			player.position.x = collideData.ul.x - player.size.width - 1;
@@ -220,6 +258,7 @@ void GamePlayer::Update() {
 
 			wallHit = true;
 		};
+
 		if (wallHit) speed[MOVE] *= -0.9f;
 	}
 
@@ -285,9 +324,9 @@ void GamePlayer::Draw() const {
 		anim = frameCounter / 25 % 3;
 		if (player.hp == 1) anim += 4;
 	}
-	else if (state[COLLIDE] == 1) { // 地面
+	else if (state[COLLIDE]) { // 地面
 		anim = state[ANIM] / 5 % 3;
-		if ((inputX > -0.3f && 0.3f > inputX) || (speed[MOVE] < 0 && inputX >= 0.3f) || (0 < speed[MOVE] && -0.3f >= inputX)) anim = 11; // スリップ
+		if ((inputX > -INPUT_X_MAGIN && INPUT_X_MAGIN > inputX) || (speed[MOVE] < 0 && inputX >= INPUT_X_MAGIN) || (0 < speed[MOVE] && -INPUT_X_MAGIN >= inputX)) anim = 11; // スリップ
 		else anim = anim + 8; // 歩行
 		if (player.hp == 1) anim += 5;
 	};
