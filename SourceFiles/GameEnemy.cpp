@@ -46,19 +46,75 @@ void GameEnemy::Update() {
 	XDistance = playerCollide.ul.x - enemy.position.x;
 	YDistance = playerCollide.ul.y - enemy.position.y;
 
-	/*float Distance = sqrt(XDistance * XDistance + YDistance * YDistance);
-	float Angle = atan2f(XDistance, YDistance);
+	float Distance = sqrt(XDistance * XDistance + YDistance * YDistance);
+	/*float Angle = atan2f(XDistance, YDistance);
 	float UpperAngle = M_PI / 6.0f;*/
 
 	const float escapeThreshold = 50.0f;
 	bool isPlayerneaby = (fabs(XDistance) < escapeThreshold) && (YDistance < 0) && (fabs(YDistance) < escapeThreshold);
 
-	if (isPlayerneaby) {
+	currenttime++;
+
+	// 距離による判定の閾値
+	const float closeDistance = 50.0f; // プレイヤーとの近距離の閾値
+	const float farDistance = 200.0f; // プレイヤーとの遠距離の閾値
+
+	/*const float escapeThreshold = 50.0f;
+	bool isPlayernearby = (fabs(XDistance) < escapeThreshold) && (YDistance < 0) && (fabs(YDistance) < escapeThreshold);*/
+
+	// タイマーの値が持続時間を超えたら、新しい行動ステートをランダムに選択する
+	if (currenttime >= TimeDuration) {
+		int randomValue = rand() % 100;
+		if (randomValue < 40) { // 40%の確率で追いかける
+			currentState = EnemyState::CHASE;
+		}
+		else if (randomValue < 70) { // 30%の確率で避ける
+			currentState = EnemyState::AVOID;
+		}
+		else { // 30%の確率で逃げる
+			currentState = EnemyState::ESCAPE;
+		}
+		currenttime = 0; // タイマーリセット
+	}
+	// 距離による判定と行動の実行
+	if (YDistance < 0 && Distance < closeDistance) { // プレイヤーが上から近い場合
+		currentState = EnemyState::CONTINUE_CHASE; // 追いかけ続ける行動を実行
+	}
+	else if (Distance < closeDistance) { // プレイヤーが近い場合
+		currentState = EnemyState::AVOID; // 避ける行動を実行
+	}
+	else if (Distance > farDistance) { // プレイヤーが遠い場合
+		currentState = EnemyState::CHASE; // 追いかける行動を実行
+	}
+
+	// 各行動ステートに応じた行動を実行
+	switch (currentState) {
+	case EnemyState::CHASE:
+		ChacePlayer();
+		break;
+	case EnemyState::ESCAPE:
 		RunAwayfromPlayer();
+		break;
+	case EnemyState::AVOID:
+		AvoidPlayer();
+		break;
+	}
+
+
+	//if (frameCounter % 60 == 0) { // 60フレームごとに回避挙動を実行
+	//	AvoidPlayer();
+	//}
+	//else {
+	//	ChacePlayer();
+	//}
+
+
+	/*if (isPlayerneaby) {
+		AvoidPlayer();
 	}
 	else {
 		ChacePlayer();
-	}
+	}*/
 
 	if (enemy.position.x <= 0) enemy.position.x = SCREEN_WIDTH - 1;      // 画面左端時
 	else if (SCREEN_WIDTH <= enemy.position.x) enemy.position.x = 0 + 1; // 画面右端時
@@ -109,23 +165,6 @@ void GameEnemy::ChacePlayer() {
 		moveSpeedY = -ChaseSpeedY;
 	}
 
-	//if (moveSpeed > moveSpeedMax) {
-	//	moveSpeed = moveSpeedMax;
-	//}
-	//else if (moveSpeed < -moveSpeedMax) {
-	//	moveSpeed = -moveSpeedMax;
-	//}
-
-	//if (moveSpeed > moveSpeedMax) {
-	//	moveSpeed = moveSpeedMax;
-	//}
-	//else if (moveSpeed < moveSpeedMax) {
-	//	moveSpeed = -moveSpeedMax;
-	//}
-
-	//enemy.position.x = playerCollide.ul.x;
-	//enemy.position.y = playerCollide.ul.y;
-
 	float currentSpeed = sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY);
 	if (currentSpeed > ChaseSpeedMax) {
 		float ratio = ChaseSpeedMax / currentSpeed;
@@ -160,23 +199,6 @@ void GameEnemy::RunAwayfromPlayer()
 		moveSpeedY = EscapeSpeedY;
 	}
 
-	//if (moveSpeed > moveSpeedMax) {
-	//	moveSpeed = moveSpeedMax;
-	//}
-	//else if (moveSpeed < -moveSpeedMax) {
-	//	moveSpeed = -moveSpeedMax;
-	//}
-
-	//if (moveSpeed > moveSpeedMax) {
-	//	moveSpeed = moveSpeedMax;
-	//}
-	//else if (moveSpeed < moveSpeedMax) {
-	//	moveSpeed = -moveSpeedMax;
-	//}
-
-	//enemy.position.x = playerCollide.ul.x;
-	//enemy.position.y = playerCollide.ul.y;
-
 	float currentSpeed = sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY);
 	if (currentSpeed > RunawaySpeedMax) {
 		float ratio = RunawaySpeedMax / currentSpeed;
@@ -186,4 +208,22 @@ void GameEnemy::RunAwayfromPlayer()
 
 	enemy.position.x += moveSpeedX;
 	enemy.position.y += moveSpeedY;
+}
+void GameEnemy::AvoidPlayer() {
+
+	float moveAmountX = (float)(rand() % 11 - 5); // -5から5までのランダムな値
+	float moveAmountY = (float)(rand() % 11 - 5); // -5から5までのランダムな値
+
+	// 移動速度を制限する
+	const float maxMoveSpeed = 1.0f;
+	float moveSpeed = sqrt(moveAmountX * moveAmountX + moveAmountY * moveAmountY);
+	if (moveSpeed > maxMoveSpeed) {
+		float ratio = maxMoveSpeed / moveSpeed;
+		moveAmountX *= ratio;
+		moveAmountY *= ratio;
+	}
+
+	// 敵の位置を更新
+	enemy.position.x += moveAmountX;
+	enemy.position.y += moveAmountY;
 }
