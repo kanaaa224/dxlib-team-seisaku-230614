@@ -45,6 +45,7 @@ void GameStageGimmick::UpdateBubble() {
 	};
 };
 
+
 void GameStageGimmick::DrawBubble() const {
 	// シャボン玉の描画
 	for (int i = 0; i < BUBBLE_MAX; i++) {
