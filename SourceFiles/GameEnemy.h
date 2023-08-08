@@ -14,6 +14,7 @@ private:
 	bool isChasingPlayer;
 
 	Person enemy;
+	Position inertia;
 
 	int lagCounter;
 	int lagTime;

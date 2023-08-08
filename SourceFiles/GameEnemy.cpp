@@ -37,7 +37,7 @@ void GameEnemy::Init() {
 };
 
 void GameEnemy::Update() {
-	
+
 	frameCounter++;
 
 	if (frameCounter % 3 == 0) anim++;
@@ -100,21 +100,15 @@ void GameEnemy::Update() {
 		break;
 	}
 
+	bool wallHit = false;
 
-	//if (frameCounter % 60 == 0) { // 60フレームごとに回避挙動を実行
-	//	AvoidPlayer();
-	//}
-	//else {
-	//	ChacePlayer();
-	//}
-
-
-	/*if (isPlayerneaby) {
-		AvoidPlayer();
+	if (enemy.position.y - enemy.size.height <= 0) {
+		wallHit = true;
 	}
-	else {
-		ChacePlayer();
-	}*/
+
+	if (wallHit) inertia.y *= -1;
+
+	wallHit = false;
 
 	if (enemy.position.x <= 0) enemy.position.x = SCREEN_WIDTH - 1;      // 画面左端時
 	else if (SCREEN_WIDTH <= enemy.position.x) enemy.position.x = 0 + 1; // 画面右端時
