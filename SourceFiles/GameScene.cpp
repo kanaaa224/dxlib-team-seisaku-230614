@@ -106,7 +106,7 @@ AbstractScene* Game::Update() {
 		if (gimmick.GetBubbleFlg(i)) {
 			collideB = gimmick.GetBubbleCollide(i);
 			int isCollide = CheckCollide(collideA, collideB);
-			if (isCollide /* && (gimmick.GetBubbleFlg(i) != 11) */) {
+			if (isCollide && (gimmick.GetBubbleFlg(i) <= 10)) {
 				gimmick.SetBubbleFlg(i, 10);
 				effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
 				if (CheckSoundMem(snd_bubble) == 0) PlaySoundMem(snd_bubble, DX_PLAYTYPE_BACK, TRUE);

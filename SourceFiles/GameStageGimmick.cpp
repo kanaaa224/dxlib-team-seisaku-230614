@@ -21,11 +21,12 @@ void GameStageGimmick::UpdateBubble() {
 	for (int i = 0; i < BUBBLE_MAX; i++) {
 		if (bubble[i].flg) {
 			bubble[i].frameCounter++;
-			if (bubble[i].flg == 11) bubble[i].flg = 0;
+			if (bubble[i].flg >= 20) bubble[i].flg = 0;
 			else if (bubble[i].flg == 10) {
 				bubble[i].anim = 3;
 				bubble[i].flg = 11;
 			}
+			else if (bubble[i].flg >= 11) bubble[i].flg++;
 			else if (bubble[i].y < -70) bubble[i].flg = 0;
 			else {
 				bubble[i].y--;
