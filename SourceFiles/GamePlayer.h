@@ -20,6 +20,8 @@
 #define PLAYER_DEFAULT_POSITION_X 50
 #define PLAYER_DEFAULT_POSITION_Y 405
 
+#define INPUT_X_MAGIN 0.3
+
 // float型 2次元座標 構造体
 struct Position {
 	float x = 0.0f;

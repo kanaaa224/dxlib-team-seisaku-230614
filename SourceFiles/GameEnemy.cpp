@@ -39,17 +39,17 @@ void GameEnemy::Update() {
 
 	if (frameCounter % 3 == 0) anim++;
 	if (anim >= 12) anim = 8;
-	//enemy.position.x = playerCollide.ul.x;
-	//Position playerposition = player.GetPosition();
+	/*enemy.position.x = playerCollide.ul.x;
+	Position playerposition = player.GetPosition();
 
-	//if (playerposition.x <= enemy.position.x)
-	//{
-	//	enemy.position.x--;
-	//}
-	//else if (playerposition.x >= enemy.position.x)
-	//{
-	//	enemy.position.x++;
-	//}
+	if (playerposition.x <= enemy.position.x)
+	{
+		enemy.position.x--;
+	}
+	else if (playerposition.x >= enemy.position.x)
+	{
+		enemy.position.x++;
+	}*/
 	
 }
 
@@ -68,6 +68,9 @@ void GameEnemy::Draw() const{
 	DrawRotaGraph2((int)enemy.position.x, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
+	//仮当たり判定の座標
+	DrawBox(45, 200, 85, 235, 0xffffff, FALSE);
+	DrawBox(45, 175, 85, 200, 0xffffff, FALSE);
 
 	DrawRotaGraph2((int)enemy.position.x + 30, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, g_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, g_enemy[anim], TRUE);
