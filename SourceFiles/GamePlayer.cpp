@@ -105,6 +105,8 @@ void GamePlayer::Update() {
 		   jumpSpeedMax = 2.5f,
 		   fallSpeedMax = 2.1f;
 
+		if (player.hp == 1) jumpForce = 0.03f;
+
 		if (flapCount) {
 			speed[FALL] -= jumpForce;
 			if (speed[FALL] < -jumpSpeedMax) speed[FALL] = -jumpSpeedMax;
