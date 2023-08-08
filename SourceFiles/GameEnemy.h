@@ -9,8 +9,44 @@
 class GameEnemy {
 private:
 	int frameCounter;
+	int currentStateDuration;
+	int nextStateChange;
+	bool isChasingPlayer;
 
 	Person enemy;
+
+	int lagCounter;
+	int lagTime;
+
+	int TimeDuration = 60;
+	int currenttime = 0;
+
+	struct Vector {
+		float x;
+		float y;
+	};
+
+	enum class EnemyState {
+		CHASE,
+		CONTINUE_CHASE,
+		ESCAPE,
+		AVOID
+	};
+
+	EnemyState currentState = EnemyState::CHASE;
+	int stateTimer;
+	int stateDuration;
+
+	float moveSpeedMax = 2.3f;
+	//Vector moveSpeed = { 1.0f, 0.5f };
+	float moveSpeed;
+	float moveSpeedX;
+	float moveSpeedY;
+	float inertiaCoefficient = 0.5f;
+
+	float XDistance;
+	float YDistance;
+	
 
 	int anim;
 
@@ -49,11 +85,13 @@ public:
 	void SetPlayerCollide(Collide collide) {
 		playerCollide = collide;
 	};
+	void ChacePlayer();
+	void RunAwayfromPlayer();
+	void AvoidPlayer();
 };
 class EnemyFish {
 private:
 	int frameCounter;
-
 
 	int img[10];
 
@@ -101,7 +139,7 @@ public:
 	};
 
 	void Draw() const {
-		if(flg) DrawRotaGraph(x, y, 1.0f, 0, img[anim], TRUE);
+		if(flg) DrawRotaGraph(x, y, 1.0f, 0, img[anim], TRUE, FALSE);
 	};
 
 	void Spawn() {

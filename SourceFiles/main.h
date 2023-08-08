@@ -3,10 +3,12 @@
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 #define GAME_NAME "BALLOON FIGHT"
+#define _USE_MATH_DEFINES
 
 #include <stdio.h>
 #include <math.h>
 #include <string>
+#include <stdlib.h>
 using std::string;
 using std::to_string;
 #include <time.h>
