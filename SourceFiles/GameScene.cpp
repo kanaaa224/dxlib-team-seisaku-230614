@@ -63,6 +63,8 @@ AbstractScene* Game::Update() {
 		player.SetState(CheckCollide(player.GetCollide(), blockData));
 	};
 
+	for()
+
 	// 仮 - 海に落ちた時の残機処理
 	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
 		player.Miss(MISS_FALLSEA);
