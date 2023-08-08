@@ -29,7 +29,7 @@ AbstractScene* Title::Update() {
 	if (frameCounter++ % 30 == 0) state++;
 	if ((state % 10) >= 4) state -= 4;
 
-	if ((PadInput::GetLStick().y == 0.0f) && !CheckHitKey(KEY_INPUT_UP) && !CheckHitKey(KEY_INPUT_DOWN) && !CheckHitKey(KEY_INPUT_W) && !CheckHitKey(KEY_INPUT_S)) ctrl = true;
+	if (((PadInput::GetLStick().y < 0.3f) && (PadInput::GetLStick().y > -0.3f)) && !CheckHitKey(KEY_INPUT_UP) && !CheckHitKey(KEY_INPUT_DOWN) && !CheckHitKey(KEY_INPUT_W) && !CheckHitKey(KEY_INPUT_S)) ctrl = true;
 	if (PadInput::OnPress(XINPUT_BUTTON_DPAD_UP) || (((PadInput::GetLStick().y >= 0.7f) || CheckHitKey(KEY_INPUT_UP) || CheckHitKey(KEY_INPUT_W)) && ctrl)) {
 		if (state < 10) state += 20;
 		else state -= 10;
