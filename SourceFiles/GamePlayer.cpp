@@ -67,8 +67,8 @@ void GamePlayer::Init() {
 	state[ANIM] = 0;
 	state[BLINK] = 1;
 	state[MISS] = 0;
-	speed[MOVE] = 0.0f;
-	speed[FALL] = 1.0f;
+	inertia.x = 0.0f;
+	inertia.y = 1.0f;
 };
 
 void GamePlayer::Update() {
@@ -98,26 +98,28 @@ void GamePlayer::Update() {
 		else if (inputX <= -INPUT_X_MAGIN) state[TURN] = 0;
 
 		//////////////////////////////////////////////////////////////////////
-		// 空中の慣性計算、落下処理
+		// 空中Y軸方向の慣性計算、落下処理
 		//////////////////////////////////////////////////////////////////////
 
 		float jumpForce = 0.08f,
 		   jumpSpeedMax = 2.5f,
 		   fallSpeedMax = 2.1f;
 
+		if (player.hp == 1) jumpForce = 0.03f;
+
 		if (flapCount) {
-			speed[FALL] -= jumpForce;
-			if (speed[FALL] < -jumpSpeedMax) speed[FALL] = -jumpSpeedMax;
+			inertia.y -= jumpForce;
+			if (inertia.y < -jumpSpeedMax) inertia.y = -jumpSpeedMax;
 		}
 		else {
 			state[ANIM]++;
-			speed[FALL] += jumpForce;
-			if (speed[FALL] > fallSpeedMax) speed[FALL] = fallSpeedMax;
+			inertia.y += jumpForce;
+			if (inertia.y > fallSpeedMax) inertia.y = fallSpeedMax;
 		};
 
 		if (--flapCount < 0) flapCount = 0;
 
-		player.position.y += speed[FALL];
+		player.position.y += inertia.y;
 
 		//////////////////////////////////////////////////////////////////////
 		// 地面・天井・壁との判定、慣性計算、移動処理
@@ -125,13 +127,11 @@ void GamePlayer::Update() {
 
 		state[COLLIDE] = 0;
 
-		bool wallHit = false;
-
 		// 地面
 		if (player.state == 1) {
 			player.position.y -= jumpForce;
 			state[COLLIDE] = 1;
-			if (speed[FALL] > 0.0f) speed[FALL] = 0;
+			if (inertia.y > 0.0f) inertia.y = 0;
 			if (inputX >= INPUT_X_MAGIN || inputX <= -INPUT_X_MAGIN) if (CheckSoundMem(snd_se_walk) == 0) PlaySoundMem(snd_se_walk, DX_PLAYTYPE_BACK, TRUE);
 		}
 		else StopSoundMem(snd_se_walk);
@@ -140,38 +140,32 @@ void GamePlayer::Update() {
 		if (player.state == 2) {
 			player.position.y = collideData.lr.y + player.size.height + 1;
 
-			wallHit = true;
+			inertia.y *= -1;
 		};
 
 		// ステージ（画面）の上端
 		if (player.position.y - player.size.height <= 0) {
 			player.position.y += 0.1f;
 
-			wallHit = true;
+			inertia.y *= -1;
 		};
-
-		if (wallHit) speed[FALL] *= -1;
-
-		wallHit = false;
 
 		// 壁
 		if (player.state == 3) {
 			//player.position.x--;
 			player.position.x = collideData.ul.x - player.size.width - 1;
 
-			wallHit = true;
+			inertia.x = -inertia.x;
 		};
 		if (player.state == 4) {
 			//player.position.x++;
 			player.position.x = collideData.lr.x + player.size.width + 1;
 
-			wallHit = true;
+			inertia.x = -inertia.x;
 		};
 
-		if (wallHit) speed[MOVE] = -speed[MOVE];
-
 		//////////////////////////////////////////////////////////////////////
-		// 移動速度・慣性計算、移動処理
+		// 移動速度・空中X軸方向の慣性計算、移動処理
 		//////////////////////////////////////////////////////////////////////
 
 		float moveSpeed, moveSpeedMax = 2.3f;
@@ -179,39 +173,39 @@ void GamePlayer::Update() {
 		if (flightMove) {
 			moveSpeed = 0.15f;
 			if (inputX >= INPUT_X_MAGIN) {
-				if (speed[MOVE] < 0) speed[MOVE] += 0.05f;
-				else speed[MOVE] += moveSpeed;
+				if (inertia.x < 0) inertia.x += 0.05f;
+				else inertia.x += moveSpeed;
    				state[ANIM]++;
-				if (speed[MOVE] > moveSpeedMax) speed[MOVE] = moveSpeedMax;
+				if (inertia.x > moveSpeedMax) inertia.x = moveSpeedMax;
 			}
 			else if (inputX <= -INPUT_X_MAGIN) {
-				if (speed[MOVE] > 0) speed[MOVE] -= 0.05f;
-				else speed[MOVE] -= moveSpeed;
+				if (inertia.x > 0) inertia.x -= 0.05f;
+				else inertia.x -= moveSpeed;
 				state[ANIM]++;
-				if (speed[MOVE] < -moveSpeedMax) speed[MOVE] = -moveSpeedMax;
+				if (inertia.x < -moveSpeedMax) inertia.x = -moveSpeedMax;
 			};
 		}
 		else if (state[COLLIDE]) {
 			moveSpeed = 0.2f;
 			if (inputX >= INPUT_X_MAGIN) {
-				speed[MOVE] += moveSpeed;
+				inertia.x += moveSpeed;
 				state[ANIM]++;
-				if (speed[MOVE] > moveSpeedMax) speed[MOVE] = moveSpeedMax;
+				if (inertia.x > moveSpeedMax) inertia.x = moveSpeedMax;
 			}
 			else if (inputX <= -INPUT_X_MAGIN) {
-				speed[MOVE] -= moveSpeed;
+				inertia.x -= moveSpeed;
 				state[ANIM]++;
-				if (speed[MOVE] < -moveSpeedMax) speed[MOVE] = -moveSpeedMax;
+				if (inertia.x < -moveSpeedMax) inertia.x = -moveSpeedMax;
 			}
 			else {
 				moveSpeed = 0.1f;
-				if (speed[MOVE] > 0) {
-					speed[MOVE] -= moveSpeed;
-					if (speed[MOVE] < 0) speed[MOVE] = 0;
+				if (inertia.x > 0) {
+					inertia.x -= moveSpeed;
+					if (inertia.x < 0) inertia.x = 0;
 				}
-				else if (speed[MOVE] < 0) {
-					speed[MOVE] += moveSpeed;
-					if (speed[MOVE] > 0) speed[MOVE] = 0;
+				else if (inertia.x < 0) {
+					inertia.x += moveSpeed;
+					if (inertia.x > 0) inertia.x = 0;
 				};
 				state[ANIM] = 0;
 			};
@@ -219,28 +213,28 @@ void GamePlayer::Update() {
 		/*
 		if (state[COLLIDE] || flightMove) {
 			if (inputX >= INPUT_X_MAGIN) {
-				if (speed[MOVE] < 0 && state[COLLIDE]) speed[MOVE] += 0.2f;
-				else speed[MOVE] += 0.2f;
+				if (inertia.x < 0 && state[COLLIDE]) inertia.x += 0.2f;
+				else inertia.x += 0.2f;
 				state[TURN] = 1;
 				state[ANIM]++;
-				if (moveSpeedMax < speed[MOVE]) speed[MOVE] = moveSpeedMax;
+				if (moveSpeedMax < inertia.x) inertia.x = moveSpeedMax;
 			}
 			else if (inputX <= -INPUT_X_MAGIN) {
-				if (0 < speed[MOVE] && state[COLLIDE]) speed[MOVE] -= 0.2f;
-				else speed[MOVE] -= 0.2f;
+				if (0 < inertia.x && state[COLLIDE]) inertia.x -= 0.2f;
+				else inertia.x -= 0.2f;
 				state[TURN] = 0;
 				state[ANIM]++;
-				if (speed[MOVE] < -moveSpeedMax) speed[MOVE] = -moveSpeedMax;
+				if (inertia.x < -moveSpeedMax) inertia.x = -moveSpeedMax;
 			}
 			else if (state[COLLIDE]) {
 				moveSpeed = 0.1f;
-				if (0 < speed[MOVE]) {
-					speed[MOVE] -= moveSpeed;
-					if (speed[MOVE] < 0) speed[MOVE] = 0;
+				if (0 < inertia.x) {
+					inertia.x -= moveSpeed;
+					if (inertia.x < 0) inertia.x = 0;
 				}
-				else if (speed[MOVE] < 0) {
-					speed[MOVE] += moveSpeed;
-					if (0 < speed[MOVE]) speed[MOVE] = 0;
+				else if (inertia.x < 0) {
+					inertia.x += moveSpeed;
+					if (0 < inertia.x) inertia.x = 0;
 				};
 				state[ANIM] = 0;
 			};
@@ -249,7 +243,7 @@ void GamePlayer::Update() {
 
 		if (--flightMove < 0 || (inputX < INPUT_X_MAGIN && inputX > -INPUT_X_MAGIN)) flightMove = 0;
 
-		player.position.x += speed[MOVE];
+		player.position.x += inertia.x;
 
 		//////////////////////////////////////////////////////////////////////
 		// 画面左右端のワープ処理
@@ -271,10 +265,10 @@ void GamePlayer::Update() {
 		else {
 			if (CheckSoundMem(snd_se_fall) == 0) {
 				PlaySoundMem(snd_se_fall, DX_PLAYTYPE_BACK, TRUE);
-				speed[FALL] = -3.0f;
+				inertia.y = -3.0f;
 			};
-			speed[FALL] += 0.1f;
-			player.position.y += speed[FALL];
+			inertia.y += 0.1f;
+			player.position.y += inertia.y;
 			state[MISS] = frameCounter;
 		};
 	}
@@ -317,13 +311,13 @@ void GamePlayer::Draw() const {
 		anim = anim + 17;
 		if (player.hp == 1) anim += 5;
 	}
-	else if (speed[MOVE] == 0) { // 待機
+	else if (inertia.x == 0) { // 待機
 		anim = frameCounter / 25 % 3;
 		if (player.hp == 1) anim += 4;
 	}
 	else if (state[COLLIDE]) { // 地面
 		anim = state[ANIM] / 5 % 3;
-		if ((inputX > -INPUT_X_MAGIN && INPUT_X_MAGIN > inputX) || (speed[MOVE] < 0 && inputX >= INPUT_X_MAGIN) || (0 < speed[MOVE] && -INPUT_X_MAGIN >= inputX)) anim = 11; // スリップ
+		if ((inputX > -INPUT_X_MAGIN && INPUT_X_MAGIN > inputX) || (inertia.x < 0 && inputX >= INPUT_X_MAGIN) || (0 < inertia.x && -INPUT_X_MAGIN >= inputX)) anim = 11; // スリップ
 		else anim = anim + 8; // 歩行
 		if (player.hp == 1) anim += 5;
 	};

@@ -52,14 +52,14 @@ class GamePlayer {
 private:
 	int frameCounter;
 
-	Person player;  // プレイヤーの位置、サイズ、状態、風船の状態
+	Person player;    // プレイヤーの位置、サイズ、状態、風船の状態
 
-	float inputX;   // スティック横軸の入力
-	int flapCount;  // ジャンプ数
-	int flightMove; // 空中で羽ばたき中の移動
-	int state[5];   // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ、ミス時のフレーム
-	float speed[2]; // 移動、落下速度
-	int stock;      // 残機
+	float inputX;     // スティック横軸の入力
+	int flapCount;    // ジャンプ数
+	int flightMove;   // 空中で羽ばたき中の移動
+	int state[5];     // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ、ミス時のフレーム
+	Position inertia; // 移動・落下の慣性
+	int stock;        // 残機
 
 	int img_player[31];
 	int snd_se_flight;
@@ -221,7 +221,7 @@ public:
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "missState: %d", state[MISS]);
 		y += 15;
-		DrawFormatString(x, y, GetColor(255, 255, 255), "moveSpeed: %0.1f fallSpeed: %0.1f", speed[0], speed[1]);
+		DrawFormatString(x, y, GetColor(255, 255, 255), "inertiaX: %0.1f inertiaY: %0.1f", inertia.x, inertia.y);
 		y += 15;
 		DrawFormatString(x, y, GetColor(255, 255, 255), "frameCounter: %d", frameCounter);
 		y += 30;
