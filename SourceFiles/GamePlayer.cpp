@@ -127,6 +127,8 @@ void GamePlayer::Update() {
 
 		state[COLLIDE] = 0;
 
+		bool wallHit = false;
+
 		// 地面
 		if (player.state == 1) {
 			player.position.y -= jumpForce;
@@ -140,29 +142,35 @@ void GamePlayer::Update() {
 		if (player.state == 2) {
 			player.position.y = collideData.lr.y + player.size.height + 1;
 
-			inertia.y *= -1;
+			wallHit = true;
 		};
 
 		// ステージ（画面）の上端
 		if (player.position.y - player.size.height <= 0) {
 			player.position.y += 0.1f;
 
-			inertia.y *= -1;
+			wallHit = true;
 		};
+
+		if (wallHit) inertia.y *= -1;
+
+		wallHit = false;
 
 		// 壁
 		if (player.state == 3) {
 			//player.position.x--;
 			player.position.x = collideData.ul.x - player.size.width - 1;
 
-			inertia.x = -inertia.x;
+			wallHit = true;
 		};
 		if (player.state == 4) {
 			//player.position.x++;
 			player.position.x = collideData.lr.x + player.size.width + 1;
 
-			inertia.x = -inertia.x;
+			wallHit = true;
 		};
+
+		if (wallHit) inertia.x = -inertia.x;
 
 		//////////////////////////////////////////////////////////////////////
 		// 移動速度・空中X軸方向の慣性計算、移動処理
