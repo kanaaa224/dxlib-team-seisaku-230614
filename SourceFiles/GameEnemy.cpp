@@ -47,8 +47,6 @@ void GameEnemy::Update() {
 	YDistance = playerCollide.ul.y - enemy.position.y;
 
 	float Distance = sqrt(XDistance * XDistance + YDistance * YDistance);
-	/*float Angle = atan2f(XDistance, YDistance);
-	float UpperAngle = M_PI / 6.0f;*/
 
 	const float escapeThreshold = 50.0f;
 	bool isPlayerneaby = (fabs(XDistance) < escapeThreshold) && (YDistance < 0) && (fabs(YDistance) < escapeThreshold);
@@ -102,13 +100,42 @@ void GameEnemy::Update() {
 
 	bool wallHit = false;
 
-	if (enemy.position.y - enemy.size.height <= 0) {
+	//画面上の判定
+	if (enemy.position.y - enemy.size.height / 2 <= 0) {
 		wallHit = true;
 	}
 
 	if (wallHit) inertia.y *= -1;
 
 	wallHit = false;
+
+	//地面
+
+
+	// 天井
+	if (enemy.state == 2) {
+		enemy.position.y = collideData.lr.y + enemy.size.height + 1;
+
+		wallHit = true;
+	};
+
+	if (wallHit) inertia.y *= -1;
+
+	wallHit = false;
+
+	if (enemy.state == 3) {
+		enemy.position.x = collideData.ul.x - enemy.size.width - 1;
+
+		wallHit = true;
+	}
+	if (enemy.state == 4) {
+		//player.position.x++;
+		enemy.position.x = collideData.lr.x + enemy.size.width + 1;
+
+		wallHit = true;
+	};
+
+	if (wallHit) inertia.x = -inertia.x;
 
 	if (enemy.position.x <= 0) enemy.position.x = SCREEN_WIDTH - 1;      // 画面左端時
 	else if (SCREEN_WIDTH <= enemy.position.x) enemy.position.x = 0 + 1; // 画面右端時
@@ -139,6 +166,7 @@ void GameEnemy::Draw() const{
 	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
 	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
 }
+
 void GameEnemy::ChacePlayer() {
 	const float ChaseSpeedMax = 0.8f;
 
@@ -172,6 +200,7 @@ void GameEnemy::ChacePlayer() {
 	enemy.position.x += moveSpeedX;
 	enemy.position.y += moveSpeedY;
 }
+
 void GameEnemy::RunAwayfromPlayer()
 {
 	const float RunawaySpeedMax = 0.5f;
@@ -206,6 +235,7 @@ void GameEnemy::RunAwayfromPlayer()
 	enemy.position.x += moveSpeedX;
 	enemy.position.y += moveSpeedY;
 }
+
 void GameEnemy::AvoidPlayer() {
 
 	float moveAmountX = (float)(rand() % 11 - 5); // -5から5までのランダムな値

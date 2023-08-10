@@ -38,12 +38,12 @@ private:
 	int stateTimer;
 	int stateDuration;
 
-	float moveSpeedMax = 2.3f;
+	float moveSpeedMax = 2.5f;
 	//Vector moveSpeed = { 1.0f, 0.5f };
 	float moveSpeed;
 	float moveSpeedX;
 	float moveSpeedY;
-	float inertiaCoefficient = 0.5f;
+	float inertiaCoefficient = 0.08f;
 
 	float XDistance;
 	float YDistance;
@@ -58,6 +58,7 @@ private:
 
 	// プレイヤーの左上・右上座標
 	Collide playerCollide;
+	Collide collideData;
 
 public:
 	// コンストラクタ
@@ -82,6 +83,34 @@ public:
 	int GetEnemyState() {
 		return enemy.state;
 	}
+	// 当たり判定用の左上・右上の座標を設定
+	void SetCollide(Collide CollideData) {
+		collideData.ul.x = CollideData.ul.x;
+		collideData.ul.y = CollideData.ul.y;
+		collideData.lr.x = CollideData.lr.x;
+		collideData.lr.y = CollideData.lr.y;
+	};
+
+	// プレイヤー左上・右上の座標の取得
+	Collide GetCollide() {
+		Collide CollideData;
+		CollideData.ul.x = (enemy.position.x - enemy.size.width);
+		CollideData.ul.y = (enemy.position.y - enemy.size.height);
+		CollideData.lr.x = (enemy.position.x + enemy.size.width);
+		CollideData.lr.y = (enemy.position.y + enemy.size.height);
+		return CollideData;
+	};
+
+	// 風船エリアの左上・右上の座標の取得
+	Collide GetWeakCollide() {
+		Collide CollideData;
+		CollideData.ul.x = (enemy.position.x - enemy.size.width);
+		CollideData.ul.y = (enemy.position.y - enemy.size.height);
+		CollideData.lr.x = (enemy.position.x + enemy.size.width);
+		CollideData.lr.y = (enemy.position.y - enemy.size.height) + 20;
+		return CollideData;
+	};
+
 	// プレイヤーの衝突座標を設定
 	void SetPlayerCollide(Collide collide) {
 		playerCollide = collide;
@@ -89,6 +118,16 @@ public:
 	void ChacePlayer();
 	void RunAwayfromPlayer();
 	void AvoidPlayer();
+
+	// 当たり判定 - 島袋
+	static int CheckCollide(Collide collideA, Collide collideB) {
+		if (collideA.lr.x <= collideB.ul.x || collideA.ul.x >= collideB.lr.x || collideA.lr.y <= collideB.ul.y || collideA.ul.y >= collideB.lr.y) return 0;
+		if (fabsf(collideA.lr.y - collideB.ul.y) < 15) return 1;
+		else if (fabsf(collideA.ul.y - collideB.lr.y) < 15) return 2;
+		else if (fabsf(collideA.lr.x - collideB.ul.x) < 15) return 3;
+		else if (fabsf(collideA.ul.x - collideB.lr.x) < 15) return 4;
+		else return 0;
+	};
 };
 class EnemyFish {
 private:
