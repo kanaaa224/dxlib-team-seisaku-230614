@@ -58,7 +58,7 @@ private:
 	int flapCount;    // ジャンプ数
 	int flightMove;   // 空中で羽ばたき中の移動
 	int state[5];     // 当たり判定の状態、左右反転状態、アニメーションのフレームカウンター、最初の点滅フラグ、ミス時のフレーム
-	Position inertia; // 移動、落下速度
+	Position inertia; // 移動・落下の慣性
 	int stock;        // 残機
 
 	int img_player[31];

@@ -60,6 +60,9 @@ private:
 	Collide playerCollide;
 	Collide collideData;
 
+	
+	int enemyMax;
+
 public:
 	// コンストラクタ
 	GameEnemy();
@@ -119,6 +122,21 @@ public:
 	void RunAwayfromPlayer();
 	void AvoidPlayer();
 
+	// 引数で指定したブロックの左下、右下の座標を返す
+	//Collide GetBlock(int StageIndex, int blockIndex) {
+	//	Collide collide;
+	//	collide.ul.x = collisionData[StageIndex].footingBlock[blockIndex][0];
+	//	collide.ul.y = collisionData[StageIndex].footingBlock[blockIndex][1];
+	//	collide.lr.x = collisionData[StageIndex].footingBlock[blockIndex][2];
+	//	collide.lr.y = collisionData[StageIndex].footingBlock[blockIndex][3];
+	//	return collide;
+	//};
+
+	// 引数で指定したステージの足場の最大数を返す
+	int GetEnemyMax() {
+		return enemyMax;
+	};
+
 	// 当たり判定 - 島袋
 	static int CheckCollide(Collide collideA, Collide collideB) {
 		if (collideA.lr.x <= collideB.ul.x || collideA.ul.x >= collideB.lr.x || collideA.lr.y <= collideB.ul.y || collideA.ul.y >= collideB.lr.y) return 0;
@@ -129,6 +147,10 @@ public:
 		else return 0;
 	};
 };
+
+
+
+
 class EnemyFish {
 private:
 	int frameCounter;
