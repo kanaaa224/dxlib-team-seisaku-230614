@@ -9,8 +9,44 @@
 class GameEnemy {
 private:
 	int frameCounter;
+	int currentStateDuration;
+	int nextStateChange;
+	bool isChasingPlayer;
 
 	Person enemy;
+
+	int lagCounter;
+	int lagTime;
+
+	int TimeDuration = 60;
+	int currenttime = 0;
+
+	struct Vector {
+		float x;
+		float y;
+	};
+
+	enum class EnemyState {
+		CHASE,
+		CONTINUE_CHASE,
+		ESCAPE,
+		AVOID
+	};
+
+	EnemyState currentState = EnemyState::CHASE;
+	int stateTimer;
+	int stateDuration;
+
+	float moveSpeedMax = 2.3f;
+	//Vector moveSpeed = { 1.0f, 0.5f };
+	float moveSpeed;
+	float moveSpeedX;
+	float moveSpeedY;
+	float inertiaCoefficient = 0.5f;
+
+	float XDistance;
+	float YDistance;
+	
 
 	int anim;
 
@@ -21,6 +57,9 @@ private:
 
 	// プレイヤーの左上・右上座標
 	Collide playerCollide;
+
+	
+	int enemyMax;
 
 public:
 	// コンストラクタ
@@ -49,7 +88,29 @@ public:
 	void SetPlayerCollide(Collide collide) {
 		playerCollide = collide;
 	};
+	void ChacePlayer();
+	void RunAwayfromPlayer();
+	void AvoidPlayer();
+
+	// 引数で指定したブロックの左下、右下の座標を返す
+	//Collide GetBlock(int StageIndex, int blockIndex) {
+	//	Collide collide;
+	//	collide.ul.x = collisionData[StageIndex].footingBlock[blockIndex][0];
+	//	collide.ul.y = collisionData[StageIndex].footingBlock[blockIndex][1];
+	//	collide.lr.x = collisionData[StageIndex].footingBlock[blockIndex][2];
+	//	collide.lr.y = collisionData[StageIndex].footingBlock[blockIndex][3];
+	//	return collide;
+	//};
+
+	// 引数で指定したステージの足場の最大数を返す
+	int GetEnemyMax() {
+		return enemyMax;
+	};
 };
+
+
+
+
 class EnemyFish {
 private:
 	int frameCounter;
@@ -101,7 +162,7 @@ public:
 	};
 
 	void Draw() const {
-		if(flg) DrawRotaGraph(x, y, 1.0f, 0, img[anim], TRUE);
+		if(flg) DrawRotaGraph(x, y, 1.0f, 0, img[anim], TRUE, FALSE);
 	};
 
 	void Spawn() {

@@ -63,17 +63,6 @@ AbstractScene* Game::Update() {
 		player.SetState(CheckCollide(player.GetCollide(), blockData));
 	};
 
-	// 仮 - 敵とプレイヤーの当たり判定
-	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
-		if (player.GetState() == 0) {
-			blockData = stage.GetBlock(stageIndex, blockIndex);
-			if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) blockIndex = 0;
-			else blockIndex++;
-		};
-		player.SetCollide(blockData);
-		player.SetState(CheckCollide(player.GetCollide(), blockData));
-	};
-
 	// 仮 - 海に落ちた時の残機処理
 	if (SCREEN_HEIGHT + 50 < (player.GetPosition().y - player.GetSize().height)) {
 		player.Miss(MISS_FALLSEA);
@@ -106,7 +95,7 @@ AbstractScene* Game::Update() {
 		if (gimmick.GetBubbleFlg(i)) {
 			collideB = gimmick.GetBubbleCollide(i);
 			int isCollide = CheckCollide(collideA, collideB);
-			if (isCollide /* && (gimmick.GetBubbleFlg(i) != 11) */) {
+			if (isCollide && (gimmick.GetBubbleFlg(i) <= 10)) {
 				gimmick.SetBubbleFlg(i, 10);
 				effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
 				if (CheckSoundMem(snd_bubble) == 0) PlaySoundMem(snd_bubble, DX_PLAYTYPE_BACK, TRUE);
