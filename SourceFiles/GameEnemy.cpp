@@ -14,6 +14,9 @@ GameEnemy::GameEnemy() {
 	nextStateChange = rand() % 300 + 180;
 	currentStateDuration = 0;
 
+	stageIndex = GameMain::GetNowStageIndex();
+	blockIndex = 0;
+
 	anim = 8;
 };
 
@@ -100,42 +103,39 @@ void GameEnemy::Update() {
 
 	bool wallHit = false;
 
+	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
+		if (GetEnemyState() == 0) {
+			blockData = stage.GetBlock(stageIndex, blockIndex);
+			if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) blockIndex = 0;
+			else blockIndex++;
+		};
+		SetCollide(blockData);
+		SetEnemyState(CheckCollide(GetCollide(), blockData));
+	};
+
 	//画面上の判定
 	if (enemy.position.y - enemy.size.height / 2 <= 0) {
-		wallHit = true;
+		inertia.y *= -1;
 	}
 
-	if (wallHit) inertia.y *= -1;
-
-	wallHit = false;
-
 	//地面
-
+	
 
 	// 天井
 	if (enemy.state == 2) {
 		enemy.position.y = collideData.lr.y + enemy.size.height + 1;
-
-		wallHit = true;
+		inertia.y *= -1;
 	};
-
-	if (wallHit) inertia.y *= -1;
-
-	wallHit = false;
 
 	if (enemy.state == 3) {
 		enemy.position.x = collideData.ul.x - enemy.size.width - 1;
-
-		wallHit = true;
+		inertia.x = -inertia.x;
 	}
 	if (enemy.state == 4) {
 		//player.position.x++;
 		enemy.position.x = collideData.lr.x + enemy.size.width + 1;
-
-		wallHit = true;
+		inertia.x = -inertia.x;
 	};
-
-	if (wallHit) inertia.x = -inertia.x;
 
 	if (enemy.position.x <= 0) enemy.position.x = SCREEN_WIDTH - 1;      // 画面左端時
 	else if (SCREEN_WIDTH <= enemy.position.x) enemy.position.x = 0 + 1; // 画面右端時

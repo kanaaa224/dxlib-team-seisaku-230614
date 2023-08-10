@@ -16,6 +16,9 @@ private:
 	Person enemy;
 	Position inertia;
 
+	GameStage stage;
+	int blockIndex, stageIndex;
+
 	int lagCounter;
 	int lagTime;
 
@@ -59,6 +62,7 @@ private:
 	// プレイヤーの左上・右上座標
 	Collide playerCollide;
 	Collide collideData;
+	Collide blockData;
 
 	
 	int enemyMax;
