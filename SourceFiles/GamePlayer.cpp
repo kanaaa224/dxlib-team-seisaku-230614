@@ -98,7 +98,7 @@ void GamePlayer::Update() {
 		else if (inputX <= -INPUT_X_MAGIN) state[TURN] = 0;
 
 		//////////////////////////////////////////////////////////////////////
-		// 空中の慣性計算、落下処理
+		// 空中Y軸方向の慣性計算、落下処理
 		//////////////////////////////////////////////////////////////////////
 
 		float jumpForce = 0.08f,
@@ -127,8 +127,6 @@ void GamePlayer::Update() {
 
 		state[COLLIDE] = 0;
 
-		bool wallHit = false;
-
 		// 地面
 		if (player.state == 1) {
 			player.position.y -= jumpForce;
@@ -142,38 +140,32 @@ void GamePlayer::Update() {
 		if (player.state == 2) {
 			player.position.y = collideData.lr.y + player.size.height + 1;
 
-			wallHit = true;
+			inertia.y *= -1;
 		};
 
 		// ステージ（画面）の上端
 		if (player.position.y - player.size.height <= 0) {
 			player.position.y += 0.1f;
 
-			wallHit = true;
+			inertia.y *= -1;
 		};
-
-		if (wallHit) inertia.y *= -1;
-
-		wallHit = false;
 
 		// 壁
 		if (player.state == 3) {
 			//player.position.x--;
 			player.position.x = collideData.ul.x - player.size.width - 1;
 
-			wallHit = true;
+			inertia.x = -inertia.x;
 		};
 		if (player.state == 4) {
 			//player.position.x++;
 			player.position.x = collideData.lr.x + player.size.width + 1;
 
-			wallHit = true;
+			inertia.x = -inertia.x;
 		};
 
-		if (wallHit) inertia.x = -inertia.x;
-
 		//////////////////////////////////////////////////////////////////////
-		// 移動速度・慣性計算、移動処理
+		// 移動速度・空中X軸方向の慣性計算、移動処理
 		//////////////////////////////////////////////////////////////////////
 
 		float moveSpeed, moveSpeedMax = 2.3f;
