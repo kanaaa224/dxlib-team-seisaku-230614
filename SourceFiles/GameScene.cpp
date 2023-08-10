@@ -142,10 +142,16 @@ AbstractScene* Game::Update() {
 	if (CheckHitKey(KEY_INPUT_ESCAPE) || PadInput::OnPress(XINPUT_BUTTON_BACK)) return new Title();
 
 	if (state != 1) player.Update();
+
+	// ゲームオーバー時の処理
 	if ((player.GetStock() == -1) && !gameover) {
 		state = 1;
 		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
 		gameover = true;
+	};
+	if (gameover && (CheckSoundMem(snd_gameOver) == 0)) {
+		GameMain::SetStageIndex(0);
+		return new Title();
 	};
 
 	ui.SetStock(player.GetStock());
