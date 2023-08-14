@@ -61,8 +61,9 @@ void GameStageGimmick::DrawBubble() const {
 		//DrawFormatString(10, 50 + (15 * i), 0xffffff, "%d : x:%f y:%f flg:%d drawX:%f", i, bubble[i].x, bubble[i].y, bubble[i].flg, bubble[i].drawX);
 
 		if (bubble[i].point_flg == 1) {
-			DrawGraph(bubble[i].drawX, bubble[i].y - 30, img_point, TRUE);
+			DrawGraph(playerCollide.ul.x, playerCollide.ul.y - 5, img_point, TRUE);
 		}
 	};
 	
+	DrawFormatString(300, 300, 0xffffff, "%d", playerCollide.ul.x);
 };

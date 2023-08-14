@@ -30,6 +30,10 @@ private:
 	//Collide playerCollide;
 
 public:
+
+	// プレイヤーの左上・右上座標
+	Collide playerCollide;
+
 	// コンストラクタ
 	GameStageGimmick();
 
@@ -103,12 +107,10 @@ public:
 		return newcount;
 	}
 
-
-
 	// プレイヤーの衝突座標を設定
-	//void SetPlayerCollide(Collide collide) {
-	//	playerCollide = collide;
-	//};
+	void SetPlayerCollide(Collide collide) {
+		playerCollide = collide;
+	};
 
 
 
