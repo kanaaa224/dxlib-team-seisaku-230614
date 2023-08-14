@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 #define GAME_NAME "BALLOON FIGHT"
@@ -76,3 +77,4 @@ public:
         };
     };
 };
+extern int g_BubbleCrackCount = 0; // シャボン玉が割れた回数を保持するグローバル変数
