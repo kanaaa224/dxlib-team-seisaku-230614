@@ -11,6 +11,9 @@ struct Bubble {
 	int frameCounter = 0;
 	int anim = 0;
 	int flg = 0;
+
+	int point_flg = 0;
+
 	float x = 0.0f;
 	float y = 0.0f;
 	float drawX = 0.0f;
@@ -20,16 +23,13 @@ struct Bubble {
 class GameStageGimmick {
 private:
 	Bubble bubble[BUBBLE_MAX];
-
+	int img_point;
 	int img_bubble[4];
 	int newcount;
 	// プレイヤーの左上・右上座標
 	//Collide playerCollide;
 
 public:
-	
-
-
 	// コンストラクタ
 	GameStageGimmick();
 

@@ -9,7 +9,7 @@
 GameStageGimmick::GameStageGimmick() {
 	// シャボン玉画像読込
 	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, img_bubble);
-
+	if ((img_point = LoadGraph("Resources/Images/Score/GetScore_500.png")) == -1) throw;
 	newcount = 0;
 };
 
@@ -27,6 +27,7 @@ void GameStageGimmick::UpdateBubble() {
 			else if (bubble[i].flg == 10) {
 				bubble[i].anim = 3;
 				bubble[i].flg = 11;
+				bubble[i].point_flg = 1;
 				newcount += 500;
 			}
 			else if (bubble[i].flg >= 11) bubble[i].flg++;
@@ -46,6 +47,9 @@ void GameStageGimmick::UpdateBubble() {
 				};
 			};
 		};
+		if (bubble[i].frameCounter % 50 == 0) {
+			bubble[i].point_flg = 0;
+		}
 	};
 };
 
@@ -55,5 +59,10 @@ void GameStageGimmick::DrawBubble() const {
 		if (bubble[i].flg) DrawRotaGraph(bubble[i].drawX, bubble[i].y, 1.0f, 0, img_bubble[bubble[i].anim], TRUE);
 		//if (bubble[i].flg) DrawBox(bubble[i].drawX - 32, bubble[i].y - 32, bubble[i].drawX + 32, bubble[i].y + 32, 0xffffff, FALSE);
 		//DrawFormatString(10, 50 + (15 * i), 0xffffff, "%d : x:%f y:%f flg:%d drawX:%f", i, bubble[i].x, bubble[i].y, bubble[i].flg, bubble[i].drawX);
+
+		if (bubble[i].point_flg == 1) {
+			DrawGraph(bubble[i].drawX, bubble[i].y - 30, img_point, TRUE);
+		}
 	};
+	
 };
