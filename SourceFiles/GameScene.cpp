@@ -4,6 +4,7 @@
 ********************************/
 #include "main.h"
 
+
 Game::Game() {
 	state = 0;
 
@@ -25,8 +26,6 @@ Game::Game() {
 	stageIndex = GameMain::GetNowStageIndex();
 	debug = false;
 	gameover = false;
-	ui.SetScore(12345);
-	ui.SetHighScore(67890);
 	ui.SetState(stageIndex + 1);
 	player.SetStock(2);
 	Position p;
@@ -51,6 +50,9 @@ Game::~Game() {
 };
 
 AbstractScene* Game::Update() {
+
+	ui.SetScore(player.GetPosition().x);
+	ui.SetHighScore(player.GetPosition().y);
 
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
 	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
@@ -142,10 +144,16 @@ AbstractScene* Game::Update() {
 	if (CheckHitKey(KEY_INPUT_ESCAPE) || PadInput::OnPress(XINPUT_BUTTON_BACK)) return new Title();
 
 	if (state != 1) player.Update();
+
+	// ゲームオーバー時の処理
 	if ((player.GetStock() == -1) && !gameover) {
 		state = 1;
 		PlaySoundMem(snd_gameOver, DX_PLAYTYPE_BACK, TRUE);
 		gameover = true;
+	};
+	if (gameover && (CheckSoundMem(snd_gameOver) == 0)) {
+		GameMain::SetStageIndex(0);
+		return new Title();
 	};
 
 	ui.SetStock(player.GetStock());
