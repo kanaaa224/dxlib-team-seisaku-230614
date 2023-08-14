@@ -25,8 +25,11 @@ private:
 
 	// プレイヤーの左上・右上座標
 	//Collide playerCollide;
-	
+
 public:
+	
+
+
 	// コンストラクタ
 	GameStageGimmick();
 
@@ -95,4 +98,7 @@ public:
 	//void SetPlayerCollide(Collide collide) {
 	//	playerCollide = collide;
 	//};
+
+
+
 };

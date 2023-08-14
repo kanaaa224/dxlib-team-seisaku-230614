@@ -6,6 +6,8 @@
 #include "AbstractScene.h"
 #include "main.h"
 
+
+
 class Game : public AbstractScene {
 private:
 	int state;

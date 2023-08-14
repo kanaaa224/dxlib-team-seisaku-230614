@@ -18,6 +18,8 @@ private:
 	int img_phase;       // PHASE
 	int img_number[10];  // 0 - 9
 
+	int bubbleCrackCount;//シャボン玉が割れた回数
+
 public:
 	// コンストラクタ
 	GameUI();
@@ -50,4 +52,6 @@ public:
 	void SetStock(int Stock) {
 		stock = Stock;
 	};
+
+	void OnBubbleCrackChanged(int newCount);
 };

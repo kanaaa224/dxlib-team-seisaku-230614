@@ -3,6 +3,8 @@
 int Resources::snd_bgm[5];
 int Resources::snd_se[5];
 
+int bubbleCrackCount = 0;
+
 /********************************
 * メインプログラム 開始
 ********************************/
