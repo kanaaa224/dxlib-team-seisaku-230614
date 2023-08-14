@@ -26,13 +26,13 @@ private:
 	int img_point;
 	int img_bubble[4];
 	int newcount;
-	// プレイヤーの左上・右上座標
-	//Collide playerCollide;
-
-public:
+	
+	int score_position;
 
 	// プレイヤーの左上・右上座標
 	Collide playerCollide;
+
+public:
 
 	// コンストラクタ
 	GameStageGimmick();
@@ -112,6 +112,8 @@ public:
 		playerCollide = collide;
 	};
 
-
-
+	void DrawScore(int score) {
+		DrawFormatString(300, 300, 0xffffff, "%d", score);
+		
+	}
 };

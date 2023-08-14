@@ -251,6 +251,10 @@ void GamePlayer::Update() {
 
 		if (player.position.x <= 0) player.position.x = SCREEN_WIDTH - 1;      // 画面左端時
 		else if (SCREEN_WIDTH <= player.position.x) player.position.x = 0 + 1; // 画面右端時		
+
+
+		position = player.position.y;
+
 	}
 
 	//////////////////////////////////////////////////////////////////////

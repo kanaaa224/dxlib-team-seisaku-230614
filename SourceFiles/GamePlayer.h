@@ -73,6 +73,8 @@ private:
 
 	Collide collideData;
 
+	int position;
+
 public:
 	// コンストラクタ
 	GamePlayer();
@@ -187,6 +189,17 @@ public:
 	int GetStock() {
 		return stock;
 	};
+
+
+	void PlayerPosition(int Position) {
+		position = Position;
+	};
+
+	int GetPlayerPosition() {
+		return position;
+	}
+
+
 
 	// デバッグ表示
 	void Debug() const {
