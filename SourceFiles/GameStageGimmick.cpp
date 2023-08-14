@@ -25,7 +25,6 @@ void GameStageGimmick::UpdateBubble() {
 			else if (bubble[i].flg == 10) {
 				bubble[i].anim = 3;
 				bubble[i].flg = 11;
-				g_BubbleCrackCount++;
 			}
 			else if (bubble[i].flg >= 11) bubble[i].flg++;
 			else if (bubble[i].y < -70) bubble[i].flg = 0;

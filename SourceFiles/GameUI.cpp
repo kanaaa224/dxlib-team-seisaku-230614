@@ -80,8 +80,4 @@ void GameUI::Draw() const {
 
 	// ゲームオーバー
 	if (stock == -1) DrawGraph(220, 220, img_gameOver, TRUE);
-
-	// シャボン玉が割れた回数を表示する
-	DrawFormatString(300, 300, 0xffffff, "Bubble Cracks: %d", g_BubbleCrackCount);
 }
-
