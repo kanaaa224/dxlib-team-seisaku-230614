@@ -51,7 +51,7 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
-	ui.SetScore(player.GetPosition().x);
+	ui.SetScore(gimmick.GetOnBubbleCrackChanged());
 	ui.SetHighScore(player.GetPosition().y);
 
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定

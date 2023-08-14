@@ -9,6 +9,8 @@
 GameStageGimmick::GameStageGimmick() {
 	// シャボン玉画像読込
 	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, img_bubble);
+
+	newcount = 0;
 };
 
 GameStageGimmick::~GameStageGimmick() {
@@ -25,7 +27,7 @@ void GameStageGimmick::UpdateBubble() {
 			else if (bubble[i].flg == 10) {
 				bubble[i].anim = 3;
 				bubble[i].flg = 11;
-				g_BubbleCrackCount++;
+				newcount++;
 			}
 			else if (bubble[i].flg >= 11) bubble[i].flg++;
 			else if (bubble[i].y < -70) bubble[i].flg = 0;

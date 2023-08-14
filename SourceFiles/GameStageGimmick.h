@@ -22,7 +22,7 @@ private:
 	Bubble bubble[BUBBLE_MAX];
 
 	int img_bubble[4];
-
+	int newcount;
 	// プレイヤーの左上・右上座標
 	//Collide playerCollide;
 
@@ -93,6 +93,17 @@ public:
 	int GetBubbleFlg(int index) {
 		return bubble[index].flg;
 	};
+
+	
+	void OnBubbleCrackChanged(int newCount) {
+		newcount = newCount;
+	};
+
+	int GetOnBubbleCrackChanged() {
+		return newcount;
+	}
+
+
 
 	// プレイヤーの衝突座標を設定
 	//void SetPlayerCollide(Collide collide) {

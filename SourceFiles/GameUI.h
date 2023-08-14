@@ -10,15 +10,12 @@ class GameUI {
 private:
 	int state, frameCounter;
 	int stock, score, highScore;
-
 	int img_playerScore; // Player1 score
 	int img_highScore;   // High score
 	int img_stock;       // 残機
 	int img_gameOver;    // GAMEOVER
 	int img_phase;       // PHASE
 	int img_number[10];  // 0 - 9
-
-	int bubbleCrackCount;//シャボン玉が割れた回数
 
 public:
 	// コンストラクタ
@@ -53,5 +50,4 @@ public:
 		stock = Stock;
 	};
 
-	void OnBubbleCrackChanged(int newCount);
 };

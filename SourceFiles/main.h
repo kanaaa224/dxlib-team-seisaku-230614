@@ -77,4 +77,3 @@ public:
         };
     };
 };
-extern int g_BubbleCrackCount = 0; // シャボン玉が割れた回数を保持するグローバル変数

@@ -47,8 +47,6 @@ void GameUI::Update() {
 
 void GameUI::Draw() const {
 
-	DrawFormatString(300, 300, 0x00ffff, "Bubble Cracks: %d", bubbleCrackCount);
-
 	// スコア（6桁）
 	DrawGraph(40, 15, img_playerScore, TRUE);
 	for (int i = 0; i < 6; i++) {
@@ -81,7 +79,6 @@ void GameUI::Draw() const {
 	// ゲームオーバー
 	if (stock == -1) DrawGraph(220, 220, img_gameOver, TRUE);
 
-	// シャボン玉が割れた回数を表示する
-	DrawFormatString(300, 300, 0xffffff, "Bubble Cracks: %d", g_BubbleCrackCount);
+	
 }
 
