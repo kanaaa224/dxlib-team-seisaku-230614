@@ -65,7 +65,7 @@ public:
 class GameMain {
 private:
 	static int stageIndex;
-	//static int score;
+	static int score;
 
 public:
 	static void SetStageIndex(int Index) {
@@ -74,5 +74,13 @@ public:
 
 	static int GetNowStageIndex() {
 		return stageIndex;
+	};
+
+	static void SetScore(int Score) {
+		score = Score;
+	};
+
+	static int GetScore() {
+		return score;
 	};
 };

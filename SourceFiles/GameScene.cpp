@@ -25,8 +25,6 @@ Game::Game() {
 	stageIndex = GameMain::GetNowStageIndex();
 	debug = false;
 	gameover = false;
-	ui.SetScore(12345);
-	ui.SetHighScore(67890);
 	ui.SetState(stageIndex + 1);
 	player.SetStock(2);
 	Position p;
@@ -51,6 +49,9 @@ Game::~Game() {
 };
 
 AbstractScene* Game::Update() {
+
+	ui.SetScore(player.GetPosition().x);
+	ui.SetHighScore(player.GetPosition().y);
 
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
 	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
