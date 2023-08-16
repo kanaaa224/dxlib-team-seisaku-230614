@@ -312,7 +312,7 @@ public:
 				};
 			};
 		};
-		if (!point) frameCounter[1] = 0;
+		if (!point) frameCounter[1] = 1;
 		if (point) if (frameCounter[1]++ % 90 == 0) point = 0;
 	};
 

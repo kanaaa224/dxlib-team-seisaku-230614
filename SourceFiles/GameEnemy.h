@@ -145,16 +145,19 @@ public:
 		else return 0;
 	};
 };
+
+//////////////////////////////////////////////////////////////////////
+// エネミー・サカナ
+// 作成：島袋
+//////////////////////////////////////////////////////////////////////
 class EnemyFish {
 private:
 	int frameCounter;
 
-
 	int img[10];
 
 	int flg, anim;
-	int x;
-	int y;
+	int x, y;
 
 public:
 	EnemyFish() {
@@ -171,7 +174,7 @@ public:
 	~EnemyFish() {
 		for (int i = 0; i < 10; i++) {
 			DeleteGraph(img[i]);
-		}
+		};
 	};
 
 	void Update() {
