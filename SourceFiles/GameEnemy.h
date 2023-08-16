@@ -156,14 +156,14 @@ private:
 
 	int img[10];
 
-	int flg, anim;
+	int state, anim;
 	int x, y;
 
 public:
 	EnemyFish() {
 		frameCounter = 0;
 
-		flg = 0;
+		state = 0;
 		anim = 0;
 		x = 0;
 		y = 0;
@@ -181,29 +181,29 @@ public:
 		x = 300;
 		y = SCREEN_HEIGHT - 50;
 
-		if (flg) {
+		if (state) {
 			if (frameCounter++ % 7 == 0) {
-				if (flg == 1) {
+				if (state == 1) {
 					if (anim < 2) {
 						anim++;
 					}
 				}
-				else if (flg == 2) {
+				else if (state == 2) {
 					if (anim > 0) {
 						anim--;
 					}
-					else flg = 0;
+					else state = 0;
 				};
 			}
 		}
 	};
 
 	void Draw() const {
-		if(flg) DrawRotaGraph(x, y, 1.0f, 0, img[anim], TRUE, FALSE);
+		if(state) DrawRotaGraph(x, y, 1.0f, 0, img[anim], TRUE, FALSE);
 	};
 
 	void Spawn() {
-		if (!flg) flg = 1;
-		else if (flg && anim == 2) flg = 2;
+		if (!state) state = 1;
+		else if (state && anim == 2) state = 2;
 	};
 };
