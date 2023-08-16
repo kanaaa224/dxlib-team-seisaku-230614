@@ -150,7 +150,7 @@ public:
 // エネミー・サカナ
 // 作成：島袋
 //////////////////////////////////////////////////////////////////////
-class EnemyFish {
+class GameEnemyFish {
 private:
 	int frameCounter;
 
@@ -160,7 +160,7 @@ private:
 	int x, y;
 
 public:
-	EnemyFish() {
+	GameEnemyFish() {
 		frameCounter = 0;
 
 		state = 0;
@@ -171,7 +171,7 @@ public:
 		LoadDivGraph("Resources/Images/Enemy/Enemy_FishAnimation.png", 10, 5, 2, 64, 64, img);
 	};
 
-	~EnemyFish() {
+	~GameEnemyFish() {
 		for (int i = 0; i < 10; i++) {
 			DeleteGraph(img[i]);
 		};
