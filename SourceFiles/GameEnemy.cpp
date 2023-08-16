@@ -6,9 +6,9 @@
 
 GameEnemy::GameEnemy() {
 	Init();
-	LoadDivGraph("Resources/Images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, r_enemy);
-	LoadDivGraph("Resources/Images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, g_enemy);
-	LoadDivGraph("Resources/Images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, p_enemy);
+	LoadDivGraph("Resources/Images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, enemyimg[0]);
+	LoadDivGraph("Resources/Images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, enemyimg[1]);
+	LoadDivGraph("Resources/Images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, enemyimg[2]);
 
 	isChasingPlayer = false;
 	nextStateChange = rand() % 300 + 180;
@@ -18,13 +18,15 @@ GameEnemy::GameEnemy() {
 	blockIndex = 0;
 
 	anim = 8;
+
+	enemypattern = 0;
 };
 
 GameEnemy::~GameEnemy() {
 	for (int i = 0; i < 18; i++) {
-		DeleteGraph(r_enemy[i]);//黄色の敵
-		DeleteGraph(g_enemy[i]);//緑色の敵
-		DeleteGraph(p_enemy[i]);//ピンクの敵
+		DeleteGraph(enemyimg[0][i]);//黄色の敵
+		DeleteGraph(enemyimg[1][i]);//緑色の敵
+		DeleteGraph(enemyimg[2][i]);//ピンクの敵
 	}
 }
 
@@ -35,12 +37,12 @@ void GameEnemy::Init() {
 	enemy.position.y = 405 - 200;
 	enemy.size.width = 15;
 	enemy.size.height = 25;
-
+	enemy.state = 0;
 	
 };
 
-void GameEnemy::Update() {
-
+void GameEnemy::Update(int empattern) {
+	enemypattern = empattern;
 	frameCounter++;
 
 	if (frameCounter % 3 == 0) anim++;
@@ -119,7 +121,10 @@ void GameEnemy::Update() {
 	}
 
 	//地面
-	
+	if (enemy.state == 1) {
+		enemy.position.y = collideData.ul.y - enemy.size.height - 1;
+		inertia.y = 0;
+	}
 
 	// 天井
 	if (enemy.state == 2) {
@@ -151,20 +156,13 @@ void GameEnemy::Draw() const{
 	////anim +=  14;		
 	////}  
 
-	DrawRotaGraph2((int)enemy.position.x, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
+	DrawRotaGraph2((int)enemy.position.x, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, enemyimg[enemypattern][anim], TRUE);
+	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, enemyimg[enemypattern][anim], TRUE);
+	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, enemyimg[enemypattern][anim], TRUE);
 	//仮当たり判定の座標
-	DrawBox(enemy.position.x, enemy.position.y, 85, 235, 0xffffff, FALSE);
-	DrawBox(45, 175, 85, 200, 0xffffff, FALSE);
+	//DrawBox(enemy.position.x, enemy.position.y, 85, 235, 0xffffff, FALSE);
+	//DrawBox(45, 175, 85, 200, 0xffffff, FALSE);
 
-	DrawRotaGraph2((int) + 30, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, g_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, g_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, g_enemy[anim], TRUE);
-
-	DrawRotaGraph2((int)enemy.position.x + 60, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
 }
 
 void GameEnemy::ChacePlayer() {

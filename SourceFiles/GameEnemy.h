@@ -54,9 +54,8 @@ private:
 
 	int anim;
 
-	int r_enemy[18];
-	int g_enemy[18];
-	int p_enemy[18];
+	int enemyimg[3][18];
+	int enemypattern;
 	
 
 	// プレイヤーの左上・右上座標
@@ -78,7 +77,7 @@ public:
 	void Init();
 
 	// 更新
-	void Update();
+	void Update(int);
 
 	// 描画
 	void Draw() const;
