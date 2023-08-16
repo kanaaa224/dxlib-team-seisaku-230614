@@ -160,7 +160,9 @@ AbstractScene* Game::Update() {
 	
 	stage.SetNowStage(stageIndex);
 	//gimmick.SetPlayerCollide(player.GetCollide());
-	enemy.SetPlayerCollide(player.GetCollide());
+	enemyA.SetPlayerCollide(player.GetCollide());
+	enemyB.SetPlayerCollide(player.GetCollide());
+	enemyC.SetPlayerCollide(player.GetCollide());
 
 	if (state != 1) { // ポーズか否か
 		effect.Update();
@@ -189,7 +191,10 @@ AbstractScene* Game::Update() {
 		};
 
 		if (CheckHitKey(KEY_INPUT_E)) fish.Spawn();
-		enemy.Update();
+		enemyA.Update(0);
+		enemyB.Update(1);
+		enemyC.Update(2);
+
 		fish.Update();
 	};
 	
@@ -208,7 +213,9 @@ void Game::Draw() const {
 		player.Draw();
 		effect.Draw();
 
-		enemy.Draw();
+		enemyA.Draw();
+		enemyB.Draw();
+		enemyC.Draw();
 		fish.Draw();
 
 		if (debug) player.Debug();
