@@ -44,6 +44,7 @@ GameStage::GameStage() {
 	collisionData[0].footingBlock[2][2] = SCREEN_WIDTH + 20;
 	collisionData[0].footingBlock[2][3] = SCREEN_HEIGHT;
 
+
 	//ステージ２の足場の当たり判定
 	collisionData[1].footingMax = 5; // 足場最大数
 
@@ -210,6 +211,9 @@ void GameStage::Draw() const {
 		DrawGraph(480, 430, img_land[1], TRUE); // 右下
 
 		DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
+		//syun test
+		GameStageGimmick gimmick;
+		gimmick.DrawThunder();
 	}
 	// ステージ２の表示
 	if (nowStage == 1) {

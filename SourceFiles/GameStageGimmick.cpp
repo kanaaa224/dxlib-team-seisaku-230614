@@ -8,6 +8,7 @@
 
 GameStageGimmick::GameStageGimmick() {
 	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, img_bubble);
+	LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 32,32, img_Thunder);
 };
 
 GameStageGimmick::~GameStageGimmick() {
@@ -51,4 +52,15 @@ void GameStageGimmick::DrawBubble() const {
 		//if (bubble[i].flg) DrawBox(bubble[i].drawX - 32, bubble[i].y - 32, bubble[i].drawX + 32, bubble[i].y + 32, 0xffffff, FALSE);
 		//DrawFormatString(10, 50 + (15 * i), 0xffffff, "%d : x:%f y:%f flg:%d drawX:%f", i, bubble[i].x, bubble[i].y, bubble[i].flg, bubble[i].drawX);
 	};
-};
+}
+void GameStageGimmick::UpdateThunder()
+{
+	
+}
+void GameStageGimmick::DrawThunder()const
+{
+	DrawGraph(300, 300, img_Thunder[Thunder_anm], TRUE);
+	DrawFormatString(320, 320, 0xffffff,"sdfjsf");
+}
+
+;

@@ -91,8 +91,14 @@ public:
 		return bubble[index].flg;
 	};
 
-	// プレイヤーの衝突座標を設定
-	//void SetPlayerCollide(Collide collide) {
-	//	playerCollide = collide;
-	//};
+	//雷
+
+	int img_Thunder[3];
+
+	void UpdateThunder();
+
+	void DrawThunder() const;
+
+	int Thunder_anm;
+	int Thunder_count = 0;
 };
