@@ -17,7 +17,10 @@ private:
 	GameStage stage;
 	GameStageGimmick gimmick; // ギミックオブジェクト
 
-	GameEnemy enemy;
+	GameEnemy enemyA;
+	GameEnemy enemyB;
+	GameEnemy enemyC;
+
 	EnemyFish fish;
 
 	// 仮
