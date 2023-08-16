@@ -9,6 +9,8 @@ GameEnemy::GameEnemy() {
 	LoadDivGraph("Resources/Images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, enemyimg[0]);
 	LoadDivGraph("Resources/Images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, enemyimg[1]);
 	LoadDivGraph("Resources/Images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, enemyimg[2]);
+	
+	inertiaCoefficient = 0.8f;
 
 	isChasingPlayer = false;
 	nextStateChange = rand() % 300 + 180;
@@ -168,6 +170,8 @@ void GameEnemy::Draw() const{
 void GameEnemy::ChacePlayer() {
 	const float ChaseSpeedMax = 0.8f;
 
+	inertiaCoefficient = 0.9f;
+
 	float ChaseSpeedX = (enemy.position.x - playerCollide.ul.x) * 0.1f;
 	moveSpeed = moveSpeed * inertiaCoefficient + ChaseSpeedX * (1.0f - inertiaCoefficient);
 
@@ -184,11 +188,11 @@ void GameEnemy::ChacePlayer() {
 		lagCounter++;
 	}
 	else {
-		moveSpeedX = -ChaseSpeedX;
-		moveSpeedY = -ChaseSpeedY;
+		moveSpeedX = -ChaseSpeedX * inertiaCoefficient;
+		moveSpeedY = -ChaseSpeedY * inertiaCoefficient;
 	}
 
-	float currentSpeed = sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY);
+	double currentSpeed = sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY);
 	if (currentSpeed > ChaseSpeedMax) {
 		float ratio = ChaseSpeedMax / currentSpeed;
 		moveSpeedX *= ratio;
@@ -201,10 +205,12 @@ void GameEnemy::ChacePlayer() {
 
 void GameEnemy::RunAwayfromPlayer()
 {
-	const float RunawaySpeedMax = 0.5f;
+	const float RunawaySpeedMax = 0.8f;
+
+	inertiaCoefficient = 0.9f;
 
 	float EscapeSpeedX = (enemy.position.x - playerCollide.ul.x) * 0.1f;
-	moveSpeed = moveSpeed * inertiaCoefficient + EscapeSpeedX * (1.0f - inertiaCoefficient);
+           	moveSpeed = moveSpeed * inertiaCoefficient + EscapeSpeedX * (1.0f - inertiaCoefficient);
 
 	float EscapeSpeedY = (enemy.position.y - playerCollide.ul.y) * 0.1f;
 	moveSpeed = moveSpeed * inertiaCoefficient + EscapeSpeedY * (1.0f - inertiaCoefficient);
@@ -219,11 +225,11 @@ void GameEnemy::RunAwayfromPlayer()
 		lagCounter++;
 	}
 	else {
-		moveSpeedX = EscapeSpeedX;
-		moveSpeedY = EscapeSpeedY;
+		moveSpeedX = EscapeSpeedX * inertiaCoefficient;
+		moveSpeedY = EscapeSpeedY * inertiaCoefficient;
 	}
 
-	float currentSpeed = sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY);
+	double currentSpeed = sqrt(moveSpeedX * moveSpeedX + moveSpeedY * moveSpeedY);
 	if (currentSpeed > RunawaySpeedMax) {
 		float ratio = RunawaySpeedMax / currentSpeed;
 		moveSpeedX *= ratio;
@@ -236,6 +242,8 @@ void GameEnemy::RunAwayfromPlayer()
 
 void GameEnemy::AvoidPlayer() {
 
+	inertiaCoefficient = 0.8f;
+
 	float moveAmountX = (float)(rand() % 11 - 5); // -5から5までのランダムな値
 	float moveAmountY = (float)(rand() % 11 - 5); // -5から5までのランダムな値
 
@@ -247,6 +255,10 @@ void GameEnemy::AvoidPlayer() {
 		moveAmountX *= ratio;
 		moveAmountY *= ratio;
 	}
+
+	// ランダムな移動量に慣性を適用
+	moveSpeedX = moveSpeedX * inertiaCoefficient + moveAmountX * (1.0f - inertiaCoefficient);
+	moveSpeedY = moveSpeedY * inertiaCoefficient + moveAmountY * (1.0f - inertiaCoefficient);
 
 	// 敵の位置を更新
 	enemy.position.x += moveAmountX;
