@@ -31,6 +31,7 @@ Game::Game() {
 	Position p;
 	p.x = 50;
 	p.y = 405;
+
 	player.SetPosition(p); // ステージによって変わるかもしれないので念のため
 	damageBlock[0] = 150;
 	damageBlock[1] = 100;
