@@ -6,22 +6,27 @@
 
 GameEnemy::GameEnemy() {
 	Init();
-	LoadDivGraph("Resources/Images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, r_enemy);
-	LoadDivGraph("Resources/Images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, g_enemy);
-	LoadDivGraph("Resources/Images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, p_enemy);
+	LoadDivGraph("Resources/Images/Enemy/Enemy_R_Animation.png", 18, 6, 3, 64, 64, enemyimg[0]);
+	LoadDivGraph("Resources/Images/Enemy/Enemy_G_Animation.png", 18, 6, 3, 64, 64, enemyimg[1]);
+	LoadDivGraph("Resources/Images/Enemy/Enemy_P_Animation.png", 18, 6, 3, 64, 64, enemyimg[2]);
 
 	isChasingPlayer = false;
 	nextStateChange = rand() % 300 + 180;
 	currentStateDuration = 0;
 
+	stageIndex = GameMain::GetNowStageIndex();
+	blockIndex = 0;
+
 	anim = 8;
+
+	enemypattern = 0;
 };
 
 GameEnemy::~GameEnemy() {
 	for (int i = 0; i < 18; i++) {
-		DeleteGraph(r_enemy[i]);//黄色の敵
-		DeleteGraph(g_enemy[i]);//緑色の敵
-		DeleteGraph(p_enemy[i]);//ピンクの敵
+		DeleteGraph(enemyimg[0][i]);//黄色の敵
+		DeleteGraph(enemyimg[1][i]);//緑色の敵
+		DeleteGraph(enemyimg[2][i]);//ピンクの敵
 	}
 }
 
@@ -32,12 +37,12 @@ void GameEnemy::Init() {
 	enemy.position.y = 405 - 200;
 	enemy.size.width = 15;
 	enemy.size.height = 25;
-
+	enemy.state = 0;
 	
 };
 
-void GameEnemy::Update() {
-	
+void GameEnemy::Update(int empattern) {
+	enemypattern = empattern;
 	frameCounter++;
 
 	if (frameCounter % 3 == 0) anim++;
@@ -47,8 +52,6 @@ void GameEnemy::Update() {
 	YDistance = playerCollide.ul.y - enemy.position.y;
 
 	float Distance = sqrt(XDistance * XDistance + YDistance * YDistance);
-	/*float Angle = atan2f(XDistance, YDistance);
-	float UpperAngle = M_PI / 6.0f;*/
 
 	const float escapeThreshold = 50.0f;
 	bool isPlayerneaby = (fabs(XDistance) < escapeThreshold) && (YDistance < 0) && (fabs(YDistance) < escapeThreshold);
@@ -100,21 +103,44 @@ void GameEnemy::Update() {
 		break;
 	}
 
+	bool wallHit = false;
 
-	//if (frameCounter % 60 == 0) { // 60フレームごとに回避挙動を実行
-	//	AvoidPlayer();
-	//}
-	//else {
-	//	ChacePlayer();
-	//}
+	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
+		if (GetEnemyState() == 0) {
+			blockData = stage.GetBlock(stageIndex, blockIndex);
+			if (blockIndex >= (stage.GetFootingMax(stageIndex) - 1)) blockIndex = 0;
+			else blockIndex++;
+		};
+		SetCollide(blockData);
+		SetEnemyState(CheckCollide(GetCollide(), blockData));
+	};
 
-
-	/*if (isPlayerneaby) {
-		AvoidPlayer();
+	//画面上の判定
+	if (enemy.position.y - enemy.size.height / 2 <= 0) {
+		inertia.y *= -1;
 	}
-	else {
-		ChacePlayer();
-	}*/
+
+	//地面
+	if (enemy.state == 1) {
+		enemy.position.y = collideData.ul.y - enemy.size.height - 1;
+		inertia.y = 0;
+	}
+
+	// 天井
+	if (enemy.state == 2) {
+		enemy.position.y = collideData.lr.y + enemy.size.height + 1;
+		inertia.y *= -1;
+	};
+
+	if (enemy.state == 3) {
+		enemy.position.x = collideData.ul.x - enemy.size.width - 1;
+		inertia.x = -inertia.x;
+	}
+	if (enemy.state == 4) {
+		//player.position.x++;
+		enemy.position.x = collideData.lr.x + enemy.size.width + 1;
+		inertia.x = -inertia.x;
+	};
 
 	if (enemy.position.x <= 0) enemy.position.x = SCREEN_WIDTH - 1;      // 画面左端時
 	else if (SCREEN_WIDTH <= enemy.position.x) enemy.position.x = 0 + 1; // 画面右端時
@@ -130,18 +156,15 @@ void GameEnemy::Draw() const{
 	////anim +=  14;		
 	////}  
 
-	DrawRotaGraph2((int)enemy.position.x, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, r_enemy[anim], TRUE);
+	DrawRotaGraph2((int)enemy.position.x, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, enemyimg[enemypattern][anim], TRUE);
+	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, enemyimg[enemypattern][anim], TRUE);
+	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, enemyimg[enemypattern][anim], TRUE);
+	//仮当たり判定の座標
+	//DrawBox(enemy.position.x, enemy.position.y, 85, 235, 0xffffff, FALSE);
+	//DrawBox(45, 175, 85, 200, 0xffffff, FALSE);
 
-	DrawRotaGraph2((int)enemy.position.x + 30, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, g_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, g_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, g_enemy[anim], TRUE);
-
-	DrawRotaGraph2((int)enemy.position.x + 60, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x - SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
-	DrawRotaGraph2((int)enemy.position.x + SCREEN_WIDTH, (int)enemy.position.y, 32, 64 - (int)enemy.size.height, 1.0f, 0, p_enemy[anim], TRUE);
 }
+
 void GameEnemy::ChacePlayer() {
 	const float ChaseSpeedMax = 0.8f;
 
@@ -175,6 +198,7 @@ void GameEnemy::ChacePlayer() {
 	enemy.position.x += moveSpeedX;
 	enemy.position.y += moveSpeedY;
 }
+
 void GameEnemy::RunAwayfromPlayer()
 {
 	const float RunawaySpeedMax = 0.5f;
@@ -209,6 +233,7 @@ void GameEnemy::RunAwayfromPlayer()
 	enemy.position.x += moveSpeedX;
 	enemy.position.y += moveSpeedY;
 }
+
 void GameEnemy::AvoidPlayer() {
 
 	float moveAmountX = (float)(rand() % 11 - 5); // -5から5までのランダムな値
