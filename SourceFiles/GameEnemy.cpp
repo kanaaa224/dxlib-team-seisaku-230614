@@ -144,6 +144,7 @@ void GameEnemy::Update(int empattern) {
 		inertia.x = -inertia.x;
 	};
 
+	//ワープ処理
 	if (enemy.position.x <= 0) enemy.position.x = SCREEN_WIDTH - 1;      // 画面左端時
 	else if (SCREEN_WIDTH <= enemy.position.x) enemy.position.x = 0 + 1; // 画面右端時
 }
