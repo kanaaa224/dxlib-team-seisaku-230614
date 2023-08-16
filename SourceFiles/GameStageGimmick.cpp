@@ -7,7 +7,6 @@
 #include "main.h"
 
 GameStageGimmick::GameStageGimmick() {
-	// シャボン玉画像読込
 	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, img_bubble);
 };
 
@@ -47,7 +46,6 @@ void GameStageGimmick::UpdateBubble() {
 };
 
 void GameStageGimmick::DrawBubble() const {
-	// シャボン玉の描画
 	for (int i = 0; i < BUBBLE_MAX; i++) {
 		if (bubble[i].flg) DrawRotaGraph(bubble[i].drawX, bubble[i].y, 1.0f, 0, img_bubble[bubble[i].anim], TRUE);
 		//if (bubble[i].flg) DrawBox(bubble[i].drawX - 32, bubble[i].y - 32, bubble[i].drawX + 32, bubble[i].y + 32, 0xffffff, FALSE);

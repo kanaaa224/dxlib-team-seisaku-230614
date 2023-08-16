@@ -10,10 +10,16 @@ Title::Title() {
 
 	ctrl = false;
 
-	if ((img_logo = LoadGraph("Resources/Images/Title/Title_Logo.png")) == -1) throw;
+	if ((img_logo = LoadGraph("Resources/Images/Title/Title_Logo.png")) == -1)       throw;
 	if ((img_mode = LoadGraph("Resources/images/Title/Title_ModeSelect.png")) == -1) throw;
-	if ((img_credit = LoadGraph("Resources/images/Title/Title_Credit.png")) == -1) throw;
+	if ((img_credit = LoadGraph("Resources/images/Title/Title_Credit.png")) == -1)   throw;
 	if (LoadDivGraph("Resources/images/Title/Title_CursorAnimation.png", 4, 4, 1, 32, 64, img_cursor) == -1) throw;
+
+	GameMain::SetStageIndex(0);
+	int score = GameMain::GetScore(),
+	highScore = GameMain::GetHighScore();
+	if (score > highScore) GameMain::SetHighScore(score);
+	GameMain::SetScore(0);
 };
 
 Title::~Title() {
