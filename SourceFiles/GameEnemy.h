@@ -46,7 +46,7 @@ private:
 	float moveSpeed;
 	float moveSpeedX;
 	float moveSpeedY;
-	float inertiaCoefficient = 0.08f;
+	float inertiaCoefficient;
 
 	float XDistance;
 	float YDistance;
