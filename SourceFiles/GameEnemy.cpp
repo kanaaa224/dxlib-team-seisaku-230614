@@ -229,8 +229,5 @@ void GameEnemy::AvoidPlayer() {
 }
 void Enemy()
 {
-	float PLX, PLY;
-	float PRX, PRY;
 
-	PLX=p.x
 }
