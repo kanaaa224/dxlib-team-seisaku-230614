@@ -62,8 +62,6 @@ public:
 		else if (fabsf(collideA.ul.x - collideB.lr.x) < 15) return 4;
 		else return 0;
 	};
-
-	void HitEnemy();
 };
 
 class GameMain {

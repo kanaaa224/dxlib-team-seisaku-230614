@@ -7,6 +7,11 @@
 
 #define ENEMYMAX  3
 
+struct Enemy {
+	float x = 0.0f;
+	float y = 0.0f;
+};
+
 class GameEnemy {
 private:
 	int frameCounter;
