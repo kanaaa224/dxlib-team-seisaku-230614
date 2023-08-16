@@ -224,4 +224,19 @@ void Game::Draw() const {
 	stage.DrawSea();
 };
 
+void Game::HitEnemy()
+{
+	float PLX, PLY;
+	float PRX, PRY;
+
+	Position p;
+	PLX = p.x - 4.0f;
+	PLX = p.x + 4.0f;
+	PLY = p.y - 4.0f;
+	PLY = p.y + 4.0f;
+
+
+
+}
+
 int GameMain::stageIndex = 0;

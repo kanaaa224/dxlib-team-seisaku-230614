@@ -227,3 +227,10 @@ void GameEnemy::AvoidPlayer() {
 	enemy.position.x += moveAmountX;
 	enemy.position.y += moveAmountY;
 }
+void Enemy()
+{
+	float PLX, PLY;
+	float PRX, PRY;
+
+	PLX=p.x
+}
