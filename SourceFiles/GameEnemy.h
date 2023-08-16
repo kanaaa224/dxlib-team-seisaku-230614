@@ -47,7 +47,6 @@ private:
 
 	float XDistance;
 	float YDistance;
-	
 
 	int anim;
 
