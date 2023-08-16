@@ -100,10 +100,10 @@ GameStage::GameStage() {
 	collisionData[2].footingBlock[4][2] = 390;
 	collisionData[2].footingBlock[4][3] = 250;
 
-	collisionData[2].footingBlock[5][0] = 180;    //左のT字の足場
-	collisionData[2].footingBlock[5][1] = 240;
-	collisionData[2].footingBlock[5][2] = 240;
-	collisionData[2].footingBlock[5][3] = 310;
+	collisionData[2].footingBlock[5][0] = 160;    //左のT字の足場
+	collisionData[2].footingBlock[5][1] = 235;
+	collisionData[2].footingBlock[5][2] = 220;
+	collisionData[2].footingBlock[5][3] = 305;
 
 	collisionData[2].footingBlock[6][0] = 270;	//海の上の足場    
 	collisionData[2].footingBlock[6][1] = 330;
@@ -176,15 +176,15 @@ GameStage::GameStage() {
 	collisionData[4].footingBlock[4][2] = 410;
 	collisionData[4].footingBlock[4][3] = 350;
 
-	collisionData[4].footingBlock[5][0] = 130;     //左のT字の足場
+	collisionData[4].footingBlock[5][0] = 118;     //左のT字の足場
 	collisionData[4].footingBlock[5][1] = 230;
-	collisionData[4].footingBlock[5][2] = 150;
+	collisionData[4].footingBlock[5][2] = 138;
 	collisionData[4].footingBlock[5][3] = 280;
 
 	collisionData[4].footingBlock[6][0] = 245;	  //真ん中のT字の足場
-	collisionData[4].footingBlock[6][1] = 180;
+	collisionData[4].footingBlock[6][1] = 200;
 	collisionData[4].footingBlock[6][2] = 275;
-	collisionData[4].footingBlock[6][3] = 230;
+	collisionData[4].footingBlock[6][3] = 250;
 
 	collisionData[4].footingBlock[7][0] = 475;	  //右のT字の足場
 	collisionData[4].footingBlock[7][1] = 180;
@@ -228,7 +228,7 @@ void GameStage::Draw() const {
 		DrawGraph(480, 430, img_land[1], TRUE); // 右下
 		DrawGraph(470, 100, img_footing[3], TRUE); // 右のT字の足場
 		DrawGraph(330, 180, img_footing[3], TRUE); // 真ん中のT字の足場
-		DrawGraph(180, 240, img_footing[3], TRUE); // 左のT字の足場
+		DrawGraph(160, 235, img_footing[3], TRUE); // 左のT字の足場
 		DrawGraph(220, 130, img_footing[4], TRUE); // 左上の小さい足場
 		DrawGraph(270, 330, img_footing[2], TRUE); // 海の上の足場
 
@@ -258,8 +258,8 @@ void GameStage::Draw() const {
 		DrawGraph(180, 120, img_footing[5], TRUE);  //上の足場
 		DrawGraph(190, 330, img_footing[5], TRUE);  //左の足場
 		DrawGraph(350, 330, img_footing[5], TRUE);   //右の足場
-		DrawGraph(130, 230, img_footing[6], TRUE);   //左のT字の足場
-		DrawGraph(250, 180, img_footing[6], TRUE);   //真ん中のT字の足場
+		DrawGraph(118, 230, img_footing[6], TRUE);   //左のT字の足場
+		DrawGraph(250, 200, img_footing[6], TRUE);   //真ん中のT字の足場
 		DrawGraph(480, 180, img_footing[6], TRUE);   //右のT字の足場
 		
 		DrawGraph(50, 100, img_cloud[0], TRUE);  // 雲
