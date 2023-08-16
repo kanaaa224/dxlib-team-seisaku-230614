@@ -105,6 +105,8 @@ AbstractScene* Game::Update() {
 		};
 	};
 
+	
+
 	// 仮 - 水しぶき
 	if (SCREEN_HEIGHT + 10 < (player.GetPosition().y - player.GetSize().height)) effect.Splash(player.GetPosition().x, (SCREEN_HEIGHT - 50));
 
@@ -192,7 +194,7 @@ AbstractScene* Game::Update() {
 		enemy.Update();
 		fish.Update();
 	};
-	
+
 	return this;
 };
 

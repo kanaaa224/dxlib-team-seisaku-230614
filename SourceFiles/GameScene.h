@@ -62,12 +62,16 @@ public:
 		else if (fabsf(collideA.ul.x - collideB.lr.x) < 15) return 4;
 		else return 0;
 	};
+
+
 };
 
 class GameMain {
 private:
 	static int stageIndex;
 	static int score;
+
+	
 
 public:
 	static void SetStageIndex(int Index) {
@@ -85,4 +89,7 @@ public:
 	static int GetScore() {
 		return score;
 	};
+
+
+	
 };

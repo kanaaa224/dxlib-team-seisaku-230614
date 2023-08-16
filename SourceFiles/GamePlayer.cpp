@@ -4,6 +4,9 @@
 ********************************/
 #include "main.h"
 
+//StageGimmickにplayerの座標持っていくためのもの
+float GamePlayer::PlayerX;
+float GamePlayer::PlayerY;
 GamePlayer::GamePlayer() {
 	stock = 2;
 
@@ -255,6 +258,9 @@ void GamePlayer::Update() {
 
 		position = player.position.y;
 
+
+		b_position = player.position.x;
+
 	}
 
 	//////////////////////////////////////////////////////////////////////
@@ -293,6 +299,10 @@ void GamePlayer::Update() {
 		};
 	}
 	else if (player.hp == -10) Restart();
+
+	//StageGimmickにplayerの座標を持っていくためのもの
+	PlayerX = player.position.x;
+	PlayerY = player.position.y;
 };
 
 void GamePlayer::Draw() const {

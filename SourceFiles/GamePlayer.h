@@ -241,6 +241,18 @@ public:
 		DrawFormatString(x, y, GetColor(255, 255, 255), "stock: %d", stock);
 	};
 
+
+
+
+	int b_position;
+	//syun
+	void GetPlayerposition2(int B_position) {
+		b_position = B_position;
+	};
+	int GetPlayerposition2() {
+		return b_position;
+	}
+
 	//// ミス時の水しぶきエフェクト
 	//void DrawSplashEffect(int frame) {
 
@@ -257,6 +269,10 @@ public:
 
 	//// 跳ね返りさせる
 	//void Bounce();
+
+	//StageGimmickにplayerの座標持っていくためのもの
+	static float PlayerX;
+	static float PlayerY;
 };
 
 //enum struct PlayerState {

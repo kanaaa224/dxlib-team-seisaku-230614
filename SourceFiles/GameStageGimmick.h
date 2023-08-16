@@ -11,9 +11,6 @@ struct Bubble {
 	int frameCounter = 0;
 	int anim = 0;
 	int flg = 0;
-
-	int point_flg = 0;
-
 	float x = 0.0f;
 	float y = 0.0f;
 	float drawX = 0.0f;
@@ -27,10 +24,17 @@ private:
 	int img_bubble[4];
 	int newcount;
 	
+	int bubblepoint_flg = 0;
 	int score_position;
 
 	// プレイヤーの左上・右上座標
 	Collide playerCollide;
+
+	GamePlayer player;
+
+	int point_count = 0;
+	int point_positionX = 0;
+	int point_positionY = 0;
 
 public:
 

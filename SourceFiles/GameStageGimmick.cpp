@@ -27,7 +27,7 @@ void GameStageGimmick::UpdateBubble() {
 			else if (bubble[i].flg == 10) {
 				bubble[i].anim = 3;
 				bubble[i].flg = 11;
-				bubble[i].point_flg = 1;
+			bubblepoint_flg = 1;
 				newcount += 500;
 			}
 			else if (bubble[i].flg >= 11) bubble[i].flg++;
@@ -47,21 +47,29 @@ void GameStageGimmick::UpdateBubble() {
 				};
 			};
 		};
-		if (bubble[i].frameCounter % 50 == 0) {
-			bubble[i].point_flg = 0;
+
+
+		if (bubblepoint_flg == 1) {
+			point_count++;
+			if (point_count % 500 == 0) {
+				bubblepoint_flg = 0;
+			}
 		}
+		point_positionX = (int)GamePlayer:: PlayerX;
+		point_positionY = (int)GamePlayer:: PlayerY;
 	};
 };
 
 void GameStageGimmick::DrawBubble() const {
 	// シャボン玉の描画
 	for (int i = 0; i < BUBBLE_MAX; i++) {
-		if (bubble[i].flg) {
-			DrawRotaGraph(bubble[i].drawX, bubble[i].y, 1.0f, 0, img_bubble[bubble[i].anim], TRUE);
+		if (bubble[i].flg) DrawRotaGraph(bubble[i].drawX, bubble[i].y, 1.0f, 0, img_bubble[bubble[i].anim], TRUE);
+
+		if (bubblepoint_flg == 1)DrawGraph(point_positionX - 10, point_positionY - 60, img_point, TRUE);
+
 			//if (bubble[i].flg) DrawBox(bubble[i].drawX - 32, bubble[i].y - 32, bubble[i].drawX + 32, bubble[i].y + 32, 0xffffff, FALSE);
 			//DrawFormatString(10, 50 + (15 * i), 0xffffff, "%d : x:%f y:%f flg:%d drawX:%f", i, bubble[i].x, bubble[i].y, bubble[i].flg, bubble[i].drawX);
 
-			DrawGraph(playerCollide.ul.x, playerCollide.ul.y - 5, img_point, TRUE);
-		}
 	};
+	
 }
