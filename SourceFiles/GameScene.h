@@ -6,8 +6,6 @@
 #include "AbstractScene.h"
 #include "main.h"
 
-
-
 class Game : public AbstractScene {
 private:
 	int state;
@@ -23,7 +21,7 @@ private:
 	GameEnemy enemyB;
 	GameEnemy enemyC;
 
-	EnemyFish fish;
+	GameEnemyFish fish;
 
 	// 仮
 	bool ctrlFlg;
