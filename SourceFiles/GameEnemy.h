@@ -133,10 +133,7 @@ public:
 	//	return collide;
 	//};
 
-	// 引数で指定したステージの足場の最大数を返す
-	int GetEnemyMax() {
-		return enemyMax;
-	};
+	
 
 	// 当たり判定 - 島袋
 	static int CheckCollide(Collide collideA, Collide collideB) {
