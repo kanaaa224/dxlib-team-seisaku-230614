@@ -16,7 +16,7 @@ struct Bubble {
 	float drawX = 0.0f;
 };
 
-// ステージクラス
+// ギミッククラス
 class GameStageGimmick {
 private:
 	Bubble bubble[BUBBLE_MAX];
@@ -27,9 +27,6 @@ private:
 	//Collide playerCollide;
 
 public:
-	
-
-
 	// コンストラクタ
 	GameStageGimmick();
 
@@ -48,7 +45,7 @@ public:
 
 	/////////////////////////////////////////////////////////
 
-	// シャボン玉リセット
+	// シャボン玉 リセット
 	void BubbleReset() {
 		for (int i = 0; i < BUBBLE_MAX; i++) {
 			bubble[i].flg = 0;
@@ -61,7 +58,7 @@ public:
 	// シャボン玉 描画
 	void DrawBubble() const;
 
-	// シャボン玉を出現させる
+	// シャボン玉 出現
 	void SpawnBubble(float x) {
 		for (int i = 0; i < BUBBLE_MAX; i++) {
 			if (!bubble[i].flg) {
@@ -98,7 +95,4 @@ public:
 	//void SetPlayerCollide(Collide collide) {
 	//	playerCollide = collide;
 	//};
-
-
-
 };

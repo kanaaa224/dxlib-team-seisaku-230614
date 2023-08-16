@@ -71,6 +71,7 @@ class GameMain {
 private:
 	static int stageIndex;
 	static int score;
+	static int highScore;
 
 public:
 	static void SetStageIndex(int Index) {
@@ -87,5 +88,13 @@ public:
 
 	static int GetScore() {
 		return score;
+	};
+
+	static void SetHighScore(int HighScore) {
+		highScore = HighScore;
+	};
+
+	static int GetHighScore() {
+		return highScore;
 	};
 };

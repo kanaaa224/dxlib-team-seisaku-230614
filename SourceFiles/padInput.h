@@ -5,12 +5,13 @@
 #pragma once
 #include "DxLib.h"
 
-#define PAD_BUTTONS 16
+#define PAD_BUTTONS   16
 #define PAD_STICK_MAX 32767.f
 
 // スティック 構造体
 struct PadStick {
-    float x, y;
+    float x = 0,
+          y = 0;
 };
 
 // パッドインプットコントローラー クラス
@@ -58,8 +59,7 @@ public:
 
     // デバッグ表示
     static void Debug() {
-        // 画面クリア
-        clsDx();
+        clsDx(); // 画面クリア
 
         printfDx("ボタンの入力情報\n");
 
