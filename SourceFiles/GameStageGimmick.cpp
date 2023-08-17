@@ -8,7 +8,13 @@
 
 GameStageGimmick::GameStageGimmick() {
 	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, img_bubble);
-	LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 32,32, img_Thunder);
+
+	if ((LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 32, 32, Thunder)) == -1) throw;
+	ThunderAnim = 0;
+	ThunderAnimFlg = 0;
+	AnimChangefps = 3;
+
+
 };
 
 GameStageGimmick::~GameStageGimmick() {
@@ -52,12 +58,72 @@ void GameStageGimmick::DrawBubble() const {
 }
 void GameStageGimmick::UpdateThunder()
 {
-	
-}
-void GameStageGimmick::DrawThunder()const
-{
-	/*DrawGraph(300, 300, img_Thunder[Thunder_anm], TRUE);*/
-	DrawFormatString(320, 320, 0xffffff,"sdfjsf");
+
+
+	// 雷
+	ThunderAnim++;
+	if (ThunderAnim > 0 && ThunderAnim <= AnimChangefps)
+	{
+		ThunderAnimFlg = 0;
+	}
+	else if (ThunderAnim > AnimChangefps && ThunderAnim <= AnimChangefps * 2)
+	{
+		ThunderAnimFlg = 1;
+	}
+	else if (ThunderAnim > AnimChangefps * 2 && ThunderAnim <= AnimChangefps * 3)
+	{
+		ThunderAnimFlg = 2;
+	}
+	else if (ThunderAnim > AnimChangefps * 3) {
+		ThunderAnim = 0;
+	};
+
+
+	// ボールの移動
+	//ここにif文で雷のスタート条件？
+
+	ThunderX += MoveX;
+	ThunderY += MoveY;
+
+	// 壁・天井での反射
+	if (ThunderX < 4 || ThunderX > 640 - 4) { // 横の壁
+		if (ThunderX < 4) {
+			ThunderX = 4;
+		}
+		else {
+			ThunderX = 640 - 4;
+		}
+		ThunderAngle = (1 - ThunderAngle) + 0.5f;
+		if (ThunderAngle > 1) ThunderAngle -= 1.0f;
+		ChangeAngle();
+	}
+	if (ThunderY < 8) { // 上の壁
+		ThunderAngle = (1 - ThunderAngle);
+		ChangeAngle();
+	}
+
+	if (ThunderY > 470) { // 下の壁
+		ThunderAngle = (1 - ThunderAngle);
+		ChangeAngle();
+	}
+
 }
 
-;
+void GameStageGimmick::ChangeAngle()
+{
+	float rad = ThunderAngle * (float)M_PI * 2;
+	MoveX = (int)(Speed * cosf(rad));
+	MoveY = (int)(Speed * sinf(rad));
+}
+
+void GameStageGimmick::DrawThunder()const
+{
+	//雷
+	DrawGraph(ThunderX, ThunderY,  Thunder[ThunderAnimFlg], TRUE);
+	DrawFormatString(300, 300, 0xffffff, "%d",MoveX);
+	DrawFormatString(300, 320, 0xffffff, "%d", Speed);
+
+}
+
+
+

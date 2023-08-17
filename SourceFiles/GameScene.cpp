@@ -170,13 +170,18 @@ AbstractScene* Game::Update() {
 	if (state != 1) { // ポーズか否か
 		effect.Update();
 
+		gimmick.UpdateThunder();
+
 		ui.Update();
 
 		stage.Update();
 		gimmick.Update();
 
+
+		
+	
 		// 雷
-		ThunderAnim++;
+	/*	ThunderAnim++;
 		if (ThunderAnim > 0 && ThunderAnim <= AnimChangefps)
 		{
 			ThunderAnimFlg = 0;
@@ -191,7 +196,7 @@ AbstractScene* Game::Update() {
 		}
 		else if (ThunderAnim > AnimChangefps * 3) {
 			ThunderAnim = 0;
-		};
+		};*/
 
 		enemyA.Update(0);
 		enemyB.Update(1);
@@ -227,7 +232,9 @@ void Game::Draw() const {
 		DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xff0000, FALSE);
 		DrawBox(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], 0xffff00, FALSE);
 
-		DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);
+		gimmick.DrawThunder();
+
+		//DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);
 	};
 
 	stage.DrawSea();

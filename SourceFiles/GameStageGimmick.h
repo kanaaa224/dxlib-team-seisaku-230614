@@ -91,14 +91,25 @@ public:
 		return bubble[index].flg;
 	};
 
-	//雷
 
-	int img_Thunder[3];
 
 	void UpdateThunder();
 
 	void DrawThunder() const;
 
-	int Thunder_anm;
-	int Thunder_count = 0;
+	void ChangeAngle(void);//雷
+
+	// 雷
+	int Thunder[3];
+	int ThunderAnim;
+	int ThunderAnimFlg;
+	int AnimChangefps;
+
+	//ボールの変数
+	int ThunderX = 320;
+	int ThunderY = 400;
+	int MoveX = 0;
+	int MoveY = 0; //雷の移動量
+	int Speed = 4; // 雷のスピード
+	float ThunderAngle = 0.625f; // 雷の角度
 };
