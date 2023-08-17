@@ -10,6 +10,7 @@ GameStageGimmick::GameStageGimmick() {
 	LoadDivGraph("Resources/Images/Stage/Stage_BubbleAnimation.png", 4, 4, 1, 64, 64, img_bubble);
 
 	if ((LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 32, 32, Thunder)) == -1) throw;
+	if ((LoadDivGraph("Resources/Images/Stage/Stage_ThunderAnimation.png", 6, 6, 1, 64, 64, ThunderB)) == -1) throw;
 	ThunderAnim = 0;
 	ThunderAnimB = 0;
 	ThunderAnimFlg = 0;
