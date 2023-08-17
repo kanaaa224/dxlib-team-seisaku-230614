@@ -112,4 +112,23 @@ public:
 	int MoveY = 0; //雷の移動量
 	int Speed = 4; // 雷のスピード
 	float ThunderAngle = 0.625f; // 雷の角度
+
+	int thunderx, thundery;
+	//雷用の座標を設定
+		int SetThunderX(int ThunderX) {
+			thunderx = ThunderX;
+	};
+
+		int GetThunderX() {
+			return thunderx;
+		}
+
+		//雷用の座標を設定
+		int SetThunderY(int ThunderY) {
+			thundery = ThunderY;
+		};
+
+		int GetThunderY() {
+			return thundery;
+		}
 };

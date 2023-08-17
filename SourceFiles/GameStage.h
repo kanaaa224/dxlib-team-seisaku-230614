@@ -63,4 +63,5 @@ public:
 	int GetFootingMax(int StageIndex) {
 		return collisionData[StageIndex].footingMax;
 	};
+
 };

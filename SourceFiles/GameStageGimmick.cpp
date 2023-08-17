@@ -82,16 +82,17 @@ void GameStageGimmick::UpdateThunder()
 	// ボールの移動
 	//ここにif文で雷のスタート条件？
 
+
 	ThunderX += MoveX;
-	ThunderY += MoveY;
+	ThunderY -= MoveY;
 
 	// 壁・天井での反射
-	if (ThunderX < 4 || ThunderX > 640 - 4) { // 横の壁
+	if (ThunderX < 4 || ThunderX > 630) { // 横の壁
 		if (ThunderX < 4) {
 			ThunderX = 4;
 		}
 		else {
-			ThunderX = 640 - 4;
+			ThunderX = 630;
 		}
 		ThunderAngle = (1 - ThunderAngle) + 0.5f;
 		if (ThunderAngle > 1) ThunderAngle -= 1.0f;
@@ -106,7 +107,8 @@ void GameStageGimmick::UpdateThunder()
 		ThunderAngle = (1 - ThunderAngle);
 		ChangeAngle();
 	}
-
+	thunderx = ThunderX;
+	thundery = ThunderY;
 }
 
 void GameStageGimmick::ChangeAngle()
@@ -120,8 +122,7 @@ void GameStageGimmick::DrawThunder()const
 {
 	//雷
 	DrawGraph(ThunderX, ThunderY,  Thunder[ThunderAnimFlg], TRUE);
-	DrawFormatString(300, 300, 0xffffff, "%d",MoveX);
-	DrawFormatString(300, 320, 0xffffff, "%d", Speed);
+	DrawFormatString(300, 300, 0xffffff, "%d", ThunderX);
 
 }
 

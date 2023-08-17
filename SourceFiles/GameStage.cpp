@@ -211,9 +211,7 @@ void GameStage::Draw() const {
 		DrawGraph(480, 430, img_land[1], TRUE); // 右下
 
 		DrawGraph(320, 80, img_cloud[0], TRUE);  // 雲
-		//syun test
-		GameStageGimmick gimmick;
-		gimmick.DrawThunder();
+		
 	}
 	// ステージ２の表示
 	if (nowStage == 1) {
