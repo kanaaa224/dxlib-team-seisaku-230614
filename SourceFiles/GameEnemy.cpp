@@ -15,7 +15,6 @@ GameEnemy::GameEnemy() {
 	isChasingPlayer = false;
 	nextStateChange = rand() % 300 + 180;
 	currentStateDuration = 0;
-
 	stageIndex = GameMain::GetNowStageIndex();
 	blockIndex = 0;
 

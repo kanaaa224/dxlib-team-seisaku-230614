@@ -91,8 +91,68 @@ public:
 		return bubble[index].flg;
 	};
 
-	// プレイヤーの衝突座標を設定
-	//void SetPlayerCollide(Collide collide) {
-	//	playerCollide = collide;
-	//};
+
+
+	void UpdateThunder();
+
+	void DrawThunder() const;
+
+	void ChangeAngle(void);//雷
+
+	// 雷
+	int Thunder[3];//画面内を反射する雷
+	int ThunderB[5];//	雲から出てくる雷
+	int ThunderAnim;
+	int ThunderAnimB;
+	int ThunderAnimFlg;
+	int ThunderAnimFlgB;
+	int AnimChangefps;
+	int AnimChangefpsB;
+	//ボールの変数
+	
+	int MoveX = 0;
+	int MoveY = 0; //雷の移動量
+	int Speed = 4; // 雷のスピード
+	float ThunderAngle = 0.625f; // 雷の角度
+
+	int thunderx, thundery;
+	//雷用の座標を設定
+		int SetThunderX(int ThunderpositionX) {
+			thunderx = ThunderpositionX;
+	};
+
+		int GetThunderX() {
+			return thunderx;
+		}
+
+		//雷用の座標を設定
+		int SetThunderY(int ThunderpositionY) {
+			thundery = ThunderpositionY;
+		};
+
+		int GetThunderY() {
+			return thundery;
+		}
+		
+		int ThundersX = 0;
+		int ThundersY = 0;
+		int ThunderX[6] = {320,50,50,50,50};
+		int ThunderY[6] = {150,180,100,100,};
+
+		int SaveThunderX[6] = { 320,50,50,50,50 };
+		int SaveThunderY[6] = { 150,180,100,100, };
+
+		int ThunderBX[6] = { 380,50,50,50,50 };
+		int ThunderBY[6] = { 100,180,100,100,100 };
+
+		int ThunderStart = 0;
+		int Thunderrandom;
+
+		int framecounter = 0;
+		int Thunder_flg = 0;
+		int Thunder_flg2 = 0;
+		int ThunderAngleB;
+		int ThunderpositionX;
+		int ThunderpositionY;
+		
 };

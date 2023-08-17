@@ -48,11 +48,11 @@
     <ClCompile Include="SourceFiles\GameStageGimmick.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\GameScene.cpp">
-      <Filter>シーン</Filter>
-    </ClCompile>
     <ClCompile Include="SourceFiles\GameEnemy.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceFiles\GameScene.cpp">
+      <Filter>シーン</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

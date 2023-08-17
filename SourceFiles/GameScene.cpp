@@ -36,7 +36,7 @@ Game::Game() {
 	damageBlock[1] = 100;
 	damageBlock[2] = damageBlock[0] + 20;
 	damageBlock[3] = damageBlock[1] + 20;
-	damageBlock[4] = 250;
+	damageBlock[4] = 250;//雷判定
 	damageBlock[5] = 100;
 	damageBlock[6] = damageBlock[4] + 20;
 	damageBlock[7] = damageBlock[5] + 20;
@@ -77,10 +77,12 @@ AbstractScene* Game::Update() {
 	collideB.ul.y = damageBlock[1];
 	collideB.lr.x = damageBlock[2];
 	collideB.lr.y = damageBlock[3];
-	collideC.ul.x = damageBlock[4];
-	collideC.ul.y = damageBlock[5];
-	collideC.lr.x = damageBlock[6];
-	collideC.lr.y = damageBlock[7];
+	collideC.ul.x = gimmick.GetThunderX();
+	collideC.ul.y = gimmick.GetThunderY();
+	collideC.lr.x = gimmick.GetThunderX() + 20;
+	collideC.lr.y = gimmick.GetThunderY() + 20;
+
+
 	if ((CheckCollide(collideA, collideB) == 0) && (CheckCollide(collideA, collideC) == 0)) damageFlg = true;
 	if (CheckCollide(collideA, collideB) >= 1 && damageFlg) {
 		player.Damage();
@@ -170,13 +172,19 @@ AbstractScene* Game::Update() {
 	if (state != 1) { // ポーズか否か
 		effect.Update();
 
+		gimmick.ChangeAngle();
+
+		gimmick.UpdateThunder();
+
 		ui.Update();
 
 		stage.Update();
 		gimmick.Update();
 
+
+	
 		// 雷
-		ThunderAnim++;
+	/*	ThunderAnim++;
 		if (ThunderAnim > 0 && ThunderAnim <= AnimChangefps)
 		{
 			ThunderAnimFlg = 0;
@@ -191,7 +199,7 @@ AbstractScene* Game::Update() {
 		}
 		else if (ThunderAnim > AnimChangefps * 3) {
 			ThunderAnim = 0;
-		};
+		};*/
 
 		enemyA.Update(0);
 		enemyB.Update(1);
@@ -225,9 +233,11 @@ void Game::Draw() const {
 		//if (gameover) DrawFormatString(10, 65, 0xffffff, "Pキーでそのまま続行");
 
 		DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xff0000, FALSE);
-		DrawBox(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], 0xffff00, FALSE);
+		
 
-		DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);
+		gimmick.DrawThunder();
+
+		/*DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);*/
 	};
 
 	stage.DrawSea();
