@@ -14,9 +14,9 @@ GameUI::GameUI() {
 
 	if ((img_playerScore = LoadGraph("Resources/Images/UI/UI_Score.png")) == -1) throw;
 	if ((img_highScore = LoadGraph("Resources/Images/UI/UI_HiScore.png")) == -1) throw;
-	if ((img_stock = LoadGraph("Resources/Images/UI/UI_Stock.png")) == -1) throw;
+	if ((img_stock = LoadGraph("Resources/Images/UI/UI_Stock.png")) == -1)       throw;
 	if ((img_gameOver = LoadGraph("Resources/Images/UI/UI_GameOver.png")) == -1) throw;
-	if ((img_phase = LoadGraph("Resources/Images/UI/UI_Phase.png")) == -1) throw;
+	if ((img_phase = LoadGraph("Resources/Images/UI/UI_Phase.png")) == -1)       throw;
 	if (LoadDivGraph("Resources/Images/UI/UI_NumAnimation.png", 10, 10, 1, 32, 32, img_number) == -1) throw;
 };
 
@@ -46,9 +46,6 @@ void GameUI::Update() {
 };
 
 void GameUI::Draw() const {
-
-	DrawFormatString(300, 300, 0x00ffff, "Bubble Cracks: %d", bubbleCrackCount);
-
 	// スコア（6桁）
 	DrawGraph(40, 15, img_playerScore, TRUE);
 	for (int i = 0; i < 6; i++) {
@@ -80,8 +77,4 @@ void GameUI::Draw() const {
 
 	// ゲームオーバー
 	if (stock == -1) DrawGraph(220, 220, img_gameOver, TRUE);
-
-	// シャボン玉が割れた回数を表示する
-	DrawFormatString(300, 300, 0xffffff, "Bubble Cracks: %d", g_BubbleCrackCount);
-}
-
+};

@@ -4,7 +4,6 @@
 ********************************/
 #include "main.h"
 
-
 Game::Game() {
 	state = 0;
 
@@ -31,6 +30,7 @@ Game::Game() {
 	Position p;
 	p.x = 50;
 	p.y = 405;
+
 	player.SetPosition(p); // ステージによって変わるかもしれないので念のため
 	damageBlock[0] = 150;
 	damageBlock[1] = 100;
@@ -51,8 +51,8 @@ Game::~Game() {
 
 AbstractScene* Game::Update() {
 
-	ui.SetScore(player.GetPosition().x);
-	ui.SetHighScore(player.GetPosition().y);
+	ui.SetScore(GameMain::GetScore());
+	ui.SetHighScore(GameMain::GetHighScore());
 
 	// 仮 - ステージ上のブロックとプレイヤーの当たり判定
 	for (int i = 0; i < stage.GetFootingMax(stageIndex); i++) {
@@ -101,7 +101,8 @@ AbstractScene* Game::Update() {
 				gimmick.SetBubbleFlg(i, 10);
 				effect.Point(player.GetPosition().x, (player.GetPosition().y - player.GetSize().height), 1);
 				if (CheckSoundMem(snd_bubble) == 0) PlaySoundMem(snd_bubble, DX_PLAYTYPE_BACK, TRUE);
-			}; // スコア表示されない・バブルが消えない時あり
+				GameMain::SetScore(GameMain::GetScore() + 500);
+			};
 		};
 	};
 
@@ -160,7 +161,11 @@ AbstractScene* Game::Update() {
 	
 	stage.SetNowStage(stageIndex);
 	//gimmick.SetPlayerCollide(player.GetCollide());
-	enemy.SetPlayerCollide(player.GetCollide());
+	enemyA.SetPlayerCollide(player.GetCollide());
+	enemyB.SetPlayerCollide(player.GetCollide());
+	enemyC.SetPlayerCollide(player.GetCollide());
+
+	if (CheckHitKey(KEY_INPUT_E)) fish.Spawn();
 
 	if (state != 1) { // ポーズか否か
 		effect.Update();
@@ -188,8 +193,10 @@ AbstractScene* Game::Update() {
 			ThunderAnim = 0;
 		};
 
-		if (CheckHitKey(KEY_INPUT_E)) fish.Spawn();
-		enemy.Update();
+		enemyA.Update(0);
+		enemyB.Update(1);
+		enemyC.Update(2);
+
 		fish.Update();
 	};
 	
@@ -208,7 +215,9 @@ void Game::Draw() const {
 		player.Draw();
 		effect.Draw();
 
-		enemy.Draw();
+		enemyA.Draw();
+		enemyB.Draw();
+		enemyC.Draw();
 		fish.Draw();
 
 		if (debug) player.Debug();
@@ -225,3 +234,5 @@ void Game::Draw() const {
 };
 
 int GameMain::stageIndex = 0;
+int GameMain::score      = 0;
+int GameMain::highScore  = 0;

@@ -6,8 +6,6 @@
 #include "AbstractScene.h"
 #include "main.h"
 
-
-
 class Game : public AbstractScene {
 private:
 	int state;
@@ -19,8 +17,11 @@ private:
 	GameStage stage;
 	GameStageGimmick gimmick; // ギミックオブジェクト
 
-	GameEnemy enemy;
-	EnemyFish fish;
+	GameEnemy enemyA;
+	GameEnemy enemyB;
+	GameEnemy enemyC;
+
+	GameEnemyFish fish;
 
 	// 仮
 	bool ctrlFlg;
@@ -68,6 +69,7 @@ class GameMain {
 private:
 	static int stageIndex;
 	static int score;
+	static int highScore;
 
 public:
 	static void SetStageIndex(int Index) {
@@ -84,5 +86,13 @@ public:
 
 	static int GetScore() {
 		return score;
+	};
+
+	static void SetHighScore(int HighScore) {
+		highScore = HighScore;
+	};
+
+	static int GetHighScore() {
+		return highScore;
 	};
 };
