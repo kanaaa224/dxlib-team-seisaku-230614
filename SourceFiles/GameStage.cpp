@@ -92,17 +92,17 @@ GameStage::GameStage() {
 
 	collisionData[2].footingBlock[3][0] = 470;    //右のT字の足場
 	collisionData[2].footingBlock[3][1] = 100;
-	collisionData[2].footingBlock[3][2] = 530;
+	collisionData[2].footingBlock[3][2] = 520;
 	collisionData[2].footingBlock[3][3] = 170;
 
 	collisionData[2].footingBlock[4][0] = 330;    //真ん中のT字の足場
 	collisionData[2].footingBlock[4][1] = 180;
-	collisionData[2].footingBlock[4][2] = 390;
+	collisionData[2].footingBlock[4][2] = 380;
 	collisionData[2].footingBlock[4][3] = 250;
 
 	collisionData[2].footingBlock[5][0] = 160;    //左のT字の足場
 	collisionData[2].footingBlock[5][1] = 235;
-	collisionData[2].footingBlock[5][2] = 220;
+	collisionData[2].footingBlock[5][2] = 210;
 	collisionData[2].footingBlock[5][3] = 305;
 
 	collisionData[2].footingBlock[6][0] = 270;	//海の上の足場    
@@ -173,17 +173,17 @@ GameStage::GameStage() {
 
 	collisionData[4].footingBlock[4][0] = 350;    //右の足場
 	collisionData[4].footingBlock[4][1] = 330;
-	collisionData[4].footingBlock[4][2] = 410;
+	collisionData[4].footingBlock[4][2] = 400;
 	collisionData[4].footingBlock[4][3] = 350;
 
 	collisionData[4].footingBlock[5][0] = 118;     //左のT字の足場
 	collisionData[4].footingBlock[5][1] = 230;
-	collisionData[4].footingBlock[5][2] = 138;
+	collisionData[4].footingBlock[5][2] = 128;
 	collisionData[4].footingBlock[5][3] = 280;
 
 	collisionData[4].footingBlock[6][0] = 245;	  //真ん中のT字の足場
 	collisionData[4].footingBlock[6][1] = 200;
-	collisionData[4].footingBlock[6][2] = 275;
+	collisionData[4].footingBlock[6][2] = 235;
 	collisionData[4].footingBlock[6][3] = 250;
 
 	collisionData[4].footingBlock[7][0] = 475;	  //右のT字の足場
