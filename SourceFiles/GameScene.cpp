@@ -80,6 +80,8 @@ AbstractScene* Game::Update() {
 	collideC.ul.y = gimmick.GetThunderY();
 	collideC.lr.x = gimmick.GetThunderX() + 20;
 	collideC.lr.y = gimmick.GetThunderY() + 20;
+
+
 	if ((CheckCollide(collideA, collideB) == 0) && (CheckCollide(collideA, collideC) == 0)) damageFlg = true;
 	if (CheckCollide(collideA, collideB) >= 1 && damageFlg) {
 		player.Damage();
@@ -230,11 +232,11 @@ void Game::Draw() const {
 		//if (gameover) DrawFormatString(10, 65, 0xffffff, "Pキーでそのまま続行");
 
 		DrawBox(damageBlock[0], damageBlock[1], damageBlock[2], damageBlock[3], 0xff0000, FALSE);
-	/*	DrawBox(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], 0xffff00, FALSE);*/
+		
 
 		gimmick.DrawThunder();
 
-		DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);
+		/*DrawExtendGraph(damageBlock[4], damageBlock[5], damageBlock[6], damageBlock[7], Thunder[ThunderAnimFlg], TRUE);*/
 	};
 
 	stage.DrawSea();

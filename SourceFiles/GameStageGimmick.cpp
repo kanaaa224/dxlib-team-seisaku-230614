@@ -11,8 +11,13 @@ GameStageGimmick::GameStageGimmick() {
 
 	if ((LoadDivGraph("Resources/Images/Stage/Stage_ThunderEffectAnimation.png", 3, 3, 1, 32, 32, Thunder)) == -1) throw;
 	ThunderAnim = 0;
+	ThunderAnimB = 0;
 	ThunderAnimFlg = 0;
+	ThunderAnimFlgB = 0;
 	AnimChangefps = 3;
+	AnimChangefpsB = 5;
+	//最初に雷をランダムな方向に進ませる
+	Thunderrandom = GetRand(2);
 
 
 };
@@ -62,7 +67,7 @@ void GameStageGimmick::DrawBubble() const {
 }
 void GameStageGimmick::UpdateThunder()
 {
-
+	
 
 	// 雷
 	ThunderAnim++;
@@ -82,37 +87,98 @@ void GameStageGimmick::UpdateThunder()
 		ThunderAnim = 0;
 	};
 
+	// 雷 雲から伸びるやつ
+	ThunderAnimB++;
+	if (ThunderAnimB > 0 && ThunderAnimB <= AnimChangefps)
+	{
+		ThunderAnimFlgB = 0;
+	}
+	else if (ThunderAnimB > AnimChangefps && ThunderAnimB <= AnimChangefps * 2)
+	{
+		ThunderAnimFlgB = 1;
+	}
+	else if (ThunderAnimB> AnimChangefps * 2 && ThunderAnimB <= AnimChangefps * 3)
+	{
+		ThunderAnimFlgB = 2;
+	}
+	else if (ThunderAnimB > AnimChangefps * 2 && ThunderAnimB <= AnimChangefps * 4)
+	{
+		ThunderAnimFlgB = 3;
+	}
+	else if (ThunderAnimB > AnimChangefps * 2 && ThunderAnimB <= AnimChangefps * 5)
+	{
+		ThunderAnimFlgB = 4;
+	}
+	else if (ThunderAnimB > AnimChangefps * 5) {
+		ThunderAnimB = 0;
+	};
 
 	// ボールの移動
 	//ここにif文で雷のスタート条件？
+	if (CheckHitKey(KEY_INPUT_V)) {
+		Thunder_flg = 1;
+		Thunder_flg2 = 1;
+	}
+	if (Thunder_flg == 1) {
+		framecounter++;
 
+		if (Thunder_flg == 1) {
+			if (Thunderrandom == 0) {//左下
+				ThunderX[ThunderStart] += MoveX;
+				ThunderY[ThunderStart] -= MoveY;
 
-	ThunderX += MoveX;
-	ThunderY -= MoveY;
+				ThunderAngleB = M_PI / 4;
+			}
 
-	// 壁・天井での反射
-	if (ThunderX < 4 || ThunderX > 630) { // 横の壁
-		if (ThunderX < 4) {
-			ThunderX = 4;
+			else if (Thunderrandom == 1) {//右下
+				ThunderX[ThunderStart] -= MoveX;
+				ThunderY[ThunderStart] -= MoveY;
+
+				ThunderAngleB = M_PI - 80;
+			}
+
+			else if (Thunderrandom == 2) {//左上
+				ThunderX[ThunderStart] += MoveX;
+				ThunderY[ThunderStart] += MoveY;
+
+				ThunderAngleB = M_PI / 2;
+			}
+
+			// 壁・天井での反射
+			if (ThunderX[ThunderStart] < 4 || ThunderX[ThunderStart] > 630) { // 横の壁
+				if (ThunderX[ThunderStart] < 4) {
+					ThunderX[ThunderStart] = 4;
+				}
+				else {
+					ThunderX[ThunderStart] = 630;
+				}
+				ThunderAngle = (1 - ThunderAngle) + 0.5f;
+				if (ThunderAngle > 1) ThunderAngle -= 1.0f;
+				ChangeAngle();
+			}
+			if (ThunderY[ThunderStart] < 8) { // 上の壁
+				ThunderAngle = (1 - ThunderAngle);
+				ChangeAngle();
+			}
+
+			if (ThunderY[ThunderStart] > 470) { // 下の壁
+				ThunderAngle = (1 - ThunderAngle);
+				ChangeAngle();
+			}
+
+			//現在のステージ
+
+			ThunderStart = GameMain::GetNowStageIndex();
+			thunderx = ThunderX[ThunderStart];
+			thundery = ThunderY[ThunderStart];
 		}
-		else {
-			ThunderX = 630;
-		}
-		ThunderAngle = (1 - ThunderAngle) + 0.5f;
-		if (ThunderAngle > 1) ThunderAngle -= 1.0f;
-		ChangeAngle();
 	}
-	if (ThunderY < 8) { // 上の壁
-		ThunderAngle = (1 - ThunderAngle);
-		ChangeAngle();
+	if (framecounter % 500 == 0) {
+		Thunder_flg = 0;
+		ThunderX[ThunderStart] = SaveThunderX[ThunderStart];
+		ThunderY[ThunderStart] = SaveThunderY[ThunderStart];
 	}
-
-	if (ThunderY > 470) { // 下の壁
-		ThunderAngle = (1 - ThunderAngle);
-		ChangeAngle();
-	}
-	thunderx = ThunderX;
-	thundery = ThunderY;
+	if (framecounter % 100 == 0) Thunder_flg2 = 0;
 }
 
 void GameStageGimmick::ChangeAngle()
@@ -124,9 +190,15 @@ void GameStageGimmick::ChangeAngle()
 
 void GameStageGimmick::DrawThunder()const
 {
-	//雷
-	DrawGraph(ThunderX, ThunderY,  Thunder[ThunderAnimFlg], TRUE);
+	if (Thunder_flg == 1) {
+		//雷
+		DrawGraph(ThunderX[ThunderStart], ThunderY[ThunderStart], Thunder[ThunderAnimFlg], TRUE);
 
+		if (Thunder_flg2 == 1) {
+			//雲から出る雷
+			DrawRotaGraph(ThunderBX[ThunderStart], ThunderBY[ThunderStart], 1.0, ThunderAngleB, ThunderB[ThunderAnimFlgB], TRUE);
+		}
+	}
 }
 
 
