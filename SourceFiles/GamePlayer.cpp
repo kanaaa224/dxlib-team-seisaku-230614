@@ -56,17 +56,17 @@ void GamePlayer::Init() {
 	player.hp = 2;
 	player.position.x = PLAYER_DEFAULT_POSITION_X;
 	player.position.y = PLAYER_DEFAULT_POSITION_Y;
-	player.size.width = 15;
+	player.size.width  = 15;
 	player.size.height = 25;
 
-	inputX = 0.0f;
-	flapCount = 0;
+	inputX     = 0.0f;
+	flapCount  = 0;
 	flightMove = 0;
 	state[COLLIDE] = 0;
-	state[TURN] = 1;
-	state[ANIM] = 0;
-	state[BLINK] = 1;
-	state[MISS] = 0;
+	state[TURN]    = 1;
+	state[ANIM]    = 0;
+	state[BLINK]   = 1;
+	state[MISS]    = 0;
 	inertia.x = 0.0f;
 	inertia.y = 1.0f;
 };
@@ -322,7 +322,7 @@ void GamePlayer::Draw() const {
 		if (player.hp == 1) anim += 5;
 	};
 
-	// ワープ用にゲーム画面分の間隔をあけて3体描画する
+	// ワープ用にゲーム画面分の間隔をあけて3体描画
 	DrawRotaGraph2((int)player.position.x, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
 	DrawRotaGraph2((int)player.position.x - SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);
 	DrawRotaGraph2((int)player.position.x + SCREEN_WIDTH, (int)player.position.y, 32, 64 - (int)player.size.height, 1.0f, 0, img_player[anim], TRUE, state[TURN]);

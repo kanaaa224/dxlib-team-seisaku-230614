@@ -24,14 +24,14 @@
 
 // float型 2次元座標 構造体
 struct Position {
-	float x = 0.0f;
-	float y = 0.0f;
+	float x = 0.0f,
+		  y = 0.0f;
 };
 
 // 大きさ 構造体
 struct Size {
-	float width = 0.0f;
-	float height = 0.0f;
+	float width = 0.0f,
+		 height = 0.0f;
 };
 
 // ブロック 構造体
@@ -44,7 +44,7 @@ struct Person {
 	Position position;
 	Size size;
 	int state = 0;
-	int hp = 0;
+	int hp    = 0;
 };
 
 // プレイヤークラス
@@ -264,6 +264,7 @@ private:
 
 	int img_splash[4];
 	int img_point[5];
+
 public:
 	GameEffect() {
 		state = 0;
